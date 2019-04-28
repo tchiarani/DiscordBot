@@ -4,7 +4,7 @@ const search = require('yt-search');
 const ytdl = require('ytdl-core');
 const client = new Discord.Client();
 
-const token = 'process.env.TOKEN';
+const token = process.env.TOKEN;
 const prefix = '/';
 
 const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg';
