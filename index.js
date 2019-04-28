@@ -226,6 +226,7 @@ client.on('message', message => {
         // QUEUE
     }else if (message.content === prefix + 'queue') {
         if(dataQueue[0]) message.channel.send(JSON.stringify(dataQueue).replace(/,/g, '\n').replace(/[["]/g, '').replace(/]/g, ''));
+        else message.channel.send("La file est **vide**");
     }
   });
 
