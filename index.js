@@ -14,16 +14,16 @@ var radios = {
     'dnb' : ['http://195.201.98.51:8000/dnbradio_main.mp3','drum\'n\'bass'],
     'metal' : ['http://144.217.29.205:80/live','métal'],
     'gold' : ['http://185.33.21.112:80/highvoltage_128','goldé'],
-    'core' : ['http://192.95.18.39:5508/dispatcher','métalcore'],
+    'core' : ['http://192.95.18.39:5508/song','métalcore'],
     'prog' : ['http://144.76.106.52:7000/progressive.mp3','progressive'],
-    'samba' : ['http://148.72.152.10:20028/dispatcher','samba'],
+    'samba' : ['http://148.72.152.10:20028/song','samba'],
     'misc' : ['http://185.85.29.144:8000/','miscellaneous'],
     'hit' : ['http://185.85.29.140:8000/','hit allemand'],
     'dub' : ['http://37.187.124.134:8010/','dub'],
-    'black' : ['http://147.135.208.34:8000/dispatcher/2/','blackmétal'],
-    'chill' : ['http://66.70.187.44:9146/dispatcher','chill'],
-    'polk' : ['http://70.38.12.44:8144/dispatcher','polk'],
-    'muhamed' : ['http://108.179.220.88:9302/dispatcher','allahu akbar'],
+    'black' : ['http://147.135.208.34:8000/song/2/','blackmétal'],
+    'chill' : ['http://66.70.187.44:9146/song','chill'],
+    'polk' : ['http://70.38.12.44:8144/song','polk'],
+    'muhamed' : ['http://108.179.220.88:9302/song','allahu akbar'],
     'motherland' : ['http://air.radiorecord.ru:805/hbass_320','cyka blyat']
 /*  'radio' : ['lien', 'texte']  */
 };
@@ -33,18 +33,18 @@ var musiques = {
 };
 var queue = [];
 var dataQueue = [];
-var dispatcher, music, videos, firstResult;
+var song, music, videos, firstResult;
 
 function play(connection, message) {
     if(!queue[1]){
-        dispatcher = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
-        dispatcher.setVolume(1/50);
+        song = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
+        song.setVolume(1/50);
         message.channel.send('Vous écoutez **'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  dans **'+message.member.voiceChannel.name+'**');
         client.user.setActivity(firstResult.title, { type: 'LISTENING' })
     }else{
         message.channel.send('**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  ajoutée à la file');
     }
-    dispatcher.on("end", () => {
+    song.on("end", () => {
         queue.shift();
         dataQueue.shift();
         if(!queue[0]) {
@@ -62,7 +62,6 @@ client.login(token);
 client.on('ready', function() {
     console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.channels.size} salons de ${client.guilds.size} serveurs différents.\n-----`);
     client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
-    console.log(dispatcher);
 });
 
 client.on('message', message => {
@@ -104,21 +103,21 @@ client.on('message', message => {
                 var args = message.content.split(' ');
                 for(var i=0; i<Object.keys(radios).length; i++) {
                     if(args[1]==Object.keys(radios)[i]) {
-                        dispatcher = connection.playArbitraryInput(Object.values(radios)[i][0]);
-                        dispatcher.setVolume(1/50);
+                        song = connection.playArbitraryInput(Object.values(radios)[i][0]);
+                        song.setVolume(1/50);
                         var words = message.content.split(' ');
                         if(words[2]>=0 && words[2]<=200){
-                            dispatcher.setVolume(words[2]/5000);
+                            song.setVolume(words[2]/5000);
                         }
                         client.user.setActivity('radio '+Object.values(radios)[i][1].toUpperCase(), { type: 'LISTENING' })
                         message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***'+Object.values(radios)[i][1].toUpperCase()+'***  dans **'+message.member.voiceChannel.name+'**');
                         message.react('▶');        
                     }else if(args[1]==Object.keys(musiques)[i]) {
-                        dispatcher = connection.playFile(Object.values(musiques)[i][0]);
-                        dispatcher.setVolume(1/50);
+                        song = connection.playFile(Object.values(musiques)[i][0]);
+                        song.setVolume(1/50);
                         var words = message.content.split(' ');
                         if(words[2]>=0 && words[2]<=200){
-                            dispatcher.setVolume(words[2]/5000);
+                            song.setVolume(words[2]/5000);
                         }
                         client.user.setActivity(Object.values(musiques)[i][1].toUpperCase(), { type: 'LISTENING' })
                         message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***'+Object.values(musiques)[i][1].toUpperCase()+'***  dans **'+message.member.voiceChannel.name+'**');
@@ -126,7 +125,7 @@ client.on('message', message => {
                     }
                 }
             }).catch(console.log);
-            dispatcher.on("end", () => {
+            song.on('end', () => {
                 message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
                 client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
             })
@@ -141,8 +140,8 @@ client.on('message', message => {
             .then(connection => {
                 var words = message.content.split(' ');
                 client.user.setActivity('la radio', { type: 'LISTENING' })
-                dispatcher = connection.playArbitraryInput(words[1]);
-                dispatcher.setVolume(1/50);
+                song = connection.playArbitraryInput(words[1]);
+                song.setVolume(1/50);
                 message.react('📻'); 
             }).catch(console.log);
         }
@@ -152,7 +151,7 @@ client.on('message', message => {
         if (message.member.voiceChannel) {
             var words = message.content.split(' ');
             if(words[1]>=0 && words[1]<=200){
-                dispatcher.setVolume(words[1]/5000);
+                song.setVolume(words[1]/5000);
                 message.react('🔊'); 
             }else{
                 message.channel.send('Fais pas l\'fou gamin ! '+words[1]+' c\'est trop fort...');
@@ -183,7 +182,7 @@ client.on('message', message => {
         // SKIP
     }else if (message.content === prefix + "skip"){
         message.react('⏭');
-        dispatcher.end("Skip");
+        song.end("Skip");
 
         // HELP
     }else if (message.content === prefix + "help"){
@@ -208,16 +207,16 @@ client.on('message', message => {
     }else if (message.content === prefix + 'pause') {
         if (message.member.voiceChannel) {
             message.react('⏸'); 
-            dispatcher.pause();
-            dispatcher.setSpeaking(false);
+            song.pause();
+            song.setSpeaking(false);
         }
 
         // RESUME
     }else if (message.content === prefix + 'resume') {
         if (message.member.voiceChannel) {
             message.react('⏯'); 
-            dispatcher.resume();
-            dispatcher.setSpeaking(true);
+            song.resume();
+            song.setSpeaking(true);
         }
 
         // QUEUE
