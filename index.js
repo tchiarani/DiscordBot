@@ -3,8 +3,10 @@ const Attachment = require('discord.js');
 const search = require('yt-search');
 const ytdl = require('ytdl-core');
 const client = new Discord.Client();
-const token = 'Mzk4NDg2Mzg2MTExNTQ1MzQ0.XMNP3g.xA3b_XJHw7C4Zx6w2OgIgrHFPjY';
+
+const token = 'process.env.TOKEN';
 const prefix = '/';
+
 const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg';
 const photoDr = 'https://cdn.discordapp.com/attachments/372772306553929729/571715565144637446/13_-_Dr_PxxxxCAT_PEEPOODO-01.png';
 
@@ -27,6 +29,7 @@ var radios = {
 };
 var musiques = {
     'aspiradance' : ['./Musique/eurodance.mp3','aspiradance']
+/*  'musique' : ['chemin', 'texte']  */
 };
 var queue = [];
 var dataQueue = [];
@@ -45,7 +48,7 @@ function play(connection, message) {
         queue.shift();
         dataQueue.shift();
         if(!queue[0]) {
-            message.channel.send('La file est vide. Deconnexion de **'+message.member.voiceChannel.name+'**');
+            message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
             client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
             connection.disconnect();
         }else {
@@ -57,15 +60,12 @@ function play(connection, message) {
 client.login(token);
 
 client.on('ready', function() {
-    //console.log("--------------------\n--> Bot connecté <--\n--------------------");
-    console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.channels.size} salons de ${client.guilds.size} serveurs.\n-----`);
-    //client.user.setActivity('Peepoodo | /help', { type: 'WATCHING' }).catch(console.error);
+    console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.channels.size} salons de ${client.guilds.size} serveurs différents.\n-----`);
     client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
 });
 
 client.on('message', message => {
-    // Voice only works in guilds, if the message does not come from a guild,
-    // we ignore it
+    // Voice only works in guilds, if the message does not come from a guild, we ignore it
     //console.log(message.guild.id);
     if (!message.guild) return;
     if (!message.content.startsWith(prefix)) return;
@@ -76,7 +76,7 @@ client.on('message', message => {
       // Only try to join the sender's voice channel if they are in one themselves
         if (message.member.voiceChannel) {
         message.member.voiceChannel.join()
-        .then(connection => { // Connection is an instance of VoiceConnection
+        .then(connection => {
             message.channel.send('Connecté dans '+message.member.voiceChannel.name);
             message.react('✅');
         }).catch(console.log);
@@ -87,14 +87,10 @@ client.on('message', message => {
 
         // STOP
     }else if (message.content === prefix + 'stop') {
+        client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
         if(message.member.voiceChannel === message.guild.me.voiceChannel){
-            message.channel.bulkDelete(1)
-            .catch(console.error);
             message.member.voiceChannel.leave();
-            client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
-            message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
         }else{
-            client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
             message.channel.send('Je ne suis pas connecté dans un salon avec vous !');
             message.react('🛑');
         }
@@ -181,20 +177,13 @@ client.on('message', message => {
 
         // SKIP
     }else if (message.content === prefix + "skip"){
-        message.member.voiceChannel.join()
-        .then(connection => {
-            message.react('⏭');
-            //queue.shift();
-            //dataQueue.shift();
-            song.end();
-        })
-        .catch(console.log);
+        message.react('⏭');
+        song.end();
 
         // HELP
     }else if (message.content === prefix + "help"){
         message.react('📜');
         message.channel.bulkDelete(1).catch(console.error);
-        message.channel.send("Tiens connard.", {tts: true})
         message.channel.send(dataHelp);
         
 
