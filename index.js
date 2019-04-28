@@ -125,10 +125,6 @@ client.on('message', message => {
                     }
                 }
             }).catch(console.log);
-            song.on('end', () => {
-                message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
-                client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
-            })
         }else{
             message.reply('il faut être dans un channel, connard !');
         }
