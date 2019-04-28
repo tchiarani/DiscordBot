@@ -229,72 +229,70 @@ client.on('message', message => {
     }else if (message.content === prefix + 'console') {
         console.log("---------------------------------------------------");
     }
-  });
+});
 
 
 
 
-  const dataHelp = {
+const dataHelp = {
     "embed": {
-      "title": "Voici pour vous mon brave :",
-      "description": "Préfix : **"+prefix+"**",
-      "color": 12214198,
-      "footer": {
-        "icon_url": photoDr,
-        "text": "/help"
-      },
-      "thumbnail": {
-        "url": "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
-      },
-      "author": {
-        "name": "Besoin d'aide ?",
-        "icon_url": photoDr
-      },
-      "fields": [
-        {
-            "name": "__**----------------------**__       Commandes",
-            "value": "/yt *[mots clés]*\n/yt *[url]*\n/play *[radio] [volume]*\n/play *[radio]*\n/play *[musique]*\n/play *[musique] [volume]*\n/radio *[url]*",
-            "inline": true
+        "title": "Voici pour vous mon brave :",
+        "description": "Préfix : **"+prefix+"**",
+        "color": 12214198,
+        "footer": {
+            "icon_url": photoDr,
+            "text": "/help"
         },
-        {
-            "name": "__**----------------------**__",
-            "value": "/vol *[0-200]*\n/pause\n/resume\n/purge *[nombre]*\n/join\n/stop\n/bob",
-            "inline": true
-          },
-        {
-            "name": "__Liste des radios :__",
-            "value": JSON.stringify(Object.keys(radios)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
-            "inline": true
+        "thumbnail": {
+            "url": "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
         },
-        {
-            "name": "__Liste des musiques :__",
-            "value": JSON.stringify(Object.keys(musiques)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
-            "inline": true
-        }
-      ]
+        "author": {
+            "name": "Besoin d'aide ?",
+            "icon_url": photoDr
+        },
+        "fields": [
+            {
+                "name": "__**----------------------**__       Commandes",
+                "value": "/yt *[mots clés]*\n/yt *[url]*\n/play *[radio] [volume]*\n/play *[radio]*\n/play *[musique]*\n/play *[musique] [volume]*\n/radio *[url]*",
+                "inline": true
+            },
+            {
+                "name": "__**----------------------**__",
+                "value": "/vol *[0-200]*\n/pause\n/resume\n/purge *[nombre]*\n/join\n/stop\n/bob",
+                "inline": true
+                },
+            {
+                "name": "__Liste des radios :__",
+                "value": JSON.stringify(Object.keys(radios)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
+                "inline": true
+            },
+            {
+                "name": "__Liste des musiques :__",
+                "value": JSON.stringify(Object.keys(musiques)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
+                "inline": true
+            }
+        ]
     }
-  };
+};
 
-  const queueInfo = {
+const queueInfo = {
     "embed": {
-      "title": "Voici pour vous mon brave :",
-      "description": "Préfix : **"+prefix+"**",
-      "color": 12214198,
-      "footer": {
+        "title": "Voici pour vous mon brave :",
+        "description": "Préfix : **"+prefix+"**",
+        "color": 12214198,
+        "footer": {
         "text": "/queue"
-      },
-      "thumbnail": {
-        "url": photoDr
-      },
-      "author": {
-        "name": "File d'attente :",
-        "icon_url": photoBob
-      },
-      "fields": [
-        {
-            "name": "Nombre de musique dans la file : "+dataQueue.length,
-            "value": JSON.stringify(dataQueue).replace(/,/g, '\n').replace(/[["]/g, '').replace(/]/g, '')
+        },
+        "thumbnail": {
+            "url": photoDr
+        },
+        "author": {
+            "name": "File d'attente :",
+            "icon_url": photoBob
+        },
+        "fields": {
+                "name": ("Nombre de musique dans la file : "+dataQueue.length),
+                "value": JSON.stringify(dataQueue).replace(/,/g, '\n').replace(/[["]/g, '').replace(/]/g, '')
         }
-      ]
     }
-  };
+};
