@@ -3,7 +3,7 @@ const Attachment = require('discord.js');
 const search = require('yt-search');
 const ytdl = require('ytdl-core');
 const client = new Discord.Client();
-const token = 'process.env.TOKEN';
+const token = 'Mzk4NDg2Mzg2MTExNTQ1MzQ0.XMNP3g.xA3b_XJHw7C4Zx6w2OgIgrHFPjY';
 const prefix = '/';
 const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg';
 const photoDr = 'https://cdn.discordapp.com/attachments/372772306553929729/571715565144637446/13_-_Dr_PxxxxCAT_PEEPOODO-01.png';
@@ -26,7 +26,7 @@ var radios = {
 /*  'radio' : ['lien', 'texte']  */
 };
 var musiques = {
-    'aspiradance' : ['C:/Users/Thomas/Documents/DevProg/DiscordBot/Musique/eurodance.mp3','aspiradance']
+    'aspiradance' : ['./Musique/eurodance.mp3','aspiradance']
 };
 var queue = [];
 var dataQueue = [];
@@ -74,9 +74,11 @@ client.on('message', message => {
     if (message.content === prefix + 'join') {
       // Only try to join the sender's voice channel if they are in one themselves
         if (message.member.voiceChannel) {
-        message.member.voiceChannel.join().then(connection => { // Connection is an instance of VoiceConnection
+        message.member.voiceChannel.join()
+        .then(connection => { // Connection is an instance of VoiceConnection
             message.channel.send('Connecté dans '+message.member.voiceChannel.name);
-            message.react('✅');}).catch(console.log);
+            message.react('✅');
+        }).catch(console.log);
         } else {
             message.reply('il faut être dans un channel, connard !');
             message.react('🖕');
@@ -125,8 +127,7 @@ client.on('message', message => {
                         message.react('▶');  
                     }
                 }
-            })
-            .catch(console.log);
+            }).catch(console.log);
         }else{
             message.reply('il faut être dans un channel, connard !');
         }
@@ -141,8 +142,7 @@ client.on('message', message => {
                 song = connection.playArbitraryInput(words[1]);
                 song.setVolume(1/50);
                 message.react('📻'); 
-            })
-            .catch(console.log);
+            }).catch(console.log);
         }
 
         // VOL
@@ -175,8 +175,7 @@ client.on('message', message => {
                     dataQueue.push(dataMusic);
                     play(connection, message);
                 })
-            })
-            .catch(console.log);
+            }).catch(console.log);
         }
 
         // SKIP
@@ -188,9 +187,7 @@ client.on('message', message => {
             //dataQueue.shift();
             song.end();
         })
-        .catch(err => {
-            console.log(err.stack);
-        });
+        .catch(console.log);
 
         // HELP
     }else if (message.content === prefix + "help"){
