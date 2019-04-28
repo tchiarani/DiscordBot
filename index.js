@@ -193,10 +193,8 @@ client.on('message', message => {
         // HELP
     }else if (message.content === prefix + "help"){
         message.react('📜');
-        message.channel.send("Tiens connard.", {
-            tts: true
-        })
-        message.channel.bulkDelete(2).catch(console.error);
+        message.channel.bulkDelete(1).catch(console.error);
+        message.channel.send("Tiens connard.", {tts: true})
         message.channel.send(dataHelp);
         
 
