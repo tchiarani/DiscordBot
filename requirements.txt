@@ -1,0 +1,4 @@
+discord
+yt-search
+ytdl-core
+ffmpeg
