@@ -44,7 +44,7 @@ function play(connection, message) {
     }else{
         message.channel.send('**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  ajoutée à la file');
     }
-    song.on("end", () => {
+    song.on("finish", () => {
         queue.shift();
         dataQueue.shift();
         if(!queue[0]) {
@@ -125,6 +125,10 @@ client.on('message', message => {
                     }
                 }
             }).catch(console.log);
+            song.on("end", () => {
+                message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
+                client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
+            })
         }else{
             message.reply('il faut être dans un channel, connard !');
         }
@@ -178,7 +182,7 @@ client.on('message', message => {
         // SKIP
     }else if (message.content === prefix + "skip"){
         message.react('⏭');
-        song.end();
+        song.finish();
 
         // HELP
     }else if (message.content === prefix + "help"){
