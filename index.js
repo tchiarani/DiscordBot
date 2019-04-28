@@ -88,12 +88,11 @@ client.on('message', message => {
         // STOP
     }else if (message.content === prefix + 'stop') {
         if(message.member.voiceChannel === message.guild.me.voiceChannel){
-            // message.channel.bulkDelete(1)
-            // .catch(console.error);
+            message.channel.bulkDelete(1)
+            .catch(console.error);
             message.member.voiceChannel.leave();
             client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
             message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
-            message.react('🛑');
         }else{
             client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
             message.channel.send('Je ne suis pas connecté dans un salon avec vous !');
@@ -104,7 +103,7 @@ client.on('message', message => {
     }else if (message.content.startsWith(prefix + 'play ')) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
-            .then(connection => { // Connection is an instance of VoiceConnection
+            .then(connection => {
                 var args = message.content.split(' ');
                 for(var i=0; i<Object.keys(radios).length; i++) {
                     if(args[1]==Object.keys(radios)[i]) {
@@ -138,7 +137,7 @@ client.on('message', message => {
     }else if (message.content.startsWith(prefix + 'radio ')) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
-            .then(connection => { // Connection is an instance of VoiceConnection
+            .then(connection => {
                 var words = message.content.split(' ');
                 client.user.setActivity('la radio', { type: 'LISTENING' })
                 song = connection.playArbitraryInput(words[1]);
@@ -164,7 +163,7 @@ client.on('message', message => {
     }else if (message.content.startsWith(prefix + 'yt ')) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
-            .then(connection => { // Connection is an instance of VoiceConnection
+            .then(connection => {
                 let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length);
                 search(words, function (err, r) {
                     message.react('▶'); 
@@ -194,8 +193,12 @@ client.on('message', message => {
         // HELP
     }else if (message.content === prefix + "help"){
         message.react('📜');
-        message.channel.bulkDelete(1).catch(console.error);
+        message.channel.send("Tiens connard.", {
+            tts: true
+        })
+        message.channel.bulkDelete(2).catch(console.error);
         message.channel.send(dataHelp);
+        
 
         // BOB
     }else if (message.content === prefix + 'bob') {
@@ -227,8 +230,8 @@ client.on('message', message => {
 
         // QUEUE
     }else if (message.content === prefix + 'queue') {
-        if(dataQueue[0]) message.channel.send(JSON.stringify(dataQueue).replace(/,/g, '\n').replace(/[["]/g, '').replace(/]/g, ''));
-        else message.channel.send("La file est **vide**");
+        if(dataQueue[0]) message.channel.send(queueInfo);
+        else message.channel.send("Aucune musique dans la file d'attente");
     }
   });
 
@@ -239,9 +242,7 @@ client.on('message', message => {
     "embed": {
       "title": "Voici pour vous mon brave :",
       "description": "Préfix : **"+prefix+"**",
-      // "url": "https://youtube.com",
       "color": 12214198,
-      //"timestamp": "2019-04-27T10:24:30.989Z",
       "footer": {
         "icon_url": photoDr,
         "text": "/help"
@@ -249,9 +250,6 @@ client.on('message', message => {
       "thumbnail": {
         "url": "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
       },
-    //   "image": {
-    //     "url": photoBob
-    //   },
       "author": {
         "name": "Besoin d'aide ?",
         "url": "",
@@ -277,6 +275,31 @@ client.on('message', message => {
             "name": "__Liste des musiques :__",
             "value": JSON.stringify(Object.keys(musiques)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
             "inline": true
+        }
+      ]
+    }
+  };
+
+  const queueInfo = {
+    "embed": {
+      "title": "Voici pour vous mon brave :",
+      "description": "Préfix : **"+prefix+"**",
+      "color": 12214198,
+      "footer": {
+        "text": "/queue"
+      },
+      "thumbnail": {
+        "url": photoDr
+      },
+      "author": {
+        "name": "File d'attente :",
+        "url": "",
+        "icon_url": photoBob
+      },
+      "fields": [
+        {
+            "name": "Nombre de musique dans la file : "+dataQueue.length,
+            "value": JSON.stringify(dataQueue).replace(/,/g, '\n').replace(/[["]/g, '').replace(/]/g, '')
         }
       ]
     }
