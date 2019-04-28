@@ -72,6 +72,7 @@ client.on('message', message => {
 
         // JOIN
     if (message.content === prefix + 'join') {
+        if (message.guild.me.voiceChannel) return message.channel.send('Désolé, je suis déjà connecté dans '+message.guild.me.voiceChannel.name);
       // Only try to join the sender's voice channel if they are in one themselves
         if (message.member.voiceChannel) {
         message.member.voiceChannel.join()
@@ -86,15 +87,16 @@ client.on('message', message => {
 
         // STOP
     }else if (message.content === prefix + 'stop') {
-        if(message.member.voiceChannel){
-            message.channel.bulkDelete(1).catch(console.error);
+        if(message.member.voiceChannel === message.guild.me.voiceChannel){
+            // message.channel.bulkDelete(1)
+            // .catch(console.error);
             message.member.voiceChannel.leave();
             client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
             message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
             message.react('🛑');
         }else{
             client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
-            message.channel.send('Je ne suis pas connecté !');
+            message.channel.send('Je ne suis pas connecté dans un salon avec vous !');
             message.react('🛑');
         }
         
