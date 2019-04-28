@@ -44,7 +44,7 @@ function play(connection, message) {
     }else{
         message.channel.send('**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  ajoutée à la file');
     }
-    song.on("finish", () => {
+    song.on("end", () => {
         queue.shift();
         dataQueue.shift();
         if(!queue[0]) {
@@ -182,14 +182,13 @@ client.on('message', message => {
         // SKIP
     }else if (message.content === prefix + "skip"){
         message.react('⏭');
-        song.finish();
+        song.end("Skip");
 
         // HELP
     }else if (message.content === prefix + "help"){
         message.react('📜');
         message.channel.bulkDelete(1).catch(console.error);
-        message.channel.send(dataHelp);
-        
+        message.channel.send(dataHelp);        
 
         // BOB
     }else if (message.content === prefix + 'bob') {
@@ -198,10 +197,11 @@ client.on('message', message => {
 
         // PURGE
     }else if (message.content.startsWith(prefix + 'purge ')) {
+        message.react('🗑');
+        message.channel.bulkDelete(1).catch(console.error);
         var args = message.content.split(' ');
         if(!args[1] || args[1] < 1 || args[1] > 100) return message.reply("Veuillez rentrer un nombre compris entre 1 et 100.");
-        message.channel.bulkDelete(args[1]+1).catch(console.error);
-        message.react('🗑');
+        message.channel.bulkDelete(args[1]).catch(console.error);
 
         // PAUSE
     }else if (message.content === prefix + 'pause') {
@@ -221,8 +221,13 @@ client.on('message', message => {
 
         // QUEUE
     }else if (message.content === prefix + 'queue') {
-        if(dataQueue[0]) message.channel.send(queueInfo);
-        else message.channel.send("Aucune musique dans la file d'attente");
+        // if(dataQueue[0]) message.channel.send(queueInfo);
+        // else message.channel.send("Aucune musique dans la file d'attente");
+        message.channel.send(queueInfo);
+
+        // TEST CONSOLE LOG
+    }else if (message.content === prefix + 'console') {
+        console.log("---------------------------------------------------");
     }
   });
 
@@ -243,7 +248,6 @@ client.on('message', message => {
       },
       "author": {
         "name": "Besoin d'aide ?",
-        "url": "",
         "icon_url": photoDr
       },
       "fields": [
@@ -284,7 +288,6 @@ client.on('message', message => {
       },
       "author": {
         "name": "File d'attente :",
-        "url": "",
         "icon_url": photoBob
       },
       "fields": [
