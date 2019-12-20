@@ -40,7 +40,7 @@ function play(connection, message) {
         song = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
         song.setVolume(1/50);
         message.channel.send('Vous écoutez **'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  dans **'+message.member.voiceChannel.name+'**');
-        client.user.setActivity(firstResult.title, { type: 'LISTENING' })
+        client.user.setActivity(firstResult.title, { type: 'WATCHING' })
     }else{
         message.channel.send('**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  ajoutée à la file');
     }
