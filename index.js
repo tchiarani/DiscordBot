@@ -341,6 +341,6 @@ const testInfo = {
 
 let embed = new Discord.RichEmbed()
   .setColor("#92BA2F");
-temparray.forEach(test => {
-  embed.addField(test, 'looped field');
+test.forEach(testu => {
+  embed.addField(testu, 'looped field');
 });
