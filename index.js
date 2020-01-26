@@ -126,15 +126,16 @@ client.on('message', message => {
                     }else {
                         let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length);
                         search(words, function (err, r) {
-                        message.react('▶'); 
-                        if (err) throw err;    
-                        videos = r.videos;
-                        firstResult = videos[0];
-                        dataMusic = '**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**';
-                        music = 'https://www.youtube.com'+firstResult.url;
-                        queue.push(music);
-                        dataQueue.push(dataMusic);
-                        play(connection, message);
+                            message.react('▶'); 
+                            if (err) throw err;    
+                            videos = r.videos;
+                            firstResult = videos[0];
+                            dataMusic = '**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**';
+                            music = 'https://www.youtube.com'+firstResult.url;
+                            queue.push(music);
+                            dataQueue.push(dataMusic);
+                            play(connection, message);
+                        })
                         break;
                     }
                 })
