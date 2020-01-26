@@ -28,7 +28,8 @@ var radios = {
 /*  'radio' : ['lien', 'texte']  */
 };
 var musiques = {
-    'aspiradance' : ['./Musique/eurodance.mp3','aspiradance']
+    'aspiradance' : ['./Musique/eurodance.mp3','aspiradance'],
+    'sw' : ['./Musique/SalleDesCoffres.mp3','la salle des coffres']
 /*  'musique' : ['chemin', 'texte']  */
 };
 var queue = [];
