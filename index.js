@@ -106,7 +106,6 @@ client.on('message', message => {
                 var maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length);
                 for(var i=0; i<maxLength; i++) {
                     if(args[1]==Object.keys(radios)[i]) {
-                        message.channel.send(i);
                         song = connection.playArbitraryInput(Object.values(radios)[i][0]);
                         song.setVolume(1/50);
                         var words = message.content.split(' ');
@@ -238,7 +237,7 @@ client.on('message', message => {
 
         // QUEUE
     }else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
-        if(dataQueue.length != 0) message.channel.send(dataQueue);
+        if(dataQueue.length != 0) message.channel.send('File d\'attente : \n' + dataQueue);
         else message.channel.send("Aucune musique dans la file d'attente");
 
         // TEST 
