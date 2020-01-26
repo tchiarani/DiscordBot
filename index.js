@@ -316,29 +316,6 @@ const queueInfo = {
     }
 };
 
-const testInfo = {
-    "embed": {
-        "title": "Voici pour vous mon brave :",
-        "description": "Préfix : **"+prefix+"**",
-        "color": 12214198,
-        "footer": {
-        "text": "/queue"
-        },
-        "thumbnail": {
-            "url": photoDr
-        },
-        "author": {
-            "name": "File d'attente :",
-            "icon_url": photoBob
-        },
-        "fields": {
-                "name": ("Nombre de musique dans la file : "+dataQueue.length),
-                "value": for (int i=0; i<test.length; i++){i+1 + ". " + test[i]\n}
-                // "value": JSON.stringify(dataQueue).replace(/,/g, '\n').replace(/[["]/g, '').replace(/]/g, '')
-        }
-    }
-};
-
 let embed = new Discord.RichEmbed()
   .setColor("#92BA2F");
 test.forEach(testu => {
