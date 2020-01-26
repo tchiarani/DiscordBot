@@ -135,6 +135,7 @@ client.on('message', message => {
                         queue.push(music);
                         dataQueue.push(dataMusic);
                         play(connection, message);
+                        break;
                     }
                 })
             }).catch(console.log);
