@@ -146,7 +146,7 @@ client.on('message', message => {
                 }
             }).catch(console.log);
         }else{
-            message.reply('il faut être dans un salon');
+            message.reply('il faut être dans un salon vocal.');
         }
 
         // RADIO
