@@ -101,9 +101,9 @@ client.on('message', message => {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
             .then(connection => {
+                var find = false;
                 var args = message.content.split(' ');
                 var maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length);
-                message.channel.send(maxLength);
                 for(var i=0; i<maxLength; i++) {
                     if(args[1]==Object.keys(radios)[i]) {
                         message.channel.send(i);
@@ -113,6 +113,7 @@ client.on('message', message => {
                         if(words[2]>=0 && words[2]<=200){
                             song.setVolume(words[2]/5000);
                         }
+                        find = true;
                         client.user.setActivity('radio '+Object.values(radios)[i][1].toUpperCase(), { type: 'LISTENING' })
                         message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***'+Object.values(radios)[i][1].toUpperCase()+'***  dans **'+message.member.voiceChannel.name+'**');
                         message.react('▶');
@@ -123,25 +124,26 @@ client.on('message', message => {
                         if(words[2]>=0 && words[2]<=200){
                             song.setVolume(words[2]/5000);
                         }
+                        find = true;
                         client.user.setActivity(Object.values(musiques)[i][1].toUpperCase(), { type: 'LISTENING' })
                         message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***'+Object.values(musiques)[i][1].toUpperCase()+'***  dans **'+message.member.voiceChannel.name+'**');
                         message.react('▶');
                         break;
-                    }else {
-                        let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length);
-                        search(words, function (err, r) {
-                            message.react('▶'); 
-                            if (err) throw err;    
-                            videos = r.videos;
-                            firstResult = videos[0];
-                            dataMusic = '**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**';
-                            music = 'https://www.youtube.com'+firstResult.url;
-                            queue.push(music);
-                            dataQueue.push(dataMusic);
-                            play(connection, message);
-                        })
-                        break;
                     }
+                }
+                if (!find) {
+                    let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length);
+                    search(words, function (err, r) {
+                        message.react('▶'); 
+                        if (err) throw err;    
+                        videos = r.videos;
+                        firstResult = videos[0];
+                        dataMusic = '**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**';
+                        music = 'https://www.youtube.com'+firstResult.url;
+                        queue.push(music);
+                        dataQueue.push(dataMusic);
+                        play(connection, message);
+                    })
                 }
             }).catch(console.log);
         }else{
