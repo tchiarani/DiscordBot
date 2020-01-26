@@ -235,7 +235,7 @@ client.on('message', message => {
 
         // QUEUE
     }else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
-        if(dataQueue.length != 0) JSON.stringify(dataQueue).replace(/,/g, '\n').replace(/[["]/g, '').replace(/]/g, '') // message.channel.send(queueInfo);
+        if(dataQueue.length != 0) message.channel.send(queueInfo);
         else message.channel.send("Aucune musique dans la file d'attente");
         // message.channel.send(queueInfo);
 
