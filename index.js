@@ -41,7 +41,7 @@ function play(connection, message) {
         song = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
         song.setVolume(1/50);
         message.channel.send('Vous écoutez **'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  dans **'+message.member.voiceChannel.name+'**');
-        client.user.setActivity(firstResult.title, { type: 'WATCHING' })
+        client.user.setActivity(firstResult.title, { type: 'LISTENING' })
     }else{
         message.channel.send('**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  ajoutée à la file');
     }
@@ -102,7 +102,8 @@ client.on('message', message => {
             message.member.voiceChannel.join()
             .then(connection => {
                 var args = message.content.split(' ');
-                for(var i=0; i<Math.max(Object.keys(radios).length, Object.keys(musiques).length); i++) {
+                var maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length);
+                for(var i=0; i<maxLength; i++) {
                     if(args[1]==Object.keys(radios)[i]) {
                         song = connection.playArbitraryInput(Object.values(radios)[i][0]);
                         song.setVolume(1/50);
@@ -143,7 +144,7 @@ client.on('message', message => {
                 }
             }).catch(console.log);
         }else{
-            message.reply('il faut être dans un channel, connard !');
+            message.reply('il faut être dans un salon');
         }
 
         // RADIO
@@ -234,9 +235,9 @@ client.on('message', message => {
 
         // QUEUE
     }else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
-        if(dataQueue[0]) message.channel.send(queueInfo);
-        else message.channel.send("Aucune musique dans la file d'attente");
-        // message.channel.send(queueInfo);
+        // if(dataQueue[0]) message.channel.send(queueInfo);
+        // else message.channel.send("Aucune musique dans la file d'attente");
+        message.channel.send(queueInfo);
 
         // TEST CONSOLE LOG
     }else if (message.content === prefix + 'console') {
