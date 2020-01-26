@@ -101,7 +101,6 @@ client.on('message', message => {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
             .then(connection => {
-                message.channel.send(dataQueue);
                 var args = message.content.split(' ');
                 var maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length);
                 for(var i=0; i<maxLength; i++) {
@@ -143,7 +142,6 @@ client.on('message', message => {
                         break;
                     }
                 }
-                message.channel.send(dataQueue.length);
             }).catch(console.log);
         }else{
             message.reply('il faut être dans un salon');
@@ -308,7 +306,8 @@ const queueInfo = {
         },
         "fields": {
                 "name": ("Nombre de musique dans la file : "+dataQueue.length),
-                "value": JSON.stringify(dataQueue).replace(/,/g, '\n').replace(/[["]/g, '').replace(/]/g, '')
+                "value": dataQueue
+                // "value": JSON.stringify(dataQueue).replace(/,/g, '\n').replace(/[["]/g, '').replace(/]/g, '')
         }
     }
 };
