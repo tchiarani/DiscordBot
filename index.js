@@ -317,7 +317,7 @@ const queueInfo = {
 };
 
 let embed = new Discord.RichEmbed()
-  .setColor("#12214198");
+  .setColor("#12214198")
   .setTitle("Nombre de musique dans la file : "+test.length)
     .setThumbnail(photoDr)
 .setAuthor("File d'attente :", photoBob);
