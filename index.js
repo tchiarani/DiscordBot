@@ -102,7 +102,7 @@ client.on('message', message => {
             message.member.voiceChannel.join()
             .then(connection => {
                 var args = message.content.split(' ');
-                for(var i=0; i<Object.keys(radios).length; i++) {
+                for(var i=0; i<Math.max(Object.keys(radios).length, Object.keys(musiques).length); i++) {
                     if(args[1]==Object.keys(radios)[i]) {
                         song = connection.playArbitraryInput(Object.values(radios)[i][0]);
                         song.setVolume(1/50);
@@ -112,7 +112,8 @@ client.on('message', message => {
                         }
                         client.user.setActivity('radio '+Object.values(radios)[i][1].toUpperCase(), { type: 'LISTENING' })
                         message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***'+Object.values(radios)[i][1].toUpperCase()+'***  dans **'+message.member.voiceChannel.name+'**');
-                        message.react('▶');        
+                        message.react('▶');
+                        break;
                     }else if(args[1]==Object.keys(musiques)[i]) {
                         song = connection.playFile(Object.values(musiques)[i][0]);
                         song.setVolume(1/50);
@@ -122,7 +123,8 @@ client.on('message', message => {
                         }
                         client.user.setActivity(Object.values(musiques)[i][1].toUpperCase(), { type: 'LISTENING' })
                         message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***'+Object.values(musiques)[i][1].toUpperCase()+'***  dans **'+message.member.voiceChannel.name+'**');
-                        message.react('▶');  
+                        message.react('▶');
+                        break;
                     }else {
                         let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length);
                         search(words, function (err, r) {
