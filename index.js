@@ -138,7 +138,7 @@ client.on('message', message => {
                         })
                         break;
                     }
-                })
+                }
             }).catch(console.log);
         }else{
             message.reply('il faut être dans un channel, connard !');
