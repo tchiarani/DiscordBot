@@ -6,11 +6,7 @@ const client = new Discord.Client();
 
 const token = process.env.TOKEN;
 const prefix = '/';
-var test = [
-    "Fakear live @ Tal Mixta for Cercle (1:17:41) de Cercle",
-    "Fakear live @ Tal Mixta for Cercle (1:17:41) de Cercle",
-    "Fakear live @ Tal Mixta for Cercle (1:17:41) de Cercle"
-];
+
 const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg';
 const photoDr = 'https://cdn.discordapp.com/attachments/372772306553929729/571715565144637446/13_-_Dr_PxxxxCAT_PEEPOODO-01.png';
 
@@ -107,8 +103,10 @@ client.on('message', message => {
             .then(connection => {
                 var args = message.content.split(' ');
                 var maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length);
+                message.channel.send(maxLength);
                 for(var i=0; i<maxLength; i++) {
                     if(args[1]==Object.keys(radios)[i]) {
+                        message.channel.send(i);
                         song = connection.playArbitraryInput(Object.values(radios)[i][0]);
                         song.setVolume(1/50);
                         var words = message.content.split(' ');
@@ -241,11 +239,10 @@ client.on('message', message => {
     }else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if(dataQueue.length != 0) message.channel.send(dataQueue);
         else message.channel.send("Aucune musique dans la file d'attente");
-        // message.channel.send(queueInfo);
 
         // TEST 
     }else if (message.content === prefix + 'test') {
-        message.channel.send(embed);
+        message.channel.send("Test réussi !");
     }
 });
 
@@ -292,35 +289,3 @@ const dataHelp = {
         ]
     }
 };
-
-const queueInfo = {
-    "embed": {
-        "title": "Voici pour vous mon brave :",
-        "description": "Préfix : **"+prefix+"**",
-        "color": 12214198,
-        "footer": {
-        "text": "/queue"
-        },
-        "thumbnail": {
-            "url": photoDr
-        },
-        "author": {
-            "name": "File d'attente :",
-            "icon_url": photoBob
-        },
-        "fields": {
-                "name": ("Nombre de musique dans la file : "+dataQueue.length),
-                "value": dataQueue
-                // "value": JSON.stringify(dataQueue).replace(/,/g, '\n').replace(/[["]/g, '').replace(/]/g, '')
-        }
-    }
-};
-
-let embed = new Discord.RichEmbed()
-  .setColor(12214198)
-  .setTitle("Nombre de musique dans la file : "+test.length)
-    .setThumbnail(photoDr)
-.setAuthor("File d'attente :", photoBob);
-for (let i = 0; i < test.length; i++){
-  embed.addField(i, test[i]);
-}
