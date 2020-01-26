@@ -116,7 +116,6 @@ client.on('message', message => {
                         client.user.setActivity('radio '+Object.values(radios)[i][1].toUpperCase(), { type: 'LISTENING' })
                         message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***'+Object.values(radios)[i][1].toUpperCase()+'***  dans **'+message.member.voiceChannel.name+'**');
                         message.react('▶');
-                        break;
                     }else if(args[1]==Object.keys(musiques)[i]) {
                         song = connection.playFile(Object.values(musiques)[i][0]);
                         song.setVolume(1/50);
