@@ -101,7 +101,7 @@ client.on('message', message => {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
             .then(connection => {
-                message.channel.send(dataQueue.length);
+                message.channel.send(dataQueue);
                 var args = message.content.split(' ');
                 var maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length);
                 for(var i=0; i<maxLength; i++) {
@@ -237,9 +237,9 @@ client.on('message', message => {
 
         // QUEUE
     }else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
-        // if(dataQueue[0]) message.channel.send(queueInfo);
-        // else message.channel.send("Aucune musique dans la file d'attente");
-        message.channel.send(queueInfo);
+        if(dataQueue.length != 0) message.channel.send(queueInfo);
+        else message.channel.send("Aucune musique dans la file d'attente");
+        // message.channel.send(queueInfo);
 
         // TEST CONSOLE LOG
     }else if (message.content === prefix + 'console') {
