@@ -340,8 +340,7 @@ const testInfo = {
 };
 
 let embed = new Discord.RichEmbed()
-  .setColor("#92BA2F")
-  .setTimestamp(Date.now());
+  .setColor("#92BA2F");
 temparray.forEach(test => {
   embed.addField(test, 'looped field');
 });
