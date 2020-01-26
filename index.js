@@ -243,9 +243,9 @@ client.on('message', message => {
         else message.channel.send("Aucune musique dans la file d'attente");
         // message.channel.send(queueInfo);
 
-        // TEST CONSOLE LOG
+        // TEST 
     }else if (message.content === prefix + 'test') {
-        message.channel.send(testInfo);
+        message.channel.send(embed);
     }
 });
 
@@ -338,3 +338,11 @@ const testInfo = {
         }
     }
 };
+
+let embed = new Discord.RichEmbed()
+  .setColor("#92BA2F")
+  .setThumbnail(bot.user.avatarURL)
+  .setTimestamp(Date.now());
+temparray.forEach(test => {
+  embed.addField(test, 'looped field');
+});
