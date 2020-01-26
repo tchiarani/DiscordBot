@@ -123,7 +123,21 @@ client.on('message', message => {
                         client.user.setActivity(Object.values(musiques)[i][1].toUpperCase(), { type: 'LISTENING' })
                         message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***'+Object.values(musiques)[i][1].toUpperCase()+'***  dans **'+message.member.voiceChannel.name+'**');
                         message.react('▶');  
+                    }else {
+                        let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length);
+                        search(words, function (err, r) {
+                        message.react('▶'); 
+                        if (err) throw err;    
+                        videos = r.videos;
+                        firstResult = videos[0];
+                        dataMusic = '**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**';
+                        music = 'https://www.youtube.com'+firstResult.url;
+                        queue.push(music);
+                        dataQueue.push(dataMusic);
+                        play(connection, message);
                     }
+                })
+            }).catch(console.log);
                 }
             }).catch(console.log);
         }else{
