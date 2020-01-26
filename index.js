@@ -144,7 +144,7 @@ client.on('message', message => {
         }
 
         // VOL
-    }else if (message.content.startsWith(prefix + 'volume ')) || (message.content.startsWith(prefix + 'v ') {
+    }else if (message.content.startsWith(prefix + 'volume ')) || (message.content.startsWith(prefix + 'v ')) {
         if (message.member.voiceChannel) {
             var words = message.content.split(' ');
             if(words[1]>=0 && words[1]<=200){
@@ -182,7 +182,7 @@ client.on('message', message => {
         song.end("Skip");
 
         // HELP
-    }else if (message.content === prefix + "help") ||(message.content === prefix + "h"){
+    }else if (message.content === prefix + "help") || (message.content === prefix + "h"){
         message.react('📜');
         message.channel.bulkDelete(1).catch(console.error);
         message.channel.send(dataHelp);        
