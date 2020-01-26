@@ -61,7 +61,7 @@ client.login(token);
 
 client.on('ready', function() {
     console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.channels.size} salons de ${client.guilds.size} serveurs différents.\n-----`);
-    client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
+    client.user.setActivity("/help", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
 });
 
 client.on('message', message => {
