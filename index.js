@@ -317,7 +317,10 @@ const queueInfo = {
 };
 
 let embed = new Discord.RichEmbed()
-  .setColor("#92BA2F");
-test.forEach(testu => {
-  embed.addField(testu, 'looped field');
-});
+  .setColor("#12214198");
+  .setTitle("Nombre de musique dans la file : "+test.length);
+    .setThumbnail(photoDr)
+.setAuthor("File d'attente :", photoBob)
+for (let i = 0; i < test.length; i++)
+  embed.addField(i, test[i]);
+}
