@@ -87,7 +87,7 @@ client.on('message', message => {
         }
 
         // STOP
-    }else if (message.content === prefix + 'stop') || (message.content === prefix + 's') {
+    }else if ((message.content === prefix + 'stop') || (message.content === prefix + 's')) {
         client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
         if(message.member.voiceChannel === message.guild.me.voiceChannel){
             message.member.voiceChannel.leave();
@@ -97,7 +97,7 @@ client.on('message', message => {
         }
         
         // PLAY
-    }else if (message.content.startsWith(prefix + 'play ')) || (message.content.startsWith(prefix + 'p ')) {
+    }else if ((message.content.startsWith(prefix + 'play ')) || (message.content.startsWith(prefix + 'p '))) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
             .then(connection => {
@@ -131,7 +131,7 @@ client.on('message', message => {
         }
 
         // RADIO
-    }else if (message.content.startsWith(prefix + 'radio ')) || (message.content.startsWith(prefix + 'r ')) {
+    }else if ((message.content.startsWith(prefix + 'radio ')) || (message.content.startsWith(prefix + 'r '))) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
             .then(connection => {
@@ -144,7 +144,7 @@ client.on('message', message => {
         }
 
         // VOL
-    }else if (message.content.startsWith(prefix + 'volume ')) || (message.content.startsWith(prefix + 'v ')) {
+    }else if ((message.content.startsWith(prefix + 'volume ')) || (message.content.startsWith(prefix + 'v '))) {
         if (message.member.voiceChannel) {
             var words = message.content.split(' ');
             if(words[1]>=0 && words[1]<=200){
@@ -157,7 +157,7 @@ client.on('message', message => {
         }
 
         // YT
-    }else if (message.content.startsWith(prefix + 'youtube ')) || (message.content.startsWith(prefix + 'yt ')) {
+    }else if ((message.content.startsWith(prefix + 'youtube ')) || (message.content.startsWith(prefix + 'yt '))) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
             .then(connection => {
@@ -182,7 +182,7 @@ client.on('message', message => {
         song.end("Skip");
 
         // HELP
-    }else if (message.content === prefix + "help") || (message.content === prefix + "h"){
+    }else if ((message.content === prefix + "help") || (message.content === prefix + "h")) {
         message.react('📜');
         message.channel.bulkDelete(1).catch(console.error);
         message.channel.send(dataHelp);        
@@ -217,7 +217,7 @@ client.on('message', message => {
         }
 
         // QUEUE
-    }else if (message.content === prefix + 'queue') || (message.content === prefix + 'q') {
+    }else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if(dataQueue[0]) message.channel.send(queueInfo);
         else message.channel.send("Aucune musique dans la file d'attente");
         // message.channel.send(queueInfo);
