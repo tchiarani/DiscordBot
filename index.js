@@ -101,6 +101,7 @@ client.on('message', message => {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
             .then(connection => {
+                message.channel.send(dataQueue.length);
                 var args = message.content.split(' ');
                 var maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length);
                 for(var i=0; i<maxLength; i++) {
@@ -142,6 +143,7 @@ client.on('message', message => {
                         break;
                     }
                 }
+                message.channel.send(dataQueue.length);
             }).catch(console.log);
         }else{
             message.reply('il faut être dans un salon');
