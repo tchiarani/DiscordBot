@@ -138,8 +138,6 @@ client.on('message', message => {
                     }
                 })
             }).catch(console.log);
-                }
-            }).catch(console.log);
         }else{
             message.reply('il faut être dans un channel, connard !');
         }
