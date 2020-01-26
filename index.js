@@ -6,7 +6,11 @@ const client = new Discord.Client();
 
 const token = process.env.TOKEN;
 const prefix = '/';
-
+var test = [
+    "Fakear live @ Tal Mixta for Cercle (1:17:41) de Cercle",
+    "Fakear live @ Tal Mixta for Cercle (1:17:41) de Cercle",
+    "Fakear live @ Tal Mixta for Cercle (1:17:41) de Cercle"
+];
 const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg';
 const photoDr = 'https://cdn.discordapp.com/attachments/372772306553929729/571715565144637446/13_-_Dr_PxxxxCAT_PEEPOODO-01.png';
 
@@ -235,13 +239,13 @@ client.on('message', message => {
 
         // QUEUE
     }else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
-        if(dataQueue.length != 0) message.channel.send(dataQueue); // message.channel.send(queueInfo);
+        if(dataQueue.length != 0) message.channel.send(dataQueue);
         else message.channel.send("Aucune musique dans la file d'attente");
         // message.channel.send(queueInfo);
 
         // TEST CONSOLE LOG
-    }else if (message.content === prefix + 'console') {
-        console.log("---------------------------------------------------");
+    }else if (message.content === prefix + 'test') {
+        message.channel.send(testInfo);
     }
 });
 
@@ -307,6 +311,29 @@ const queueInfo = {
         "fields": {
                 "name": ("Nombre de musique dans la file : "+dataQueue.length),
                 "value": dataQueue
+                // "value": JSON.stringify(dataQueue).replace(/,/g, '\n').replace(/[["]/g, '').replace(/]/g, '')
+        }
+    }
+};
+
+const testInfo = {
+    "embed": {
+        "title": "Voici pour vous mon brave :",
+        "description": "Préfix : **"+prefix+"**",
+        "color": 12214198,
+        "footer": {
+        "text": "/queue"
+        },
+        "thumbnail": {
+            "url": photoDr
+        },
+        "author": {
+            "name": "File d'attente :",
+            "icon_url": photoBob
+        },
+        "fields": {
+                "name": ("Nombre de musique dans la file : "+dataQueue.length),
+                "value": for (int i=0; i<test.length; i++){i+1 + ". " + test[i]\n}
                 // "value": JSON.stringify(dataQueue).replace(/,/g, '\n').replace(/[["]/g, '').replace(/]/g, '')
         }
     }
