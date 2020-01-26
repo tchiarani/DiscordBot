@@ -341,7 +341,6 @@ const testInfo = {
 
 let embed = new Discord.RichEmbed()
   .setColor("#92BA2F")
-  .setThumbnail(bot.user.avatarURL)
   .setTimestamp(Date.now());
 temparray.forEach(test => {
   embed.addField(test, 'looped field');
