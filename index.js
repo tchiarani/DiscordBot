@@ -49,7 +49,7 @@ function play(connection, message) {
         dataQueue.shift();
         if(!queue[0]) {
             message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
-            client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
+            client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
             connection.disconnect();
         }else {
             play(connection, message);
@@ -61,7 +61,7 @@ client.login(token);
 
 client.on('ready', function() {
     console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.channels.size} salons de ${client.guilds.size} serveurs différents.\n-----`);
-    client.user.setActivity("/help", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
+    client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
 });
 
 client.on('message', message => {
@@ -87,7 +87,7 @@ client.on('message', message => {
 
         // STOP
     }else if (message.content === prefix + 'stop') {
-        client.user.setActivity("Regarde Peepoodo", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
+        client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
         if(message.member.voiceChannel === message.guild.me.voiceChannel){
             message.member.voiceChannel.leave();
         }else{
