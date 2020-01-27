@@ -87,7 +87,7 @@ client.on('ready', function() {
 
 client.on('message', message => {
     
-    console.log(client.guild.id)
+    console.log(client.guilds)
     console.log("queue : " + queue)
     
     // Voice only works in guilds, if the message does not come from a guild, we ignore it
