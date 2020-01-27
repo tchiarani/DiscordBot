@@ -60,10 +60,10 @@ function play(connection, message, action) {
         if (data[message.guild.id]['queue'].length == 0) {
             message.channel.send('Vous écoutez **' + data[message.guild.id]['dataQueue'][0] + '** dans **' + message.member.voiceChannel.name + '**');
         } else {
-            message.channel.send('**' + firstResult.title + '** de **' + firstResult.author.name + '** (' + firstResult.timestamp + ') ajoutée à la file');
+            message.channel.send('**' + firstResult.title + '** de ' + firstResult.author.name + ' (' + firstResult.timestamp + ') ajoutée à la file');
         }
     } else if (action == "Skip") {
-        message.channel.send('Vous écoutez **' + data[message.guild.id]['dataQueue'][0] + '** dans **' + message.member.voiceChannel.name + '**');
+        message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans ' + message.member.voiceChannel.name + '');
     }
     if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action != "Add" && data[message.guild.id]['queue'].length >= 1) {
         actualSong = connection.playStream(ytdl(data[message.guild.id]['queue'][0], { filter: 'audioonly' }));
@@ -177,7 +177,7 @@ client.on('message', message => {
                             if (err) throw err;
                             videos = r.videos;
                             firstResult = videos[0];
-                            dataMusic = '**' + firstResult.title + '** de **' + firstResult.author.name + '** (' + firstResult.timestamp + ')';
+                            dataMusic = '**' + firstResult.title + '** de ' + firstResult.author.name + ' (' + firstResult.timestamp + ')';
                             music = 'https://www.youtube.com' + firstResult.url;
                             data[message.guild.id]['queue'].push(music);
                             data[message.guild.id]['dataQueue'].push(dataMusic);
@@ -263,14 +263,14 @@ client.on('message', message => {
         // QUEUE
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
-            message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1).map((value, index) => emojisNombre[index] + ' ' + value + '\n').slice(0, -1));
+            message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"));
         } else {
             message.channel.send("Aucune musique dans la file d'attente");
         }
 
         // TEST 
     } else if (message.content === prefix + 'test') {
-        message.channel.send("Test réussi !");
+        message.channel.send("Test réussi ! Uptime : " + client.uptime);
         console.log("---------------------------------------");
     }
 });
