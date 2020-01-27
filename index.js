@@ -95,7 +95,6 @@ function end(connection, message, action) {
 
 function setMyActivity() {
     client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
-    client.user.setStatus('dnd')
 }
 
 client.login(token);
