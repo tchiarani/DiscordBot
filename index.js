@@ -59,7 +59,7 @@ function end(connection, message, action) {
     if (action != "Skip end") {
         actualSong.end([action])
     }
-    if (action == 'Skip') {
+    if (action == 'Skip' || action == "Skip end") {
         queue.shift();
         dataQueue.shift();
     } else if (action == 'Stop') {
