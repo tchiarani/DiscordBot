@@ -81,13 +81,13 @@ function end(connection, message, action) {
 client.login(token);
 
 client.on('ready', function() {
-    console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.channels.size} salons de ${client.guilds.size} serveurs différents.\n-----`);
+    console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.guilds.size} serveurs différents.\n-----`);
     client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
 });
 
 client.on('message', message => {
     
-    console.log(message.guild.id)
+    console.log(client.guild.id)
     console.log("queue : " + queue)
     
     // Voice only works in guilds, if the message does not come from a guild, we ignore it
@@ -276,7 +276,12 @@ client.on('message', message => {
     }
 });
 
-
+client.on('reconnecting', () => {
+ console.log('Reconnecting!');
+});
+client.on('disconnect', () => {
+ console.log('Disconnect!');
+});
 
 
 const dataHelp = {
