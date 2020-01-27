@@ -211,8 +211,13 @@ client.on('message', message => {
 
         // SKIP
     }else if (message.content === prefix + "skip"){
-        message.react('⏭');
-        end(connection, "Skip");
+        if (message.member.voiceChannel) {
+            message.member.voiceChannel.join()
+            .then(connection => {
+                message.react('⏭');
+                end(connection, "Skip");
+            }).catch(console.log);
+        }        
 
         // HELP
     }else if ((message.content === prefix + "help") || (message.content === prefix + "h")) {
