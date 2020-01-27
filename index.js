@@ -36,32 +36,35 @@ let musiques = {
 let servers = ['398553452873252875', '357629000949956619']
 
 let queue = [];
-servers.forEach(id => { 
-    queue[id] = [], 
-    queue[id]['actualSong'] = '',
-    queue[id]['song'] = [], 
-    queue[id]['music'] = '', 
-    queue[id]['firstResult'] = '',
-    queue[id]['queue'] = [],
-    queue[id]['dataQueue'] = []
-})
+servers.forEach(id => initGuild(id))
 
 servers.push('test')
+
+console.log(client.guilds)
+console.log(client.guilds.map(guild => guild.id))
+
+client.on('guildCreate', (guild) => {
+    console.log(guild)
+    initGuild(guild.id)
+});
 
 console.log('queue : ')
 console.log(queue)
 
-console.log(client.guilds.map(guild => guild.id))
+// let actualSong, song, music, videos, firstResult;
 
-client.on('guildCreate', (guild) => {
-    
-});
+function initGuild(id) {
+    queue[id] = []
+    queue[id]['actualSong'] = ''
+    queue[id]['song'] = []
+    queue[id]['music'] = ''
+    queue[id]['firstResult'] = ''
+    queue[id]['queue'] = []
+    queue[id]['dataQueue'] = []  
 
-client.on('guildDelete', (guild) => {
-    
-});
-
-let actualSong, song, music, videos, firstResult;
+    console.log('queue : ')
+    console.log(queue) 
+}
 
 function play(connection, message, action) {
     if (action == "Add") {
