@@ -34,14 +34,12 @@ var musiques = {
 };
 var queue = [];
 var servers = ['398553452873252875', '357629000949956619']
-servers.forEach(id => queue['id'] = [])
+servers.forEach(id => queue[id] = [])
 
-console.log(client)
-console.log(client.guilds)
-console.log(client.guilds.id)
 console.log("queue avant push : " + queue)
 //queue['398553452873252875'].push('test')
 console.log("queue apres push : " + queue)
+
 
 var dataQueue = [];
 var actualSong, song, music, videos, firstResult;
