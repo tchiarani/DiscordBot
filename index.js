@@ -74,7 +74,7 @@ function end(connection, message, action){
         connection.disconnect();
     } else {
         console.log("File pas vide, on continu")
-        play(connection, message);
+        play(connection, message, 'Skip');
     }
 }
 
@@ -268,6 +268,7 @@ client.on('message', message => {
         // TEST 
     }else if (message.content === prefix + 'test') {
         message.channel.send("Test réussi !");
+        console.log("---------------------------------------");
     }
 });
 
