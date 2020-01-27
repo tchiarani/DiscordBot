@@ -262,7 +262,7 @@ client.on('message', message => {
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
             message.channel.send('En écoute : \n' + data[message.guild.id]['dataQueue'][0] + 'File d\'attente : \n');
-            message.channel.send(data[message.guild.id]['dataQueue'].slice(1).map((value, index) => index + '. ' + value));
+            message.channel.send(data[message.guild.id]['dataQueue'].map((value, index) => index + '. ' + value)).slice(1);
         } else {
             message.channel.send("Aucune musique dans la file d'attente");
         }
