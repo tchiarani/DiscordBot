@@ -46,10 +46,9 @@ servers.forEach(id => {
     queue[id]['dataQueue'] = []
 })
 
-let dataQueue = [];
-servers.forEach(id => dataQueue[id] = [])
-
 //queue['398553452873252875'].push('test')
+
+servers.push('test')
 
 console.log('queue : ')
 console.log(queue)
