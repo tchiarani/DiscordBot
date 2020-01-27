@@ -33,8 +33,11 @@ var musiques = {
 /*  'musique' : ['chemin', 'texte']  */
 };
 var queue = [];
+var queue2 = [];
 var servers = ['398553452873252875', '357629000949956619']
-servers.forEach(id => queue.push(id = []))
+servers.forEach(id => queue.push(id => []))
+servers.forEach(id => queue2.push([id => []]))
+
 var dataQueue = [];
 var actualSong, song, music, videos, firstResult;
 
@@ -87,7 +90,8 @@ client.on('ready', function() {
 client.on('message', message => {
     
     console.log(message.guild.id)
-    console.log(queue)
+    console.log("queue : " + queue)
+    console.log("queue2 : " + queue2)
     
     // Voice only works in guilds, if the message does not come from a guild, we ignore it
     //console.log(message.guild.id);
