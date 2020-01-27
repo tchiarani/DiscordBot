@@ -94,12 +94,16 @@ function end(connection, message, action) {
     }
 }
 
+function setMyActivity() {
+    client.user.setActivity("unikorn.ga  |  /help", { type: "WATCHING" })
+}
+
 client.login(token);
 
 client.on('ready', function() {
-    console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.guilds.size} serveurs différents.\n-----`);
-    client.user.setActivity("unikorn.ga pour + d'infos", { type: "WATCHING" })
-    setTimeout(client.user.setActivity("unikorn.ga  |  /help", { type: "WATCHING" }), 10000);
+    console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.guilds.size} serveurs différents.\n-----`)
+    client.user.setActivity("unikorn.ga ❤️", { type: "WATCHING" })
+    setTimeout(setMyActivity(), 10000)
     client.guilds.keyArray().forEach(id => initGuild(id))
 });
 
