@@ -124,7 +124,7 @@ client.on('message', message => {
                     message.react('✅');
                 }).catch(console.log);
         } else {
-            message.reply('il faut être dans un channel, connard !');
+            message.reply('il faut être dans un salon vocal.');
             message.react('🖕');
         }
 
@@ -265,7 +265,7 @@ client.on('message', message => {
         // QUEUE
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
-            message.channel.send('▶️ ' + data[message.guild.id]['dataQueue'][0] + '\nFile d\'attente : \n' + data[message.guild.id]['dataQueue'].map((value, index) => emojisNombre[index] + '. ' + value + '\n'));
+            message.channel.send('▶️ ' + data[message.guild.id]['dataQueue'][0] + '\nFile d\'attente : \n' + data[message.guild.id]['dataQueue'].slice(1).map((value, index) => emojisNombre[index] + '. ' + value + '\n'));
         } else {
             message.channel.send("Aucune musique dans la file d'attente");
         }
