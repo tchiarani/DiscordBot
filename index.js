@@ -32,20 +32,22 @@ let musiques = {
     'sw' : ['./Musique/SalleDesCoffres.mp3','la salle des coffres']
 /*  'musique' : ['chemin', 'texte']  */
 };
-let queue = [];
-console.log("queue before all manipulation : ")
-console.log(queue)
+
 let servers = ['398553452873252875', '357629000949956619']
-servers.forEach(id => queue[id] = [])
 
-console.log("queue avant push : ")
-console.log(queue)
-queue['398553452873252875'].push('test')
-console.log("queue apres push : ")
-console.log(queue)
-
+let queue = [];
+servers.forEach(id => queue[id] = ['actualSong': '', 'song': [], 'music': '', 'firstResult': '', 'queue': [], 'dataQueue': []])
 
 let dataQueue = [];
+servers.forEach(id => dataQueue[id] = [])
+
+//queue['398553452873252875'].push('test')
+
+console.log('queue : ')
+console.log(queue)
+
+
+
 let actualSong, song, music, videos, firstResult;
 
 function play(connection, message, action) {
