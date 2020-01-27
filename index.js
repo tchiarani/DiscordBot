@@ -38,10 +38,6 @@ let servers = ['398553452873252875', '357629000949956619']
 let data = [];
 servers.forEach(id => initGuild(id))
 
-console.log(client.guilds.values)
-console.log(client.guilds.get(id))
-
-
 client.on('guildCreate', (guild) => {
     console.log(guild)
     initGuild(guild.id)
