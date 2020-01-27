@@ -51,7 +51,7 @@ servers.push('test')
 console.log('queue : ')
 console.log(queue)
 
-console.log(client.guilds.find(guild => guild.id))
+console.log(client.guilds.map(guild => guild.id))
 
 client.on('guildCreate', (guild) => {
     
