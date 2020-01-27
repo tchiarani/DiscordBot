@@ -88,7 +88,6 @@ function end(connection, message, action) {
     }
     if (data[message.guild.id]['queue'].length == 0) {
         message.channel.send('Déconnexion de ' + message.member.voiceChannel.name);
-        client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
         connection.disconnect();
     } else {
         play(connection, message, 'Skip');
@@ -99,7 +98,8 @@ client.login(token);
 
 client.on('ready', function() {
     console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.guilds.size} serveurs différents.\n-----`);
-    client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
+    client.user.setActivity("unikorn.ga pour + d'infos", { type: "WATCHING" })
+    setTimeout(client.user.setActivity("unikorn.ga  |  /help", { type: "WATCHING" }), 10000);
     client.guilds.keyArray().forEach(id => initGuild(id))
 });
 
@@ -126,7 +126,6 @@ client.on('message', message => {
 
         // STOP
     } else if ((message.content === prefix + 'stop') || (message.content === prefix + 's')) {
-        client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
         if (message.member.voiceChannel === message.guild.me.voiceChannel) {
             message.member.voiceChannel.leave();
         } else {
@@ -151,7 +150,6 @@ client.on('message', message => {
                                 song.setVolume(words[2] / 5000);
                             }
                             find = true;
-                            client.user.setActivity('radio ' + Object.values(radios)[i][1].toUpperCase(), { type: 'LISTENING' })
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**');
                             message.react('▶');
                         } else if (args[1] == Object.keys(musiques)[i]) {
@@ -162,7 +160,6 @@ client.on('message', message => {
                                 song.setVolume(words[2] / 5000);
                             }
                             find = true;
-                            client.user.setActivity(Object.values(musiques)[i][1].toUpperCase(), { type: 'LISTENING' })
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(musiques)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**');
                             message.react('▶');
                             break;
@@ -193,7 +190,6 @@ client.on('message', message => {
             message.member.voiceChannel.join()
                 .then(connection => {
                     var words = message.content.split(' ');
-                    client.user.setActivity('la radio', { type: 'LISTENING' })
                     data[message.guild.id]['song'] = connection.playArbitraryInput(words[1]);
                     data[message.guild.id]['song'].setVolume(1 / 50);
                     message.react('📻');
