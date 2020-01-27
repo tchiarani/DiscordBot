@@ -47,12 +47,14 @@ function play(connection, message) {
     }
     
     song.on("end", () => {
+        console.log("Song end")
         this.end("Skip")
     })
 }
 
 function end(message){
     if (message == 'Skip') {
+        console.log("Skip ok")
         queue.shift();
         dataQueue.shift();
     } else if (message == 'Stop') {
@@ -60,10 +62,12 @@ function end(message){
         dataQueue = [];
     }
     if(!queue[0]) {
+        console.log("File vide")
         message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
         client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
         connection.disconnect();
     } else {
+        console.log("File pas vide, on continu")
         play(connection, message);
     }
 }
