@@ -56,12 +56,12 @@ function initGuild(id) {
 function play(connection, message, action) {
     if (action == "Add") {
         if (data[message.guild.id]['queue'].length == 1) {
-            message.channel.send('Vous écoutez **' + data[message.guild.id]['dataQueue'][0] + '** dans **' + message.member.voiceChannel.name + '**');
+            message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans ' + message.member.voiceChannel.name);
         } else {
             message.channel.send('**' + firstResult.title + '** de ' + firstResult.author.name + ' (' + firstResult.timestamp + ') ajoutée à la file');
         }
     } else if (action == "Skip") {
-        message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans ' + message.member.voiceChannel.name + '');
+        message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans ' + message.member.voiceChannel.name);
     }
     if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action != "Add" && data[message.guild.id]['queue'].length >= 1) {
         data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0], { filter: 'audioonly' }));
@@ -205,7 +205,7 @@ client.on('message', message => {
         if (message.member.voiceChannel) {
             var words = message.content.split(' ');
             if (words[1] >= 0 && words[1] <= 200) {
-                song.setVolume(words[1] / 5000);
+                data[message.guild.id]['song'].setVolume(words[1] / 5000);
                 message.react('🔊');
             } else {
                 message.channel.send('Fais pas l\'fou gamin ! ' + words[1] + ' c\'est trop fort...');
