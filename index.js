@@ -36,19 +36,25 @@ var queue = [];
 var dataQueue = [];
 var song, music, videos, firstResult;
 
-function play(connection, message) {
+function play(connection, message, action) {
     if(!queue[1]){
         song = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
         song.setVolume(1/50);
         message.channel.send('Vous écoutez **'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  dans **'+message.member.voiceChannel.name+'**');
         client.user.setActivity(firstResult.title, { type: 'LISTENING' })
     } else {
-        message.channel.send('**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  ajoutée à la file');
+        if (action == 'Add') {
+            message.channel.send('**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  ajoutée à la file');
+        } else if (action == 'Skip') {
+            message.channel.send('Vous écoutez ' + dataQueue[0] + ' dans **' + message.member.voiceChannel.name+'**');
+            client.user.setActivity(dataQueue[0], { type: 'LISTENING' })
+        }
+        
     }
     
     song.on("end", () => {
         console.log("Song end")
-        end(connection, "Skip")
+        end(connection, message, "Skip")
     })
 }
 
