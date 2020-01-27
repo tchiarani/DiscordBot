@@ -161,7 +161,7 @@ client.on('message', message => {
                         music = 'https://www.youtube.com'+firstResult.url;
                         queue.push(music);
                         dataQueue.push(dataMusic);
-                        play(connection, message);
+                        play(connection, message, 'Add');
                     })
                 }
             }).catch(console.log);
