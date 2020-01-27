@@ -42,19 +42,19 @@ function play(connection, message, action) {
     } else if (action == "Skip") {
         message.channel.send('Vous écoutez ' + dataQueue[0] + ' dans **' + message.member.voiceChannel.name+'**');
         client.user.setActivity(dataQueue[0], { type: 'LISTENING' })
-        if(queue.length >= 1){
-            actualSong = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
-            actualSong.setVolume(1/50);
-            message.channel.send('Vous écoutez **'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  dans **'+message.member.voiceChannel.name+'**');
-            client.user.setActivity(firstResult.title, { type: 'LISTENING' })
+    }
+    if(action == "Add" && queue.length <= 1 || action != "Add" && queue.length >= 1) {
+        actualSong = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
+        actualSong.setVolume(1/50);
+        message.channel.send('Vous écoutez **'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  dans **'+message.member.voiceChannel.name+'**');
+        client.user.setActivity(firstResult.title, { type: 'LISTENING' })
 
-            actualSong.on("end", (reason) => {
-                console.log("Song end")
-                console.log("reason : " + reason)
-                end(connection, message, "Skip")
-            })
-        }
-    }    
+        actualSong.on("end", (reason) => {
+            console.log("Song end")
+            console.log("reason : " + reason)
+            end(connection, message, "Skip")
+        })
+    }
 }
 
 function end(connection, message, action){
