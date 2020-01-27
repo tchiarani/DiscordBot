@@ -59,7 +59,7 @@ function play(connection, message, action) {
 }
 
 function end(connection, message, action){
-    song.end([action])
+    await song.end([action])
     if (action == 'Skip') {
         queue.shift();
         dataQueue.shift();
