@@ -52,7 +52,6 @@ function play(connection, message, action) {
         actualSong.on("end", (reason) => {
             console.log("Song end")
             console.log("reason : " + reason)
-            end(connection, message, "Skip")
         })
     }
 }
