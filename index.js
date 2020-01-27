@@ -179,7 +179,7 @@ client.on('message', message => {
                             if (err) throw err;
                             videos = r.videos;
                             firstResult = videos[0];
-                            dataMusic = firstResult.title + ' (' + firstResult.timestamp + ') de ' + firstResult.author.name;
+                            dataMusic = firstResult.title + ' (' + firstResult.timestamp + ')';
                             music = 'https://www.youtube.com' + firstResult.url;
                             data[message.guild.id]['queue'].push(music);
                             data[message.guild.id]['dataQueue'].push(dataMusic);
