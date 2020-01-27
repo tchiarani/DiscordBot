@@ -101,7 +101,7 @@ client.login(token);
 
 client.on('ready', function() {
     console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.guilds.size} serveurs différents.\n-----`)
-    client.user.setActivity("unikorn.ga ❤️", { type: "WATCHING" })
+    client.user.setActivity("unikorn.ga | 🦄", { type: "WATCHING" })
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
 });
@@ -283,15 +283,14 @@ client.on('disconnect', () => {
 
 const dataHelp = {
     "embed": {
-        "title": "Voici pour vous mon brave :",
         "description": "Préfix : **" + prefix + "**",
-        "color": 12214198,
+        "color": "7289DA",
         "footer": {
-            "text": "unikorn.ga | /help"
+            "text": "/help | unikorn.ga"
         },
         "author": {
             "name": "Besoin d'aide ?",
-            "icon_url": photoDr //client.user.avatarURL
+            "icon_url": photoDr
         },
         "fields": [{
                 "name": "__**----------------------**__       Commandes",
@@ -304,12 +303,12 @@ const dataHelp = {
                 "inline": true
             },
             {
-                "name": "__Liste des radios :__",
+                "name": "__Radios :__",
                 "value": JSON.stringify(Object.keys(radios)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
-                "inline": true
+                "inline": false
             },
             {
-                "name": "__Liste des musiques :__",
+                "name": "__Musiques :__",
                 "value": JSON.stringify(Object.keys(musiques)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
                 "inline": true
             }
