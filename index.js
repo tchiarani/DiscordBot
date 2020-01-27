@@ -33,6 +33,8 @@ var musiques = {
 /*  'musique' : ['chemin', 'texte']  */
 };
 var queue = [];
+var servers = ['5454', '545445']
+servers.forEach(id => queue.push(id = []))
 var dataQueue = [];
 var actualSong, song, music, videos, firstResult;
 
@@ -88,6 +90,8 @@ client.on('message', message => {
     if (!message.guild) return;
     if (!message.content.startsWith(prefix)) return;
 
+    console.log(message.guild.id)
+    
         // JOIN
     if (message.content === prefix + 'join') {
         if (message.guild.me.voiceChannel) return message.channel.send('Désolé, je suis déjà connecté dans '+message.guild.me.voiceChannel.name);
