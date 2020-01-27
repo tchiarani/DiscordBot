@@ -33,6 +33,7 @@ var musiques = {
 /*  'musique' : ['chemin', 'texte']  */
 };
 var queue = [];
+console.log("queue before all manipulation : " + queue)
 var servers = ['398553452873252875', '357629000949956619']
 servers.forEach(id => queue[id] = [])
 
