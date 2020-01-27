@@ -34,7 +34,7 @@ var musiques = {
 };
 var queue = [];
 var dataQueue = [];
-var song, music, videos, firstResult;
+var actualSong, song, music, videos, firstResult;
 
 function play(connection, message, action) {
     if (action == "Add") {
@@ -43,12 +43,12 @@ function play(connection, message, action) {
         message.channel.send('Vous écoutez ' + dataQueue[0] + ' dans **' + message.member.voiceChannel.name+'**');
         client.user.setActivity(dataQueue[0], { type: 'LISTENING' })
         if(queue.length >= 1){
-            song = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
-            song.setVolume(1/50);
+            actualSong = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
+            actualSong.setVolume(1/50);
             message.channel.send('Vous écoutez **'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  dans **'+message.member.voiceChannel.name+'**');
             client.user.setActivity(firstResult.title, { type: 'LISTENING' })
 
-            song.on("end", (reason) => {
+            actualSong.on("end", (reason) => {
                 console.log("Song end")
                 console.log("reason : " + reason)
                 end(connection, message, "Skip")
@@ -58,7 +58,7 @@ function play(connection, message, action) {
 }
 
 function end(connection, message, action){
-    song.end([action])
+    actualSong.end([action])
     if (action == 'Skip') {
         queue.shift();
         dataQueue.shift();
