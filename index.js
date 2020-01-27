@@ -42,6 +42,12 @@ function play(connection, message, action) {
         song.setVolume(1/50);
         message.channel.send('Vous écoutez **'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  dans **'+message.member.voiceChannel.name+'**');
         client.user.setActivity(firstResult.title, { type: 'LISTENING' })
+        
+        song.on("end", (reason) => {
+            console.log("Song end")
+            console.log("reason : " + reason)
+            end(connection, message, "Skip")
+        })
     } else {
         if (action == 'Add') {
             message.channel.send('**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  ajoutée à la file');
@@ -49,30 +55,17 @@ function play(connection, message, action) {
             message.channel.send('Vous écoutez ' + dataQueue[0] + ' dans **' + message.member.voiceChannel.name+'**');
             client.user.setActivity(dataQueue[0], { type: 'LISTENING' })
         }
-        
     }
-    
-    song.on("end", (reason) => {
-        console.log("reason : " + reason)
-        console.log("Song end")
-        end(connection, message, "Skip")
-    })
 }
 
 function end(connection, message, action){
     if (action == 'Skip') {
-        console.log("Skip tableau avant shift :")
-        console.log(queue)
         queue.shift();
         dataQueue.shift();
-        console.log("tableau après shift :")
-        console.log(queue)
     } else if (action == 'Stop') {
         queue = [];
         dataQueue = [];
     }
-    console.log("tableau après if :")
-    console.log(queue.length)
     if(queue.length == 0) {
         console.log("File vide")
         message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
