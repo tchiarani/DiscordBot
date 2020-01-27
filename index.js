@@ -102,7 +102,7 @@ client.login(token);
 client.on('ready', function() {
     console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.guilds.size} serveurs différents.\n-----`)
     client.user.setActivity("unikorn.ga ❤️", { type: "WATCHING" })
-    setTimeout(setMyActivity, 10000)
+    client.setTimeout(setMyActivity(), 10000)
     client.guilds.keyArray().forEach(id => initGuild(id))
 });
 
@@ -291,7 +291,7 @@ const dataHelp = {
         },
         "author": {
             "name": "Besoin d'aide ?",
-            "icon_url": client.user.avatarURL
+            "icon_url": client.user.avatar
         },
         "fields": [{
                 "name": "__**----------------------**__       Commandes",
