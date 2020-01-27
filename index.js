@@ -42,20 +42,30 @@ function play(connection, message) {
         song.setVolume(1/50);
         message.channel.send('Vous écoutez **'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  dans **'+message.member.voiceChannel.name+'**');
         client.user.setActivity(firstResult.title, { type: 'LISTENING' })
-    }else{
+    } else {
         message.channel.send('**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  ajoutée à la file');
     }
+    
     song.on("end", () => {
+        this.end("Skip")
+    })
+}
+
+function end(message){
+    if (message == 'Skip') {
         queue.shift();
         dataQueue.shift();
-        if(!queue[0]) {
-            message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
-            client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
-            connection.disconnect();
-        }else {
-            play(connection, message);
-        }
-    })
+    } else if (message == 'Stop') {
+        queue = [];
+        dataQueue = [];
+    }
+    if(!queue[0]) {
+        message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
+        client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
+        connection.disconnect();
+    } else {
+        play(connection, message);
+    }
 }
 
 client.login(token);
@@ -198,7 +208,7 @@ client.on('message', message => {
         // SKIP
     }else if (message.content === prefix + "skip"){
         message.react('⏭');
-        song.end("Skip");
+        end("Skip");
 
         // HELP
     }else if ((message.content === prefix + "help") || (message.content === prefix + "h")) {
