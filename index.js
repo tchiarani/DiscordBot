@@ -201,7 +201,7 @@ client.on('message', message => {
         if (message.member.voiceChannel) {
             var words = message.content.split(' ');
             if(words[1]>=0 && words[1]<=200){
-                song.setVolume(words[1]/5000);
+                actualSong.setVolume(words[1]/5000);
                 message.react('🔊'); 
             }else{
                 message.channel.send('Fais pas l\'fou gamin ! '+words[1]+' c\'est trop fort...');
