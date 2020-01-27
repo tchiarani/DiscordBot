@@ -46,13 +46,6 @@ function play(connection, message, action) {
     if(action == "Add" && queue.length <= 1 || action != "Add" && queue.length >= 1) {
         actualSong = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
         actualSong.setVolume(1/50);
-        message.channel.send('Vous écoutez **'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  dans **'+message.member.voiceChannel.name+'**');
-        client.user.setActivity(firstResult.title, { type: 'LISTENING' })
-
-        actualSong.on("end", (reason) => {
-            console.log("Song end")
-            console.log("reason : " + reason)
-        })
     }
 }
 
@@ -65,15 +58,11 @@ function end(connection, message, action){
         queue = [];
         dataQueue = [];
     }
-    console.log("after if : " + queue.length)
-    console.log("action : " + action)
     if(queue.length == 0) {
-        console.log("File vide")
         message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
         client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
         connection.disconnect();
     } else {
-        console.log("File pas vide, on continu")
         play(connection, message, 'Skip');
     }
 }
