@@ -36,7 +36,7 @@ let musiques = {
 let servers = ['398553452873252875', '357629000949956619']
 
 let queue = [];
-servers.forEach(id => queue[id] = ['actualSong': '', 'song': [], 'music': '', 'firstResult': '', 'queue': [], 'dataQueue': []])
+servers.forEach(id => queue[id] = ['actualSong' = '', 'song' = [], 'music' = '', 'firstResult' = '', 'queue' = [], 'dataQueue' = []])
 
 let dataQueue = [];
 servers.forEach(id => dataQueue[id] = [])
