@@ -46,11 +46,19 @@ function play(connection, message, action) {
     if(action == "Add" && queue.length <= 1 || action != "Add" && queue.length >= 1) {
         actualSong = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
         actualSong.setVolume(1/50);
+        
+        actualSong.on("end", (reason) => {
+            if (reason != "Skip") {
+                end(connection, message, "Skip end")   
+            }
+        })
     }
 }
 
-function end(connection, message, action){
-    actualSong.end([action])
+function end(connection, message, action) {
+    if (action != "Skip end") {
+        actualSong.end([action])
+    }
     if (action == 'Skip') {
         queue.shift();
         dataQueue.shift();
