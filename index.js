@@ -43,7 +43,7 @@ servers.forEach(id => {
     queue[id]['music'] = '', 
     queue[id]['firstResult'] = '',
     queue[id]['queue'] = [],
-    queue[id]['dataQueue'] = [],
+    queue[id]['dataQueue'] = []
 })
 
 let dataQueue = [];
