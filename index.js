@@ -181,8 +181,8 @@ client.on('message', message => {
                         firstResult = videos[0];
                         dataMusic = '**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**';
                         music = 'https://www.youtube.com'+firstResult.url;
-                        data[id]['queue'].push(music);
-                        data[id]['dataQueue'].push(dataMusic);
+                        data[message.guild.id]['queue'].push(music);
+                        data[message.guild.id]['dataQueue'].push(dataMusic);
                         play(connection, message, 'Add');
                     })
                 }
@@ -264,7 +264,7 @@ client.on('message', message => {
 
         // QUEUE
     }else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
-        if(data[id]['dataQueue'].length != 0) message.channel.send('File d\'attente : \n' + data[id]['dataQueue']);
+        if(data[message.guild.id]['dataQueue'].length != 0) message.channel.send('File d\'attente : \n' + data[message.guild.id]['dataQueue']);
         else message.channel.send("Aucune musique dans la file d'attente");
 
         // TEST 
