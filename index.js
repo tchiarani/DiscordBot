@@ -39,7 +39,6 @@ const emojisNombre = [':one:', ':two:', ':three:', ':four:', ':five:', ':six:', 
 let data = [];
 
 client.on('guildCreate', (guild) => {
-    console.log(guild)
     initGuild(guild.id)
 });
 
@@ -95,7 +94,7 @@ function end(connection, message, action) {
 }
 
 function setMyActivity() {
-    client.user.setActivity("unikorn.ga  |  /help", { type: "WATCHING" })
+    client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
 }
 
 client.login(token);
@@ -288,24 +287,20 @@ const dataHelp = {
         "description": "Préfix : **" + prefix + "**",
         "color": 12214198,
         "footer": {
-            "icon_url": photoDr,
-            "text": "/help"
-        },
-        "thumbnail": {
-            "url": "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
+            "text": "unikorn.ga | /help"
         },
         "author": {
             "name": "Besoin d'aide ?",
-            "icon_url": photoDr
+            "icon_url": client.user.avatarURL
         },
         "fields": [{
                 "name": "__**----------------------**__       Commandes",
-                "value": "/yt *[mots clés]*\n/yt *[url]*\n/play *[radio] [volume]*\n/play *[radio]*\n/play *[musique]*\n/play *[musique] [volume]*\n/radio *[url]*",
+                "value": "/play *[mots clés]*\n/play *[url]*\n/play *[radio]*\n/play *[musique]*\n/radio *[url]*\n/skip",
                 "inline": true
             },
             {
                 "name": "__**----------------------**__",
-                "value": "/vol *[0-200]*\n/pause\n/resume\n/purge *[nombre]*\n/join\n/stop\n/bob",
+                "value": "/vol *[0-200]*\n/pause\n/resume\n/purge *[nombre]*\n/join\n/stop",
                 "inline": true
             },
             {
