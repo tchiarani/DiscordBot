@@ -37,7 +37,7 @@ var dataQueue = [];
 var song, music, videos, firstResult;
 
 function play(connection, message, action) {
-    if(!queue[1]){
+    if(queue.length <= 1){
         song = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
         song.setVolume(1/50);
         message.channel.send('Vous écoutez **'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  dans **'+message.member.voiceChannel.name+'**');
@@ -70,7 +70,7 @@ function end(connection, message, action){
         queue = [];
         dataQueue = [];
     }
-    if(!queue[0]) {
+    if(queue.length == 0) {
         console.log("File vide")
         message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
         client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
