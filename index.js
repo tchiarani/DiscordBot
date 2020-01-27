@@ -58,12 +58,12 @@ function initGuild(id) {
 function play(connection, message, action) {
     if (action == "Add") {
         if (data[message.guild.id]['queue'].length == 0) {
-            message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans **' + message.member.voiceChannel.name + '**');
+            message.channel.send('Vous écoutez **' + data[message.guild.id]['dataQueue'][0] + '** dans **' + message.member.voiceChannel.name + '**');
         } else {
-            message.channel.send('**' + firstResult.title + '** (' + firstResult.timestamp + ') de **' + firstResult.author.name + '**  ajoutée à la file');
+            message.channel.send('**' + firstResult.title + '** de **' + firstResult.author.name + '** (' + firstResult.timestamp + ') ajoutée à la file');
         }
     } else if (action == "Skip") {
-        message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans **' + message.member.voiceChannel.name + '**');
+        message.channel.send('Vous écoutez **' + data[message.guild.id]['dataQueue'][0] + '** dans **' + message.member.voiceChannel.name + '**');
     }
     if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action != "Add" && data[message.guild.id]['queue'].length >= 1) {
         actualSong = connection.playStream(ytdl(data[message.guild.id]['queue'][0], { filter: 'audioonly' }));
@@ -177,7 +177,7 @@ client.on('message', message => {
                             if (err) throw err;
                             videos = r.videos;
                             firstResult = videos[0];
-                            dataMusic = '**' + firstResult.title + ' (' + firstResult.timestamp + ') **' + firstResult.author.name + '**';
+                            dataMusic = '**' + firstResult.title + '** de **' + firstResult.author.name + '** (' + firstResult.timestamp + ')';
                             music = 'https://www.youtube.com' + firstResult.url;
                             data[message.guild.id]['queue'].push(music);
                             data[message.guild.id]['dataQueue'].push(dataMusic);
