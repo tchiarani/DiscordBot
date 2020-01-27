@@ -36,6 +36,12 @@ var queue = [];
 var servers = ['398553452873252875', '357629000949956619']
 servers.forEach(id => queue['id'] = [])
 
+console.log(client.guilds.id)
+console.log("queue avant push : " + queue)
+queue[client.guilds.id].push('caca')
+queue[client.guilds.id].push('lol')
+console.log("queue apres push : " + queue)
+
 var dataQueue = [];
 var actualSong, song, music, videos, firstResult;
 
@@ -85,11 +91,7 @@ client.on('ready', function() {
     client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
 });
 
-client.on('message', message => {
-    
-    console.log(client.guilds)
-    console.log("queue : " + queue)
-    
+client.on('message', message => {    
     // Voice only works in guilds, if the message does not come from a guild, we ignore it
     //console.log(message.guild.id);
     if (!message.guild) return;
