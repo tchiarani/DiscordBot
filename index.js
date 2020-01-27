@@ -34,6 +34,7 @@ let musiques = {
 };
 
 let servers = ['398553452873252875', '357629000949956619']
+console.log(client.guilds.toJSON())
 
 let data = [];
 servers.forEach(id => initGuild(id))
