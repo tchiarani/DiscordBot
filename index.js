@@ -34,7 +34,6 @@ let musiques = {
 };
 
 let servers = ['398553452873252875', '357629000949956619']
-console.log(client.guilds.keyArray())
 
 let data = [];
 servers.forEach(id => initGuild(id))
@@ -100,6 +99,7 @@ client.login(token);
 client.on('ready', function() {
     console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.guilds.size} serveurs différents.\n-----`);
     client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
+    console.log(client.guilds.keyArray())
 });
 
 client.on('message', message => {    
