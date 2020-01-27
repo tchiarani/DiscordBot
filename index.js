@@ -48,7 +48,7 @@ function play(connection, message) {
     
     song.on("end", () => {
         console.log("Song end")
-        this.end("Skip")
+        end("Skip")
     })
 }
 
