@@ -52,12 +52,12 @@ function play(connection, message) {
     })
 }
 
-function end(connection, message){
-    if (message == 'Skip') {
+function end(connection, message, action){
+    if (action == 'Skip') {
         console.log("Skip ok")
         queue.shift();
         dataQueue.shift();
-    } else if (message == 'Stop') {
+    } else if (action == 'Stop') {
         queue = [];
         dataQueue = [];
     }
@@ -215,7 +215,7 @@ client.on('message', message => {
             message.member.voiceChannel.join()
             .then(connection => {
                 message.react('⏭');
-                end(connection, "Skip");
+                end(connection, message,"Skip");
             }).catch(console.log);
         }        
 
