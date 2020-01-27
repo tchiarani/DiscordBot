@@ -144,8 +144,8 @@ client.on('message', message => {
                     var maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length);
                     for (var i = 0; i < maxLength; i++) {
                         if (args[1] == Object.keys(radios)[i]) {
-                            song = connection.playArbitraryInput(Object.values(radios)[i][0]);
-                            song.setVolume(1 / 50);
+                            data[message.guild.id]['song'] = connection.playArbitraryInput(Object.values(radios)[i][0]);
+                            data[message.guild.id]['song'].setVolume(1 / 50);
                             var words = message.content.split(' ');
                             if (words[2] >= 0 && words[2] <= 200) {
                                 song.setVolume(words[2] / 5000);
@@ -155,8 +155,8 @@ client.on('message', message => {
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**');
                             message.react('▶');
                         } else if (args[1] == Object.keys(musiques)[i]) {
-                            song = connection.playFile(Object.values(musiques)[i][0]);
-                            song.setVolume(1 / 50);
+                            data[message.guild.id]['song'] = connection.playFile(Object.values(musiques)[i][0]);
+                            data[message.guild.id]['song'].setVolume(1 / 50);
                             var words = message.content.split(' ');
                             if (words[2] >= 0 && words[2] <= 200) {
                                 song.setVolume(words[2] / 5000);
@@ -194,8 +194,8 @@ client.on('message', message => {
                 .then(connection => {
                     var words = message.content.split(' ');
                     client.user.setActivity('la radio', { type: 'LISTENING' })
-                    song = connection.playArbitraryInput(words[1]);
-                    song.setVolume(1 / 50);
+                    data[message.guild.id]['song'] = connection.playArbitraryInput(words[1]);
+                    data[message.guild.id]['song'].setVolume(1 / 50);
                     message.react('📻');
                 }).catch(console.log);
         }
