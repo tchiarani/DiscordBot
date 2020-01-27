@@ -38,10 +38,10 @@ let servers = ['398553452873252875', '357629000949956619']
 let queue = [];
 servers.forEach(id => initGuild(id))
 
-servers.push('test')
+console.log(client.guilds.values)
+console.log(Array.from(collection.values()))
+console.log(Array.from(collection))
 
-console.log(client.guilds)
-console.log(client.guilds.map(guild => guild.id))
 
 client.on('guildCreate', (guild) => {
     console.log(guild)
