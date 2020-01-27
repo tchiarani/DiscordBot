@@ -60,9 +60,12 @@ function play(connection, message, action) {
 
 function end(connection, message, action){
     if (action == 'Skip') {
-        console.log("Skip ok")
+        console.log("Skip tableau avant shift :")
+        console.log(queue)
         queue.shift();
         dataQueue.shift();
+        console.log("tableau après shift :")
+        console.log(queue)
     } else if (action == 'Stop') {
         queue = [];
         dataQueue = [];
