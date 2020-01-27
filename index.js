@@ -70,6 +70,8 @@ function end(connection, message, action){
         queue = [];
         dataQueue = [];
     }
+    console.log("tableau après if :")
+    console.log(queue.length)
     if(queue.length == 0) {
         console.log("File vide")
         message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
