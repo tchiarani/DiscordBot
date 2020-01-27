@@ -103,7 +103,7 @@ client.login(token);
 client.on('ready', function() {
     console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.guilds.size} serveurs différents.\n-----`)
     client.user.setActivity("unikorn.ga ❤️", { type: "WATCHING" })
-    client.setTimeout(setMyActivity(), 10000)
+    setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
 });
 
@@ -114,7 +114,7 @@ client.on('message', message => {
     if (!message.content.startsWith(prefix)) return;
 
     // JOIN
-    if (message.content === prefix + 'join') {
+    if (message.content.toLowerCase() === prefix + 'join') {
         if (message.guild.me.voiceChannel) return message.channel.send('Désolé, je suis déjà connecté dans ' + message.guild.me.voiceChannel.name);
         // Only try to join the sender's voice channel if they are in one themselves
         if (message.member.voiceChannel) {
@@ -129,7 +129,7 @@ client.on('message', message => {
         }
 
         // STOP
-    } else if ((message.content === prefix + 'stop') || (message.content === prefix + 's')) {
+    } else if ((message.content.toLowerCase() === prefix + 'stop') || (message.content.toLowerCase() === prefix + 's')) {
         if (message.member.voiceChannel === message.guild.me.voiceChannel) {
             message.member.voiceChannel.leave();
         } else {
@@ -138,7 +138,7 @@ client.on('message', message => {
         }
 
         // PLAY
-    } else if ((message.content.startsWith(prefix + 'play ')) || (message.content.startsWith(prefix + 'p '))) {
+    } else if ((message.content.toLowerCase().startsWith(prefix + 'play ')) || (message.content.toLowerCase().startsWith(prefix + 'p '))) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {
@@ -189,7 +189,7 @@ client.on('message', message => {
         }
 
         // RADIO
-    } else if ((message.content.startsWith(prefix + 'radio ')) || (message.content.startsWith(prefix + 'r '))) {
+    } else if ((message.content.toLowerCase().startsWith(prefix + 'radio ')) || (message.content.toLowerCase().startsWith(prefix + 'r '))) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {
@@ -201,7 +201,7 @@ client.on('message', message => {
         }
 
         // VOL
-    } else if ((message.content.startsWith(prefix + 'volume ')) || (message.content.startsWith(prefix + 'v '))) {
+    } else if ((message.content.toLowerCase().startsWith(prefix + 'volume ')) || (message.content.toLowerCase().startsWith(prefix + 'v '))) {
         if (message.member.voiceChannel) {
             var words = message.content.split(' ');
             if (words[1] >= 0 && words[1] <= 200) {
@@ -214,7 +214,7 @@ client.on('message', message => {
         }
 
         // SKIP
-    } else if (message.content === prefix + "skip") {
+    } else if (message.content.toLowerCase() === prefix + "skip") {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {
@@ -224,18 +224,18 @@ client.on('message', message => {
         }
 
         // HELP
-    } else if ((message.content === prefix + "help") || (message.content === prefix + "h")) {
+    } else if ((message.content.toLowerCase() === prefix + "help") || (message.content.toLowerCase() === prefix + "h")) {
         message.react('📜');
         message.channel.bulkDelete(1).catch(console.error);
         message.channel.send(dataHelp);
 
         // BOB
-    } else if (message.content === prefix + 'bob') {
+    } else if (message.content.toLowerCase() === prefix + 'bob') {
         const attachment = new Discord.Attachment(photoBob);
         message.channel.send(attachment);
 
         // PURGE
-    } else if (message.content.startsWith(prefix + 'purge ')) {
+    } else if (message.content.toLowerCase().startsWith(prefix + 'purge ')) {
         message.react('🗑');
         message.channel.bulkDelete(1).catch(console.error);
         var args = message.content.split(' ');
@@ -243,7 +243,7 @@ client.on('message', message => {
         message.channel.bulkDelete(args[1]).catch(console.error);
 
         // PAUSE
-    } else if (message.content === prefix + 'pause') {
+    } else if (message.content.toLowerCase() === prefix + 'pause') {
         if (message.member.voiceChannel) {
             message.react('⏸');
             data[message.guild.id]['song'].pause();
@@ -251,7 +251,7 @@ client.on('message', message => {
         }
 
         // RESUME
-    } else if (message.content === prefix + 'resume') {
+    } else if (message.content.toLowerCase() === prefix + 'resume') {
         if (message.member.voiceChannel) {
             message.react('⏯');
             data[message.guild.id]['song'].resume();
@@ -259,7 +259,7 @@ client.on('message', message => {
         }
 
         // QUEUE
-    } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
+    } else if ((message.content.toLowerCase() === prefix + 'queue') || (message.content.toLowerCase() === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
             message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"));
         } else {
@@ -267,7 +267,7 @@ client.on('message', message => {
         }
 
         // TEST 
-    } else if (message.content === prefix + 'test') {
+    } else if (message.content.toLowerCase() === prefix + 'test') {
         message.channel.send("Test réussi ! Uptime : " + client.uptime);
         console.log("---------------------------------------");
     }
