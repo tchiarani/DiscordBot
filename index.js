@@ -181,8 +181,8 @@ client.on('message', message => {
                         firstResult = videos[0];
                         dataMusic = '**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**';
                         music = 'https://www.youtube.com'+firstResult.url;
-                        queue.push(music);
-                        dataQueue.push(dataMusic);
+                        data[id]['queue'].push(music);
+                        data[id]['dataQueue'].push(dataMusic);
                         play(connection, message, 'Add');
                     })
                 }
@@ -215,26 +215,6 @@ client.on('message', message => {
                 message.channel.send('Fais pas l\'fou gamin ! '+words[1]+' c\'est trop fort...');
                 message.react('🛑'); 
             }
-        }
-
-        // YT
-    }else if ((message.content.startsWith(prefix + 'youtube ')) || (message.content.startsWith(prefix + 'yt '))) {
-        if (message.member.voiceChannel) {
-            message.member.voiceChannel.join()
-            .then(connection => {
-                let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length);
-                search(words, function (err, r) {
-                    message.react('▶'); 
-                    if (err) throw err;    
-                    videos = r.videos;
-                    firstResult = videos[0];
-                    dataMusic = '**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**';
-                    music = 'https://www.youtube.com'+firstResult.url;
-                    queue.push(music);
-                    dataQueue.push(dataMusic);
-                    play(connection, message);
-                })
-            }).catch(console.log);
         }
 
         // SKIP
@@ -284,7 +264,7 @@ client.on('message', message => {
 
         // QUEUE
     }else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
-        if(dataQueue.length != 0) message.channel.send('File d\'attente : \n' + dataQueue);
+        if(data[id]['dataQueue'].length != 0) message.channel.send('File d\'attente : \n' + data[id]['dataQueue']);
         else message.channel.send("Aucune musique dans la file d'attente");
 
         // TEST 
