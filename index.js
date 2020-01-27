@@ -43,8 +43,6 @@ client.on('guildCreate', (guild) => {
     initGuild(guild.id)
 });
 
-// let actualSong, song, music, videos, firstResult;
-
 function initGuild(id) {
     data[id] = []
     data[id]['actualSong'] = ''
@@ -57,7 +55,7 @@ function initGuild(id) {
 
 function play(connection, message, action) {
     if (action == "Add") {
-        if (data[message.guild.id]['queue'].length == 0) {
+        if (data[message.guild.id]['queue'].length == 1) {
             message.channel.send('Vous écoutez **' + data[message.guild.id]['dataQueue'][0] + '** dans **' + message.member.voiceChannel.name + '**');
         } else {
             message.channel.send('**' + firstResult.title + '** de ' + firstResult.author.name + ' (' + firstResult.timestamp + ') ajoutée à la file');
@@ -66,10 +64,10 @@ function play(connection, message, action) {
         message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans ' + message.member.voiceChannel.name + '');
     }
     if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action != "Add" && data[message.guild.id]['queue'].length >= 1) {
-        actualSong = connection.playStream(ytdl(data[message.guild.id]['queue'][0], { filter: 'audioonly' }));
-        actualSong.setVolume(1 / 50);
+        data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0], { filter: 'audioonly' }));
+        data[message.guild.id]['song'].setVolume(1 / 50);
 
-        actualSong.on("end", (reason) => {
+        data[message.guild.id]['song'].on("end", (reason) => {
             if (reason != "Skip") {
                 end(connection, message, "Skip end")
             }
@@ -79,7 +77,7 @@ function play(connection, message, action) {
 
 function end(connection, message, action) {
     if (action != "Skip end") {
-        actualSong.end([action])
+        data[message.guild.id]['song'].end([action])
     }
     if (action == 'Skip' || action == "Skip end") {
         data[message.guild.id]['queue'].shift();
@@ -207,7 +205,7 @@ client.on('message', message => {
         if (message.member.voiceChannel) {
             var words = message.content.split(' ');
             if (words[1] >= 0 && words[1] <= 200) {
-                actualSong.setVolume(words[1] / 5000);
+                song.setVolume(words[1] / 5000);
                 message.react('🔊');
             } else {
                 message.channel.send('Fais pas l\'fou gamin ! ' + words[1] + ' c\'est trop fort...');
@@ -248,22 +246,22 @@ client.on('message', message => {
     } else if (message.content === prefix + 'pause') {
         if (message.member.voiceChannel) {
             message.react('⏸');
-            song.pause();
-            song.setSpeaking(false);
+            data[message.guild.id]['song'].pause();
+            data[message.guild.id]['song'].setSpeaking(false);
         }
 
         // RESUME
     } else if (message.content === prefix + 'resume') {
         if (message.member.voiceChannel) {
             message.react('⏯');
-            song.resume();
-            song.setSpeaking(true);
+            data[message.guild.id]['song'].resume();
+            data[message.guild.id]['song'].setSpeaking(true);
         }
 
         // QUEUE
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
-            message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"));
+            message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"));
         } else {
             message.channel.send("Aucune musique dans la file d'attente");
         }
