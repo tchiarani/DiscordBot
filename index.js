@@ -38,8 +38,8 @@ servers.forEach(id => queue['id'] = [])
 
 console.log(client.guilds.id)
 console.log("queue avant push : " + queue)
-queue[client.guilds.id].push('caca')
-queue[client.guilds.id].push('lol')
+queue['client.guilds.id'].push('caca')
+queue['client.guilds.id'].push('lol')
 console.log("queue apres push : " + queue)
 
 var dataQueue = [];
