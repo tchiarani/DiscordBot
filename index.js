@@ -39,7 +39,7 @@ var song, music, videos, firstResult;
 function play(connection, message, action) {
     if (action == "Add") {
         message.channel.send('**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  ajoutée à la file');
-    } else if (action == "Skip) {
+    } else if (action == "Skip") {
         message.channel.send('Vous écoutez ' + dataQueue[0] + ' dans **' + message.member.voiceChannel.name+'**');
         client.user.setActivity(dataQueue[0], { type: 'LISTENING' })
         if(queue.length >= 1){
