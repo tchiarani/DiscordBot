@@ -256,8 +256,12 @@ client.on('message', message => {
 
         // QUEUE
     }else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
-        if(data[message.guild.id]['dataQueue'].length != 0) message.channel.send('File d\'attente : \n' + data[message.guild.id]['dataQueue']);
-        else message.channel.send("Aucune musique dans la file d'attente");
+        if(data[message.guild.id]['dataQueue'].length != 0) {
+            message.channel.send('File d\'attente : \n');
+            message.channel.send(data[message.guild.id]['dataQueue'].map((index, value) => index + '. ' + value));
+        } else {
+            message.channel.send("Aucune musique dans la file d'attente");
+        }
 
         // TEST 
     }else if (message.content === prefix + 'test') {
