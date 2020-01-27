@@ -34,7 +34,7 @@ var musiques = {
 };
 var queue = [];
 var servers = ['398553452873252875', '357629000949956619']
-servers.forEach(id => queue[id].push([]))
+servers.forEach(id => queue['id'].push([]))
 
 var dataQueue = [];
 var actualSong, song, music, videos, firstResult;
