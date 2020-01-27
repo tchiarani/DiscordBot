@@ -46,14 +46,20 @@ servers.forEach(id => {
     queue[id]['dataQueue'] = []
 })
 
-//queue['398553452873252875'].push('test')
-
 servers.push('test')
 
 console.log('queue : ')
 console.log(queue)
 
+console.log(Client.guilds.find(id))
 
+client.on('guildCreate', (guild) => {
+    
+});
+
+client.on('guildDelete', (guild) => {
+    
+});
 
 let actualSong, song, music, videos, firstResult;
 
