@@ -69,11 +69,11 @@ function play(connection, message, action) {
     if (action == "Add") {
         message.channel.send('**'+firstResult.title+'** ('+firstResult.timestamp+') de **'+firstResult.author.name+'**  ajoutée à la file');
     } else if (action == "Skip") {
-        message.channel.send('Vous écoutez ' + dataQueue[0] + ' dans **' + message.member.voiceChannel.name+'**');
-        client.user.setActivity(dataQueue[0], { type: 'LISTENING' })
+        message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans **' + message.member.voiceChannel.name+'**');
+        client.user.setActivity(data[message.guild.id]['dataQueue'][0], { type: 'LISTENING' })
     }
-    if(action == "Add" && queue.length <= 1 || action != "Add" && queue.length >= 1) {
-        actualSong = connection.playStream(ytdl(queue[0], {filter:'audioonly'}));
+    if(action == "Add" && data[message.guild.id]['queue'].length <= 1 || action != "Add" && data[message.guild.id]['queue'].length >= 1) {
+        actualSong = connection.playStream(ytdl(data[message.guild.id]['queue'][0], {filter:'audioonly'}));
         actualSong.setVolume(1/50);
         
         actualSong.on("end", (reason) => {
@@ -89,13 +89,13 @@ function end(connection, message, action) {
         actualSong.end([action])
     }
     if (action == 'Skip' || action == "Skip end") {
-        queue.shift();
-        dataQueue.shift();
+        data[message.guild.id]['queue'].shift();
+        data[message.guild.id]['dataQueue'].shift();
     } else if (action == 'Stop') {
-        queue = [];
-        dataQueue = [];
+        data[message.guild.id]['queue'] = [];
+        data[message.guild.id]['dataQueue'] = [];
     }
-    if(queue.length == 0) {
+    if(data[message.guild.id]['queue'].length == 0) {
         message.channel.send('Déconnexion de '+message.member.voiceChannel.name);
         client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
         connection.disconnect();
