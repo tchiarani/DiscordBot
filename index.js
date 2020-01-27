@@ -95,6 +95,7 @@ function end(connection, message, action) {
 
 function setMyActivity() {
     client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
+    client.user.setStatus('dnd')
 }
 
 client.login(token);
@@ -291,7 +292,7 @@ const dataHelp = {
         },
         "author": {
             "name": "Besoin d'aide ?",
-            "icon_url": client.user.avatar
+            "icon_url": photoDr //client.user.avatarURL
         },
         "fields": [{
                 "name": "__**----------------------**__       Commandes",
