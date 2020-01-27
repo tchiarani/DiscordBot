@@ -263,7 +263,7 @@ client.on('message', message => {
         // QUEUE
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
-            message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1).map((value, index) => emojisNombre[index] + ' ' + value + '\n').replace(/,/gi, ''));
+            message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1).map((value, index) => emojisNombre[index] + ' ' + value + '\n').slice(0, -1));
         } else {
             message.channel.send("Aucune musique dans la file d'attente");
         }
