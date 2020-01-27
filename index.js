@@ -48,11 +48,11 @@ function play(connection, message) {
     
     song.on("end", () => {
         console.log("Song end")
-        end("Skip")
+        end(connection, "Skip")
     })
 }
 
-function end(message){
+function end(connection, message){
     if (message == 'Skip') {
         console.log("Skip ok")
         queue.shift();
@@ -212,7 +212,7 @@ client.on('message', message => {
         // SKIP
     }else if (message.content === prefix + "skip"){
         message.react('⏭');
-        end("Skip");
+        end(connection, "Skip");
 
         // HELP
     }else if ((message.content === prefix + "help") || (message.content === prefix + "h")) {
