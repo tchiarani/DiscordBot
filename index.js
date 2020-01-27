@@ -27,23 +27,26 @@ var radios = {
     'motherland' : ['http://air.radiorecord.ru:805/hbass_320','cyka blyat']
 /*  'radio' : ['lien', 'texte']  */
 };
-var musiques = {
+let musiques = {
     'aspiradance' : ['./Musique/eurodance.mp3','aspiradance'],
     'sw' : ['./Musique/SalleDesCoffres.mp3','la salle des coffres']
 /*  'musique' : ['chemin', 'texte']  */
 };
-var queue = [];
-console.log("queue before all manipulation : " + queue)
-var servers = ['398553452873252875', '357629000949956619']
+let queue = [];
+console.log("queue before all manipulation : ")
+console.log(queue)
+let servers = ['398553452873252875', '357629000949956619']
 servers.forEach(id => queue[id] = [])
 
-console.log("queue avant push : " + queue)
+console.log("queue avant push : ")
+console.log(queue)
 queue['398553452873252875'].push('test')
-console.log("queue apres push : " + queue)
+console.log("queue apres push : ")
+console.log(queue)
 
 
-var dataQueue = [];
-var actualSong, song, music, videos, firstResult;
+let dataQueue = [];
+let actualSong, song, music, videos, firstResult;
 
 function play(connection, message, action) {
     if (action == "Add") {
