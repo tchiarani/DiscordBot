@@ -10,7 +10,7 @@ const prefix = '/';
 const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg';
 const photoDr = 'https://cdn.discordapp.com/attachments/372772306553929729/571715565144637446/13_-_Dr_PxxxxCAT_PEEPOODO-01.png';
 
-var radios = {
+const radios = {
     'dnb': ['http://195.201.98.51:8000/dnbradio_main.mp3', 'drum\'n\'bass'],
     'metal': ['http://144.217.29.205:80/live', 'métal'],
     'gold': ['http://185.33.21.112:80/highvoltage_128', 'goldé'],
@@ -26,12 +26,15 @@ var radios = {
     'muhamed': ['http://108.179.220.88:9302/song', 'allahu akbar'],
     'motherland': ['http://air.radiorecord.ru:805/hbass_320', 'cyka blyat']
         /*  'radio' : ['lien', 'texte']  */
-};
-let musiques = {
+}
+
+const musiques = {
     'aspiradance': ['./Musique/eurodance.mp3', 'aspiradance'],
     'sw': ['./Musique/SalleDesCoffres.mp3', 'la salle des coffres']
         /*  'musique' : ['chemin', 'texte']  */
-};
+}
+
+const emojisNombre = [':one:', ':two:', ':three:', ':four:', ':five:', ':six:', ':seven:', ':height:', ':nine:']
 
 let data = [];
 
@@ -175,7 +178,7 @@ client.on('message', message => {
                             if (err) throw err;
                             videos = r.videos;
                             firstResult = videos[0];
-                            dataMusic = '**' + firstResult.title + '** (' + firstResult.timestamp + ') de **' + firstResult.author.name + '**';
+                            dataMusic = firstResult.title + ' (' + firstResult.timestamp + ') de ' + firstResult.author.name;
                             music = 'https://www.youtube.com' + firstResult.url;
                             data[message.guild.id]['queue'].push(music);
                             data[message.guild.id]['dataQueue'].push(dataMusic);
@@ -261,8 +264,7 @@ client.on('message', message => {
         // QUEUE
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
-            message.channel.send('En écoute : \n' + data[message.guild.id]['dataQueue'][0] + '\nFile d\'attente : \n');
-            message.channel.send(data[message.guild.id]['dataQueue'].map((value, index) => index + 1 + '. ' + value).slice(1));
+            message.channel.send('▶️ ' + data[message.guild.id]['dataQueue'][0] + '\nFile d\'attente : \n' + data[message.guild.id]['dataQueue'].map((value, index) => emojisNombre[index - 1] + '. ' + value + '\n'));
         } else {
             message.channel.send("Aucune musique dans la file d'attente");
         }
