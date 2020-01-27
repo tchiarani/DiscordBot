@@ -35,7 +35,7 @@ let musiques = {
 
 let servers = ['398553452873252875', '357629000949956619']
 
-let queue = [];
+let data = [];
 servers.forEach(id => initGuild(id))
 
 console.log(client.guilds.values)
@@ -47,22 +47,22 @@ client.on('guildCreate', (guild) => {
     initGuild(guild.id)
 });
 
-console.log('queue : ')
-console.log(queue)
+console.log('data : ')
+console.log(data)
 
 // let actualSong, song, music, videos, firstResult;
 
 function initGuild(id) {
-    queue[id] = []
-    queue[id]['actualSong'] = ''
-    queue[id]['song'] = []
-    queue[id]['music'] = ''
-    queue[id]['firstResult'] = ''
-    queue[id]['queue'] = []
-    queue[id]['dataQueue'] = []  
+    data[id] = []
+    data[id]['actualSong'] = ''
+    data[id]['song'] = []
+    data[id]['music'] = ''
+    data[id]['firstResult'] = ''
+    data[id]['queue'] = []
+    data[id]['dataQueue'] = []  
 
-    console.log('queue : ')
-    console.log(queue) 
+    console.log('data : ')
+    console.log(data) 
 }
 
 function play(connection, message, action) {
