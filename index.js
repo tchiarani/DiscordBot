@@ -39,6 +39,7 @@ let queue = [];
 servers.forEach(id => initGuild(id))
 
 console.log(client.guilds.values)
+console.log(client.guilds.values())
 console.log(Array.from(client.guilds.values()))
 console.log(Array.from(client.guilds))
 
