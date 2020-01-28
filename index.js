@@ -34,7 +34,7 @@ const musiques = {
         /*  'musique' : ['chemin', 'texte']  */
 }
 
-const emojisNombre = ['1️⃣', '\:two:', '\:three:', '\:four:', '\:five:', '\:six:', '\:seven:', '\:height:', '\:nine:']
+const emojisNombre = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
 
 let data = []
 
@@ -282,7 +282,7 @@ client.on('message', message => {
             .setTitle(question)
             .setAuthor("Sondage crée par " + message.author.username)
         for (let i = 0; i < choices.length; i++) {
-            pollEmbed.setDescription(emojisNombre[i] + " " + choices[i])
+            pollEmbed.addField(emojisNombre[i] + " " + choices[i])
         }
         message.channel.send(pollEmbed)
             .then(function(poll) {
