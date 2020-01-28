@@ -356,7 +356,7 @@ const dataHelp = {
 const dataHelp2 = new Discord.RichEmbed()
     .setTitle("Liste des commandes")
     .setDescription("Préfix : **" + prefix + "**")
-    .setAuthor("Besoin d'aide ?", client.users.first().avatarURL, "https://unikorn.ga/bot")
+    .setAuthor("Besoin d'aide ?", photoDr, "https://unikorn.ga/bot")
     .setColor('#7289DA')
     .setFooter("/help | unikorn.ga", "")
     .addField("----------------", commandes.slice(0, commandes.length / 2).join("\n"), true)
