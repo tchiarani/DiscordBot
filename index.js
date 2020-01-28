@@ -66,6 +66,7 @@ function play(connection, message, action) {
         data[message.guild.id]['song'].setVolume(1 / 50);
 
         data[message.guild.id]['song'].on("end", (reason) => {
+            console.log(reason)
             if (reason != "Skip") {
                 end(connection, message, "Skip end")
             }
