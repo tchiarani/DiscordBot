@@ -8,7 +8,9 @@ const token = process.env.TOKEN
 const prefix = '/'
 
 const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg'
-const photoDr = 'https://cdn.discordapp.com/attachments/372772306553929729/571715565144637446/13_-_Dr_PxxxxCAT_PEEPOODO-01.png'
+const bot = client.users.first()
+const botAvatar = 'https://cdn.discordapp.com/avatars/398486386111545344/e48cc085278cf3313477c99711ede5f3.png'
+botAvatar = 'https://cdn.discordapp.com/avatars/' + bot.id + '/' + bot.avatar + '.png'
 
 const commandes = ["play", "skip", "queue", "volume", "stop", "pause", "resume", "radios", "musiques", "radio", "purge", "poll", "help"]
 
@@ -356,7 +358,7 @@ const dataHelp = {
 const dataHelp2 = new Discord.RichEmbed()
     .setTitle("Liste des commandes")
     .setDescription("Préfix : **" + prefix + "**")
-    .setAuthor("Besoin d'aide ?", "https://cdn.discordapp.com/" + client.users.first().avatar + ".png", "https://unikorn.ga/bot")
+    .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
     .setColor('#7289DA')
     .setFooter("/help | unikorn.ga", "")
     .addField("----------------", commandes.slice(0, commandes.length / 2).join("\n"), true)
