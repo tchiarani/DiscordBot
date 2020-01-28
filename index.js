@@ -284,11 +284,12 @@ client.on('message', message => {
         for (let i = 0; i < choices.length; i++) {
             pollEmbed.setDescription(emojisNombre[i] + " " + choices[i])
         }
-        let pollMsg = message.channel.send(pollEmbed)
-        for (let i = 0; i < choices.length; i++) {
-            pollMsg.react(emojisNombre[i])
-        }
-        message.delete()
+        message.channel.send(pollEmbed)
+            .then(function(poll) {
+                for (let i = 0; i < choices.length; i++) {
+                    poll.react(emojisNombre[i])
+                }
+            }).catch(console.log());
 
         // TEST 
     } else if (message.content === prefix + 'test') {
