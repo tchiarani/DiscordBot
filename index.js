@@ -337,7 +337,7 @@ const dataHelp = {
         },
         "author": {
             "name": "Besoin d'aide ?",
-            "icon_url": photoDr
+            "icon_url": botAvatar
         },
         "fields": [{
                 "name": "__**----------------------**__       Commandes",
