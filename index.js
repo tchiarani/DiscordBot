@@ -291,18 +291,20 @@ client.on('message', message => {
                 for (let i = 0; i < choices.length; i++) {
                     poll.react(emojisNombre[i])
                 }
-            }).catch(console.log());
+            }).catch(console.log())
 
         // TEST 
     } else if (message.content === prefix + 'test') {
-        message.channel.send("Test réussi ! Uptime : " + client.uptime)
+        message.channel.send("Test réussi !")
         console.log("---------------------------------------")
     }
 })
 
 client.on('reconnecting', () => {
     console.log('Reconnecting!')
-}) client.on('disconnect', () => {
+})
+
+client.on('disconnect', () => {
     console.log('Disconnect!')
     client.user.setActivity("la maintenance", { type: "WATCHING" })
 })
