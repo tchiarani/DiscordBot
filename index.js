@@ -271,7 +271,7 @@ client.on('message', message => {
         // POLL
     } else if (message.content.startsWith(prefix + 'poll ')) {
         let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
-        var choices = message.content.split(' ')
+        var choices = message.content.substring(message.content.indexOf("?") + 1, message.content.length + 1).split(' ')
         if (!choices[1]) {
             message.reply('Utilisation de ' + prefix + 'poll : ' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
             return
@@ -283,6 +283,7 @@ client.on('message', message => {
             .setTitle(question)
             .setAuthor("Sondage crée par " + message.author.username)
         message.channel.send(pollEmbed)
+        message.delete()
 
         // TEST 
     } else if (message.content === prefix + 'test') {
@@ -309,7 +310,7 @@ const dataHelp = {
         },
         "author": {
             "name": "Besoin d'aide ?",
-            "icon_url": photoDr
+            "icon_url": client.user.avatarURL
         },
         "fields": [{
                 "name": "__**----------------------**__       Commandes",
