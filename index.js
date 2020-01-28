@@ -44,20 +44,20 @@ client.on('guildCreate', (guild) => {
 
 function initGuild(id) {
     data[id] = []
-    data[id]['actualSong'] = ''
     data[id]['song'] = []
-    data[id]['music'] = ''
     data[id]['firstResult'] = ''
     data[id]['queue'] = []
     data[id]['dataQueue'] = []
+    data[id]['dataVideoEmbed'] = {}
 }
 
 function play(connection, message, action) {
     if (action == "Add") {
         if (data[message.guild.id]['queue'].length == 1) {
             message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans ' + message.member.voiceChannel.name);
+            message.channel.send(data[id]['dataVideoEmbed']);
         } else {
-            message.channel.send('**' + firstResult.title + '** de ' + firstResult.author.name + ' (' + firstResult.timestamp + ') ajoutée à la file');
+            message.channel.send('**' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ') ajoutée à la file');
         }
     } else if (action == "Skip") {
         message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans ' + message.member.voiceChannel.name);
@@ -174,10 +174,10 @@ client.on('message', message => {
                             message.react('▶');
                             if (err) throw err;
                             videos = r.videos;
-                            firstResult = videos[0];
-                            console.log(firstResult)
-                            dataMusic = '**' + firstResult.title + '** de ' + firstResult.author.name + ' (' + firstResult.timestamp + ')';
-                            music = 'https://www.youtube.com' + firstResult.url;
+                            data[message.guild.id]['firstResult'] = videos[0];
+                            dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (' + videos[0].timestamp + ')';
+                            let music = 'https://www.youtube.com' + videos[0].url;
+                            setMusicEmbed(videos[0]);
                             data[message.guild.id]['queue'].push(music);
                             data[message.guild.id]['dataQueue'].push(dataMusic);
                             play(connection, message, 'Add');
@@ -285,7 +285,7 @@ client.on('disconnect', () => {
 const dataHelp = {
     "embed": {
         "description": "Préfix : **" + prefix + "**",
-        "color": 7506394,
+        "color": "7289DA",
         "footer": {
             "text": "/help | unikorn.ga"
         },
@@ -294,12 +294,12 @@ const dataHelp = {
             "icon_url": photoDr
         },
         "fields": [{
-                "name": "__**---------------------------**__       Commandes",
+                "name": "__**----------------------**__       Commandes",
                 "value": "/play *[mots clés]*\n/play *[url]*\n/play *[radio]*\n/play *[musique]*\n/radio *[url]*\n/skip",
                 "inline": true
             },
             {
-                "name": "__**---------------------------**__",
+                "name": "__**----------------------**__",
                 "value": "/vol *[0-200]*\n/pause\n/resume\n/purge *[nombre]*\n/join\n/stop",
                 "inline": true
             },
@@ -315,4 +315,26 @@ const dataHelp = {
             }
         ]
     }
-};
+}
+
+function setMusicEmbed(video) {
+    data[id]['dataVideoEmbed'] = {
+        "embed": {
+            "content": "Vous écoutez :",
+            "embed": {
+                "title": video.title,
+                "description": "Durée : " + video.timestamp,
+                "url": "https://youtbe.com" + video.url,
+                "color": 16711680,
+                "thumbnail": {
+                    "url": "https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg"
+                },
+                "author": {
+                    "name": video.author.name,
+                    "url": "https://youtube.com/channel/" + video.author.id,
+                    "icon_url": ""
+                }
+            }
+        }
+    }
+}
