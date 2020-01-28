@@ -8,7 +8,7 @@ const token = process.env.TOKEN
 const prefix = '/'
 
 const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg'
-const bot = client.users.first()
+const bot = client.users.first(1)
 const botAvatar = 'https://cdn.discordapp.com/avatars/398486386111545344/e48cc085278cf3313477c99711ede5f3.png'
 botAvatar = 'https://cdn.discordapp.com/avatars/' + bot.id + '/' + bot.avatar + '.png'
 
