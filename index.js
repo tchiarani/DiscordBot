@@ -321,7 +321,7 @@ function setMusicEmbed(id, video) {
     data[id]['dataVideoEmbed'] = new Discord.RichEmbed()
     .setTitle(video.title)
     .setDescription("Durée : " + video.timestamp)
-    .setAuthor(video.author.name, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA1AopVtQlUPGZgVC-u4GHvl2UNyNbGEkd05og2opWNl75Uvzx&s.png", "https://youtube.com/channel/" + video.author.id)
+    .setAuthor(video.author.name, "https://icons-for-free.com/iconfiles/png/512/social+square+youtube+icon-1320185494902500914.png", "https://youtube.com/channel/" + video.author.id)
     .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
     .setColor('#7289DA')
 	.setURL("https://youtube.com" + video.url)
