@@ -353,7 +353,7 @@ const dataHelp = {
 }
 
 const dataHelp2 = new Discord.RichEmbed()
-    .setTitle(video.title)
+    .setTitle("Liste des commandes")
     .setDescription("Préfix : **" + prefix + "**")
     .setAuthor("Besoin d'aide ?", photoDr, "https://unikorn.ga/bot")
     .setColor('#0000FF')
