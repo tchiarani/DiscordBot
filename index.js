@@ -55,7 +55,7 @@ function play(connection, message, action) {
     if (action == "Add") {
         if (data[message.guild.id]['queue'].length == 1) {
             message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans ' + message.member.voiceChannel.name);
-            message.channel.send(data[id]['dataVideoEmbed']);
+            message.channel.send(data[message.guild.id]['dataVideoEmbed']);
         } else {
             message.channel.send('**' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ') ajoutée à la file');
         }
@@ -177,7 +177,7 @@ client.on('message', message => {
                             data[message.guild.id]['firstResult'] = videos[0];
                             dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (' + videos[0].timestamp + ')';
                             let music = 'https://www.youtube.com' + videos[0].url;
-                            setMusicEmbed(videos[0]);
+                            setMusicEmbed(message.guild.id, videos[0]);
                             data[message.guild.id]['queue'].push(music);
                             data[message.guild.id]['dataQueue'].push(dataMusic);
                             play(connection, message, 'Add');
@@ -317,7 +317,7 @@ const dataHelp = {
     }
 }
 
-function setMusicEmbed(video) {
+function setMusicEmbed(id, video) {
     data[id]['dataVideoEmbed'] = {
         "embed": {
             "content": "Vous écoutez :",
