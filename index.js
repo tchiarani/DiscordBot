@@ -281,8 +281,7 @@ client.on('message', message => {
         // QUEUE
     } else if (message.content.startsWith(prefix + 'queue ') || message.content.startsWith(prefix + 'q ')) {
         let words = message.content.split(' ')
-        console.log(typeof words[1])
-        console.log(words[1])
+        console.log("words[1]" + words[1])
         console.log(data[message.guild.id]['dataQueue'][words[1]])
         if (words[1] == undefined) {
             if (data[message.guild.id]['dataQueue'].length != 0) {
