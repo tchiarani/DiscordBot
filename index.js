@@ -284,7 +284,7 @@ client.on('disconnect', () => {
 const dataHelp = {
     "embed": {
         "description": "Préfix : **" + prefix + "**",
-        "color": "7289DA",
+        "color": 7506394,
         "footer": {
             "text": "/help | unikorn.ga"
         },
