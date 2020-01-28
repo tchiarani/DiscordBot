@@ -34,7 +34,7 @@ const musiques = {
         /*  'musique' : ['chemin', 'texte']  */
 }
 
-const emojisNombre = [':one:', ':two:', ':three:', ':four:', ':five:', ':six:', ':seven:', ':height:', ':nine:']
+const emojisNombre = ['\:one:', '\:two:', '\:three:', '\:four:', '\:five:', '\:six:', '\:seven:', '\:height:', '\:nine:']
 
 let data = []
 
