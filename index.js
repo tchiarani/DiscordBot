@@ -150,14 +150,14 @@ client.on('message', message => {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {
-                    var find = false
-                    var args = message.content.split(' ')
-                    var maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length)
-                    for (var i = 0; i < maxLength; i++) {
+                    let find = false
+                    let args = message.content.split(' ')
+                    let maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length)
+                    for (let i = 0; i < maxLength; i++) {
                         if (args[1] == Object.keys(radios)[i]) {
                             data[message.guild.id]['song'] = connection.playArbitraryInput(Object.values(radios)[i][0])
                             data[message.guild.id]['song'].setVolume(1 / 25)
-                            var words = message.content.split(' ')
+                            let words = message.content.split(' ')
                             if (words[2] >= 0 && words[2] <= 200) {
                                 data[message.guild.id]['song'].setVolume(words[2] / 2500)
                             }
@@ -167,7 +167,7 @@ client.on('message', message => {
                         } else if (args[1] == Object.keys(musiques)[i]) {
                             data[message.guild.id]['song'] = connection.playFile(Object.values(musiques)[i][0])
                             data[message.guild.id]['song'].setVolume(1 / 25)
-                            var words = message.content.split(' ')
+                            let words = message.content.split(' ')
                             if (words[2] >= 0 && words[2] <= 200) {
                                 data[message.guild.id]['song'].setVolume(words[2] / 2500)
                             }
@@ -198,29 +198,32 @@ client.on('message', message => {
         }
 
         // RADIO
-    } else if ((message.content.startsWith(prefix + 'radio ')) || (message.content.startsWith(prefix + 'r '))) {
+    } else if (message.content.startsWith(prefix + 'radio ')) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {
-                    var words = message.content.split(' ')
+                    let words = message.content.split(' ')
                     data[message.guild.id]['song'] = connection.playArbitraryInput(words[1])
                     data[message.guild.id]['song'].setVolume(1 / 25)
                     message.react('📻')
                 }).catch(console.log)
         }
 
-        // VOL
-    } else if (message.content === prefix + 'volume' || message.content === prefix + 'v') {
-        message.channel.send("🔊 Volume : " + data[message.guild.id]['song'].volume)
+        // VOLUME
     } else if ((message.content.startsWith(prefix + 'volume ')) || (message.content.startsWith(prefix + 'v '))) {
         if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
-            var words = message.content.split(' ')
-            if (words[1] >= 0 && words[1] <= 200) {
-                data[message.guild.id]['song'].setVolume(words[1] / 2500)
-                message.react('🔊')
+            let words = message.content.split(' ')
+            if (words[1] == undefined) {
+                message.channel.send("🔊 Volume : " + data[message.guild.id]['song'].volume * 2500)
             } else {
-                message.channel.send('Fais pas l\'fou gamin ! ' + words[1] + ' c\'est trop fort...')
-                message.react('🛑')
+                if (words[1] >= 0 && words[1] <= 200) {
+                    data[message.guild.id]['song'].setVolume(words[1] / 2500)
+                    message.react('🔊')
+                } else {
+                    message.channel.send('Fais pas l\'fou gamin ! ' + words[1] + ' c\'est trop fort...')
+                    message.react('🛑')
+                }
+
             }
         }
 
@@ -256,8 +259,8 @@ client.on('message', message => {
 
         // PURGE
     } else if (message.content.startsWith(prefix + 'purge ')) {
-        var args = message.content.split(' ')
-        if (!args[1] || args[1] < 1 || args[1] > 100) return message.reply("Veuillez rentrer un nombre compris entre 1 et 100.")
+        let args = message.content.split(' ')
+        if (args[1] == undefined || args[1] < 1 || args[1] > 100) return message.reply('Utilisation de **' + prefix + 'purge** : ' + prefix + 'purge *0~100*')
         message.channel.bulkDelete(args[1] + 1).catch(console.error)
 
         // PAUSE
@@ -277,7 +280,26 @@ client.on('message', message => {
         }
 
         // QUEUE
-    } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
+    } else if (message.content.startsWith(prefix + 'queue ') || message.content.startsWith(prefix + 'q ')) {
+        let words = message.content.split(' ')
+        console.log(typeof words[1])
+        console.log(data[message.guild.id]['dataQueue'][words[1]])
+        if (words[1] == undefined) {
+            if (data[message.guild.id]['dataQueue'].length != 0) {
+                message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
+            } else {
+                message.channel.send("Aucune musique dans la file d'attente.")
+            }
+        } else if (typeof words[1] == undefined) {
+            if (data[message.guild.id]['dataQueue'][words[1]] != undefined) {
+                message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
+            } else {
+                message.channel.send("Aucune musique dans la file d'attente.")
+            }
+        }
+
+        // REMOVE
+    } else if (message.content.startsWith(prefix + 'remove ') || message.content.startsWith(prefix + 'r ')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
             message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
         } else {
@@ -287,9 +309,9 @@ client.on('message', message => {
         // POLL
     } else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
         let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
-        var choices = message.content.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
-        if (!choices[1] || choices.length > 9) {
-            message.reply('Utilisation de ' + prefix + 'poll : ' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
+        let choices = message.content.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
+        if (choices[1] == undefined || choices.length > 9) {
+            message.reply('Utilisation de **' + prefix + 'poll** : ' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
             return
         }
         const pollEmbed = new Discord.RichEmbed()
