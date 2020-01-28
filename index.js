@@ -56,14 +56,14 @@ function play(connection, message, action) {
         if (data[message.guild.id]['queue'].length == 1) {
             message.channel.send(data[message.guild.id]['dataVideoEmbed'][0])
         } else {
-            message.channel.send('**' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ') ajoutée à la file')
+            message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
         }
     } else if (action == "Skip") {
         message.channel.send(data[message.guild.id]['dataVideoEmbed'][0])
     }
     if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action != "Add" && data[message.guild.id]['queue'].length >= 1) {
         data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0], { filter: 'audioonly' }))
-        data[message.guild.id]['song'].setVolume(1 / 50)
+        data[message.guild.id]['song'].setVolume(1 / 25)
 
         data[message.guild.id]['song'].on("end", (reason) => {
             if (reason == undefined) {
@@ -151,20 +151,20 @@ client.on('message', message => {
                     for (var i = 0; i < maxLength; i++) {
                         if (args[1] == Object.keys(radios)[i]) {
                             data[message.guild.id]['song'] = connection.playArbitraryInput(Object.values(radios)[i][0])
-                            data[message.guild.id]['song'].setVolume(1 / 50)
+                            data[message.guild.id]['song'].setVolume(1 / 25)
                             var words = message.content.split(' ')
                             if (words[2] >= 0 && words[2] <= 200) {
-                                data[message.guild.id]['song'].setVolume(words[2] / 5000)
+                                data[message.guild.id]['song'].setVolume(words[2] / 2500)
                             }
                             find = true
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
                             message.react('📻')
                         } else if (args[1] == Object.keys(musiques)[i]) {
                             data[message.guild.id]['song'] = connection.playFile(Object.values(musiques)[i][0])
-                            data[message.guild.id]['song'].setVolume(1 / 50)
+                            data[message.guild.id]['song'].setVolume(1 / 25)
                             var words = message.content.split(' ')
                             if (words[2] >= 0 && words[2] <= 200) {
-                                data[message.guild.id]['song'].setVolume(words[2] / 5000)
+                                data[message.guild.id]['song'].setVolume(words[2] / 2500)
                             }
                             find = true
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(musiques)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
@@ -199,19 +199,19 @@ client.on('message', message => {
                 .then(connection => {
                     var words = message.content.split(' ')
                     data[message.guild.id]['song'] = connection.playArbitraryInput(words[1])
-                    data[message.guild.id]['song'].setVolume(1 / 50)
+                    data[message.guild.id]['song'].setVolume(1 / 25)
                     message.react('📻')
                 }).catch(console.log)
         }
 
         // VOL
-    } else if (message.content === prefix + 'volume ' || message.content === prefix + 'v ') {
+    } else if (message.content === prefix + 'volume' || message.content === prefix + 'v') {
         message.channel.send("🔊 Volume : " + data[message.guild.id]['song'].volume)
     } else if ((message.content.startsWith(prefix + 'volume ')) || (message.content.startsWith(prefix + 'v '))) {
         if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
             var words = message.content.split(' ')
             if (words[1] >= 0 && words[1] <= 200) {
-                data[message.guild.id]['song'].setVolume(words[1] / 5000)
+                data[message.guild.id]['song'].setVolume(words[1] / 2500)
                 message.react('🔊')
             } else {
                 message.channel.send('Fais pas l\'fou gamin ! ' + words[1] + ' c\'est trop fort...')
@@ -266,7 +266,7 @@ client.on('message', message => {
         if (data[message.guild.id]['dataQueue'].length != 0) {
             message.channel.send('File d\'aatente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
         } else {
-            message.channel.send("Aucune musique dans la file d'attente")
+            message.channel.send("Aucune musique dans la file d'attente.")
         }
 
         // POLL
