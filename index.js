@@ -279,7 +279,7 @@ client.on('message', message => {
         }
 
         // QUEUE
-    } else if (message.content.startsWith(prefix + 'queue ') || message.content.startsWith(prefix + 'q ')) {
+    } else if ((message.content.startsWith(prefix + 'queue ')) || (message.content.startsWith(prefix + 'q '))) {
         let words = message.content.split(' ')
         console.log("words[1]" + words[1])
         console.log(data[message.guild.id]['dataQueue'][words[1]])
@@ -291,7 +291,7 @@ client.on('message', message => {
             }
         } else {
             if (words[1] != undefined) {
-                message.channel.send(data[message.guild.id]['dataQueue'].slice(words[1], words[1]).map((value, index) => emojisNombre[index] + ' ' + value))
+                message.channel.send(data[message.guild.id]['dataQueue'][words[1]])
             } else {
                 message.channel.send("Pas ce numéro dans la file d'attente.")
             }
