@@ -89,10 +89,6 @@ function end(connection, message, action) {
         data[message.guild.id]['dataVideoEmbed'] = []
     }
     if (data[message.guild.id]['queue'].length == 0) {
-        message.channel.send("Déconnexion du salon " + connection.channel.name)
-            .then(function(msg) {
-                setTimeout(msg.delete, 5000)
-            }).catch(console.log())
         connection.disconnect()
     } else {
         play(connection, message, 'Skip')
