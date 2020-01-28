@@ -8,9 +8,7 @@ const token = process.env.TOKEN
 const prefix = '/'
 
 const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg'
-const bot = client.users.first(1)
-const botAvatar = 'https://cdn.discordapp.com/avatars/398486386111545344/e48cc085278cf3313477c99711ede5f3.png'
-botAvatar = 'https://cdn.discordapp.com/avatars/' + bot.id + '/' + bot.avatar + '.png'
+let botAvatar = 'https://cdn.discordapp.com/avatars/398486386111545344/e48cc085278cf3313477c99711ede5f3.png'
 
 const commandes = ["play", "skip", "queue", "volume", "stop", "pause", "resume", "radios", "musiques", "radio", "purge", "poll", "help"]
 
@@ -110,7 +108,7 @@ client.on('ready', function() {
     client.user.setActivity("unikorn.ga | 🦄", { type: "WATCHING" })
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
-    console.log(client.users.first())
+    botAvatar = 'https://cdn.discordapp.com/avatars/' + client.users.first().id + '/' + client.users.first().avatar + '.png'
 })
 
 client.on('message', message => {
