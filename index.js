@@ -89,7 +89,6 @@ function end(connection, message, action) {
         data[message.guild.id]['dataVideoEmbed'] = []
     }
     if (data[message.guild.id]['queue'].length == 0) {
-        message.channel.send('Déconnexion de ' + message.member.voiceChannel.name)
         connection.disconnect()
     } else {
         play(connection, message, 'Skip')
@@ -128,16 +127,17 @@ client.on('message', message => {
                 }).catch(console.log)
         } else {
             message.reply('il faut être dans un salon vocal.')
-            message.react('🖕')
+            message.react('❌')
         }
 
         // STOP
     } else if ((message.content === prefix + 'stop') || (message.content === prefix + 's')) {
         if (message.member.voiceChannel === message.guild.me.voiceChannel) {
             message.member.voiceChannel.leave()
+            message.react('🛑')
         } else {
             message.channel.send('Je ne suis pas connecté dans un salon avec vous !')
-            message.react('🛑')
+            message.react('❌')
         }
 
         // PLAY
