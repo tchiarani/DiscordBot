@@ -8,7 +8,8 @@ const token = process.env.TOKEN
 const prefix = '/'
 
 const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg'
-let botAvatar, authorAvatar
+let authorAvatar = 'https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png'
+let botAvatar
 
 const commandes = ["play", "skip", "queue", "volume", "stop", "pause", "resume", "radios", "musiques", "radio", "purge", "poll", "help"]
 
@@ -104,7 +105,7 @@ function setMyActivity() {
 client.login(token)
 
 client.on('ready', function() {
-    console.log(`-----\nBot connecté, avec ${client.users.size} utilisateurs, dans ${client.guilds.size} serveurs différents.\n-----`)
+    console.log(`-----\nBot connecté dans ${client.guilds.size} serveurs différents, pour ${client.users.size} utilisateurs.\n-----`)
     client.user.setActivity("unikorn.ga | 🦄", { type: "WATCHING" })
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
@@ -117,7 +118,6 @@ client.on('message', message => {
     if (!message.guild) return
     if (!message.content.startsWith(prefix)) return
     message.content = message.content.toLowerCase()
-    console.log(message.author)
 
     // JOIN
     if (message.content === prefix + 'join') {
@@ -235,9 +235,8 @@ client.on('message', message => {
 
         // HELP
     } else if ((message.content === prefix + "help") || (message.content === prefix + "h")) {
-        message.react('📜')
+        message.react('❓')
         message.channel.send(dataHelp)
-        message.channel.send(dataHelp2)
 
         // RADIOS
     } else if (message.content === prefix + "radios") {
@@ -329,37 +328,12 @@ const capitalize = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
-const dataHelp = {
-    "embed": {
-        "description": "Préfix : **" + prefix + "**",
-        "color": 7506394,
-        "footer": {
-            "text": "/help | unikorn.ga"
-        },
-        "author": {
-            "name": "Besoin d'aide ?",
-            "icon_url": botAvatar
-        },
-        "fields": [{
-                "name": "__**----------------------**__       Commandes",
-                "value": "/play *[mots clés]*\n/play *[url]*\n/play *[radio]*\n/play *[musique]*\n/radio *[url]*\n/skip",
-                "inline": true
-            },
-            {
-                "name": "__**----------------------**__",
-                "value": "/vol *[0-200]*\n/pause\n/resume\n/purge *[nombre]*\n/join\n/stop",
-                "inline": true
-            }
-        ]
-    }
-}
-
-const dataHelp2 = new Discord.RichEmbed()
+const dataHelp = new Discord.RichEmbed()
     .setTitle("Liste des commandes")
     .setDescription("Préfix : **" + prefix + "**")
     .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
     .setColor('#7289DA')
-    .setFooter("/help | unikorn.ga", "")
+    .setFooter("/help | unikorn.ga", authorAvatar)
     .addField("----------------", commandes.slice(0, commandes.length / 2).join("\n"), true)
     .addField("----------------", commandes.slice(commandes.length / 2, commandes.length).join("\n"), true)
 
@@ -368,6 +342,7 @@ const radiosList = {
         "description": "Écouter une radio : **" + prefix + "p *[radio]* **",
         "color": 7506394,
         "footer": {
+            "icon_url": authorAvatar,
             "text": "unikorn.ga | /radios"
         },
         "author": {
@@ -386,7 +361,9 @@ const musiquesList = {
         "description": "Écouter une musique : **" + prefix + "p *[musique]* **",
         "color": 7506394,
         "footer": {
+            "icon_url": authorAvatar,
             "text": "/musiques | unikorn.ga"
+
         },
         "author": {
             "name": "Liste des musiques"
