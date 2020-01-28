@@ -240,11 +240,9 @@ client.on('message', message => {
 
         // PURGE
     } else if (message.content.startsWith(prefix + 'purge ')) {
-        message.react('🗑')
-        message.channel.bulkDelete(1).catch(console.error)
         var args = message.content.split(' ')
         if (!args[1] || args[1] < 1 || args[1] > 100) return message.reply("Veuillez rentrer un nombre compris entre 1 et 100.")
-        message.channel.bulkDelete(args[1]).catch(console.error)
+        message.channel.bulkDelete(args[1] + 1).catch(console.error)
 
         // PAUSE
     } else if (message.content === prefix + 'pause') {
@@ -283,7 +281,7 @@ client.on('message', message => {
             .setFooter("Réagissez pour voter")
             .setDescription(choices)
             .setTitle(question)
-            .setAuthor("Sondage crée par " + message.user.name)
+            .setAuthor("Sondage crée par " + message.author.username)
         message.channel.send(pollEmbed)
 
         // TEST 
