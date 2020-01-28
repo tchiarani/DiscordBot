@@ -282,9 +282,10 @@ client.on('message', message => {
             .setColor(0xffffff)
             .setFooter("Réagissez pour voter")
             .setTitle(question.charAt(0).toUpperCase() + question.slice(1))
-            .setAuthor("Sondage crée par " + message.author.username) for (let i = 0; i < choices.length; i++) {
-                pollEmbed.addField("Choix " + i + 1, emojisNombre[i] + " " + choices[i].charAt(0).toUpperCase() + choices[i].slice(1), false)
-            }
+            .setAuthor("Sondage crée par " + message.author.username)
+        for (let i = 0; i < choices.length; i++) {
+            pollEmbed.addField("Choix " + i + 1, emojisNombre[i] + " " + choices[i].charAt(0).toUpperCase() + choices[i].slice(1), false)
+        }
         message.channel.send(pollEmbed)
             .then(function(poll) {
                 for (let i = 0; i < choices.length; i++) {
