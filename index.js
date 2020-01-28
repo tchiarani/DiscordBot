@@ -118,7 +118,7 @@ client.on('message', message => {
     // JOIN
     if (message.content === prefix + 'join') {
         if (message.guild.me.voiceChannel) return message.channel.send('Désolé, je suis déjà connecté dans ' + message.guild.me.voiceChannel.name)
-        // Only try to join the sender's voice channel if they are in one themselves
+            // Only try to join the sender's voice channel if they are in one themselves
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {
@@ -269,6 +269,22 @@ client.on('message', message => {
         } else {
             message.channel.send("Aucune musique dans la file d'attente")
         }
+
+        // POLL
+    } else if (message.content.startsWith(prefix + 'poll ')) {
+        let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
+        var choices = message.content.split(' ')
+        if (!choices[1]) {
+            message.reply('Utilisation de ' + prefix + 'poll : ' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
+            return
+        }
+        const pollEmbed = new Discord.RichEmbed()
+            .setColor(0xffffff)
+            .setFooter("Réagissez pour voter")
+            .setDescription(choices)
+            .setTitle(question)
+            .setAuthor("Sondage crée par " + message.user.name)
+        let msg = await message.channel.send(pollEmbed)
 
         // TEST 
     } else if (message.content === prefix + 'test') {
