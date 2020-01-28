@@ -49,17 +49,13 @@ function initGuild(id) {
     data[id]['queue'] = []
     data[id]['dataQueue'] = []
     data[id]['dataVideoEmbed'] = {}
-    data[id]['dataVideoEmbed2'] = {}
 }
 
 function play(connection, message, action) {
     if (action == "Add") {
         if (data[message.guild.id]['queue'].length == 1) {
             message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans ' + message.member.voiceChannel.name);
-            console.log(data[message.guild.id]['dataVideoEmbed'])
             message.channel.send(data[message.guild.id]['dataVideoEmbed']);
-            console.log(data[message.guild.id]['dataVideoEmbed2'])
-            message.channel.send(data[message.guild.id]['dataVideoEmbed2']);
         } else {
             message.channel.send('**' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ') ajoutée à la file');
         }
@@ -323,27 +319,16 @@ const dataHelp = {
 }
 
 function setMusicEmbed(id, video) {
-    data[id]['dataVideoEmbed'] = {
-        "embed": {
-            "content": "Vous écoutez :",
-            "embed": {
-                "title": video.title,
-                "description": "Durée : " + video.timestamp,
-                "url": "https://youtbe.com" + video.url,
-                "color": 16711680,
-                "thumbnail": {
-                    "url": "https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg"
-                },
-                "author": {
-                    "name": video.author.name,
-                    "url": "https://youtube.com/channel/" + video.author.id,
-                    "icon_url": ""
-                }
-            }
-        }
-    }
-    data[id]['dataVideoEmbed2'] = new Discord.RichEmbed()
+    data[id]['dataVideoEmbed'] = new Discord.RichEmbed()
     .setTitle(video.title)
     .setDescription("Durée : " + video.timestamp)
-    .setAuthor(video.author.name, "https://youtube.com/channel/" + video.author.id, "")
+    .setAuthor(video.author.name, "", "https://youtube.com/channel/" + video.author.id)
+    .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
+    .setColor('#7289DA')
+	.setURL("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
+	
+	
+	
+	// .addField('Regular field title', 'Some value here')
+	// .addBlankField()
 }
