@@ -269,9 +269,9 @@ client.on('message', message => {
         }
 
         // POLL
-    } else if (message.content.startsWith(prefix + 'poll ')) {
+    } else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
         let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
-        var choices = message.content.substring(message.content.indexOf("?") + 1, message.content.length + 1) //.replace(/"/gi, '').split(' ')
+        var choices = message.content.substring(message.content.indexOf("?") + 1, message.content.length + 1).replace(/"/gi, '').split(' ')
         console.log("Question : " + question)
         console.log("Choices : " + choices)
         if (!choices[1]) {
@@ -281,10 +281,10 @@ client.on('message', message => {
         const pollEmbed = new Discord.RichEmbed()
             .setColor(0xffffff)
             .setFooter("Réagissez pour voter")
-            .setTitle(question.charAt(0).toUpperCase() + question.slice(1))
+            .setTitle(capitalize(question))
             .setAuthor("Sondage crée par " + message.author.username)
         for (let i = 0; i < choices.length; i++) {
-            pollEmbed.addField("Choix " + i + 1, emojisNombre[i] + " " + choices[i].charAt(0).toUpperCase() + choices[i].slice(1), false)
+            pollEmbed.addField("Choix " + i + 1, emojisNombre[i] + " " + capitalize(choices[i]), false)
         }
         message.channel.send(pollEmbed)
             .then(function(poll) {
@@ -309,6 +309,10 @@ client.on('disconnect', () => {
     client.user.setActivity("la maintenance", { type: "WATCHING" })
 })
 
+const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
 
 const dataHelp = {
     "embed": {
