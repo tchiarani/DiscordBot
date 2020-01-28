@@ -54,7 +54,7 @@ function initGuild(id) {
 function play(connection, message, action) {
     if (action == "Add") {
         if (data[message.guild.id]['queue'].length == 1) {
-            message.channel.send("Vous écoutez :" + data[message.guild.id]['dataVideoEmbed']);
+            message.channel.send(data[message.guild.id]['dataVideoEmbed']);
         } else {
             message.channel.send('**' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ') ajoutée à la file');
         }
@@ -318,7 +318,7 @@ const dataHelp = {
 }
 
 function setMusicEmbed(id, video) {
-    data[id]['dataVideoEmbed'] = new Discord.RichEmbed()
+    data[id]['dataVideoEmbed'] = "Vous écoutez : " + new Discord.RichEmbed()
     .setTitle(video.title)
     .setDescription("Durée : " + video.timestamp)
     .setAuthor(video.author.name, "https://www.youtube.com/about/static/svgs/icons/brand-resources/YouTube_icon_dark.svg", "https://youtube.com/channel/" + video.author.id)
