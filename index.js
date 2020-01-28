@@ -271,7 +271,7 @@ client.on('message', message => {
         // POLL
     } else if (message.content.startsWith(prefix + 'poll ')) {
         let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
-        var choices = message.content.substring(message.content.indexOf("?") + 1, message.content.length + 1).replace('"', '').split(' ')
+        var choices = message.content.substring(message.content.indexOf("?") + 1, message.content.length + 1).replace(/"/gi, '').split(' ')
         if (!choices[1]) {
             message.reply('Utilisation de ' + prefix + 'poll : ' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
             return
@@ -279,10 +279,15 @@ client.on('message', message => {
         const pollEmbed = new Discord.RichEmbed()
             .setColor(0xffffff)
             .setFooter("Réagissez pour voter")
-            .setDescription(choices)
             .setTitle(question)
             .setAuthor("Sondage crée par " + message.author.username)
-        message.channel.send(pollEmbed)
+        for (let i = 0; i < choices.length; i++) {
+            pollEmbed.setDescription(emojisNombre[i] + " " + choices[i])
+        }
+        let pollMsg = message.channel.send(pollEmbed)
+        for (let i = 0; i < choices.length; i++) {
+            pollMsg.react(emojisNombre[i])
+        }
         message.delete()
 
         // TEST 
