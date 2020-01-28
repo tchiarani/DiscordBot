@@ -280,8 +280,9 @@ client.on('message', message => {
 
         // QUEUE
     } else if ((message.content.startsWith(prefix + 'queue ')) || (message.content.startsWith(prefix + 'q'))) {
-        let queueNumber = message.content.split(' ')
-        console.log("OK" + queueNumber + queueNumber.length + queueNumber[1])
+        //let queueNumber = message.content.split(' ')
+        let queueNumber = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(' ')
+        console.log("OK" + queueNumber)
         if (queueNumber[1] == undefined) {
             if (data[message.guild.id]['dataQueue'].length != 0) {
                 message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
@@ -310,8 +311,8 @@ client.on('message', message => {
     } else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
         let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
         let choices = message.content.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
-        if (choices[1] == undefined || choices.length > 9) {
-            message.reply('Utilisation de **' + prefix + 'poll** : ' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
+        if (question[1] == undefined || choices[1] == undefined || choices.length > 9) {
+            message.reply('Utilisation de **' + prefix + 'poll** :\n' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
             return
         }
         const pollEmbed = new Discord.RichEmbed()
