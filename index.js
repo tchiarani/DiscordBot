@@ -320,12 +320,13 @@ const dataHelp = {
 
 function setMusicEmbed(id, video) {
     data[id]['dataVideoEmbed'] = new Discord.RichEmbed()
+    .setContent("Vous écoutez :")
     .setTitle(video.title)
     .setDescription("Durée : " + video.timestamp)
-    .setAuthor(video.author.name, "", "https://youtube.com/channel/" + video.author.id)
+    .setAuthor(video.author.name, "https://www.youtube.com/about/static/svgs/icons/brand-resources/YouTube_icon_dark.svg", "https://youtube.com/channel/" + video.author.id)
     .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
     .setColor('#7289DA')
-	.setURL("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
+	.setURL("https://youtube.com" + video.url)
 	
 	
 	
