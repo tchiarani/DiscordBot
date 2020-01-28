@@ -318,7 +318,7 @@ const dataHelp = {
 }
 
 function setMusicEmbed(id, video) {
-    data[id]['dataVideoEmbed'] = "Vous écoutez : " + new Discord.RichEmbed()
+    data[id]['dataVideoEmbed'] = new Discord.RichEmbed()
     .setTitle(video.title)
     .setDescription("Durée : " + video.timestamp)
     .setAuthor(video.author.name, "https://www.youtube.com/about/static/svgs/icons/brand-resources/YouTube_icon_dark.svg", "https://youtube.com/channel/" + video.author.id)
