@@ -8,7 +8,7 @@ const token = process.env.TOKEN
 const prefix = '/'
 
 const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg'
-let botAvatar = 'https://cdn.discordapp.com/avatars/398486386111545344/e48cc085278cf3313477c99711ede5f3.png'
+let botAvatar, authorAvatar
 
 const commandes = ["play", "skip", "queue", "volume", "stop", "pause", "resume", "radios", "musiques", "radio", "purge", "poll", "help"]
 
@@ -117,6 +117,7 @@ client.on('message', message => {
     if (!message.guild) return
     if (!message.content.startsWith(prefix)) return
     message.content = message.content.toLowerCase()
+    console.log(message.author)
 
     // JOIN
     if (message.content === prefix + 'join') {
@@ -367,7 +368,7 @@ const radiosList = {
         "description": "Écouter une radio : **" + prefix + "p *[radio]* **",
         "color": 7506394,
         "footer": {
-            "text": "/radios | unikorn.ga"
+            "text": "unikorn.ga | /radios"
         },
         "author": {
             "name": "Liste des radios"
