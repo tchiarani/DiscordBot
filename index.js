@@ -310,7 +310,7 @@ const dataHelp = {
         },
         "author": {
             "name": "Besoin d'aide ?",
-            "icon_url": client.user.avatarURL
+            "icon_url": photoDr
         },
         "fields": [{
                 "name": "__**----------------------**__       Commandes",
