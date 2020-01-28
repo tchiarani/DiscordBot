@@ -284,7 +284,7 @@ client.on('message', message => {
             .setTitle(question)
             .setAuthor("Sondage crée par " + message.author.username)
         for (let i = 0; i < choices.length; i++) {
-            pollEmbed.addField("", emojisNombre[i] + " " + choices[i], false)
+            pollEmbed.addField("Choix " + i + 1, emojisNombre[i] + " " + choices[i], false)
         }
         message.channel.send(pollEmbed)
             .then(function(poll) {
