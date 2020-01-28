@@ -272,9 +272,6 @@ client.on('message', message => {
     } else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
         let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
         var choices = message.content.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
-        console.log("Question : " + question)
-        console.log("Choices : " + choices)
-
         if (!choices[1] || choices.length > 9) {
             message.reply('Utilisation de ' + prefix + 'poll : ' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
             return
@@ -285,7 +282,7 @@ client.on('message', message => {
             .setTitle(capitalize(question))
             .setAuthor("Sondage crée par " + message.author.username)
         for (let i = 0; i < choices.length; i++) {
-            pollEmbed.addField("Choix " + i + 1, emojisNombre[i] + " " + capitalize(choices[i]), false)
+            pollEmbed.addField(emojisNombre[i], capitalize(choices[i]), false)
         }
         message.channel.send(pollEmbed)
             .then(function(poll) {
