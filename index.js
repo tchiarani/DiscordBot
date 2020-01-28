@@ -208,12 +208,16 @@ client.on('message', message => {
     } else if ((message.content.startsWith(prefix + 'volume ')) || (message.content.startsWith(prefix + 'v '))) {
         if (message.member.voiceChannel) {
             var words = message.content.split(' ')
-            if (words[1] >= 0 && words[1] <= 200) {
-                data[message.guild.id]['song'].setVolume(words[1] / 5000)
-                message.react('🔊')
+            if (!words[1]) {
+                message.channel.send("🔊 Volume : " + data[message.guild.id]['song'].volume * 5000)
             } else {
-                message.channel.send('Fais pas l\'fou gamin ! ' + words[1] + ' c\'est trop fort...')
-                message.react('🛑')
+                if (words[1] >= 0 && words[1] <= 200) {
+                    data[message.guild.id]['song'].setVolume(words[1] / 5000)
+                    message.react('🔊')
+                } else {
+                    message.channel.send('Fais pas l\'fou gamin ! ' + words[1] + ' c\'est trop fort...')
+                    message.react('🛑')
+                }
             }
         }
 
@@ -230,7 +234,6 @@ client.on('message', message => {
         // HELP
     } else if ((message.content === prefix + "help") || (message.content === prefix + "h")) {
         message.react('📜')
-        message.channel.bulkDelete(1).catch(console.error)
         message.channel.send(dataHelp)
 
         // BOB
