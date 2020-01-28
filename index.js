@@ -10,6 +10,8 @@ const prefix = '/'
 const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg'
 const photoDr = 'https://cdn.discordapp.com/attachments/372772306553929729/571715565144637446/13_-_Dr_PxxxxCAT_PEEPOODO-01.png'
 
+const commandes = ["play", "skip", "queue", "volume", "stop", "pause", "resume", "radios", "musiques", "radio", "purge", "poll", "help"]
+
 const radios = {
     'dnb': ['http://195.201.98.51:8000/dnbradio_main.mp3', 'drum\'n\'bass'],
     'metal': ['http://144.217.29.205:80/live', 'métal'],
@@ -233,6 +235,7 @@ client.on('message', message => {
     } else if ((message.content === prefix + "help") || (message.content === prefix + "h")) {
         message.react('📜')
         message.channel.send(dataHelp)
+        message.channel.send(dataHelp2)
 
         // RADIOS
     } else if (message.content === prefix + "radios") {
@@ -348,6 +351,15 @@ const dataHelp = {
         ]
     }
 }
+
+const dataHelp2 = new Discord.RichEmbed()
+    .setTitle(video.title)
+    .setDescription("Préfix : **" + prefix + "**")
+    .setAuthor("Besoin d'aide ?", photoDr, "https://unikorn.ga/bot")
+    .setColor('#0000FF')
+    .setFooter("/help | unikorn.ga", "")
+    .addField("----------------", commandes.slice(0, commandes.length / 2).join("\n"), true)
+    .addField("----------------", commandes.slice(commandes.length / 2, commandes.length).join("\n"), true)
 
 const radiosList = {
     "embed": {
