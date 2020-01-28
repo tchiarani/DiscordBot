@@ -175,6 +175,7 @@ client.on('message', message => {
                             if (err) throw err;
                             videos = r.videos;
                             firstResult = videos[0];
+                            console.log(firstResult)
                             dataMusic = '**' + firstResult.title + '** de ' + firstResult.author.name + ' (' + firstResult.timestamp + ')';
                             music = 'https://www.youtube.com' + firstResult.url;
                             data[message.guild.id]['queue'].push(music);
