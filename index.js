@@ -271,7 +271,7 @@ client.on('message', message => {
         // POLL
     } else if (message.content.startsWith(prefix + 'poll ')) {
         let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
-        var choices = message.content.substring(message.content.indexOf("? "), message.content.length + 1).replace(/"/gi, '').split(' ')
+        var choices = message.content.substring(message.content.indexOf("?") + 1, message.content.length + 1) //.replace(/"/gi, '').split(' ')
         console.log("Question : " + question)
         console.log("Choices : " + choices)
         if (!choices[1]) {
@@ -281,11 +281,10 @@ client.on('message', message => {
         const pollEmbed = new Discord.RichEmbed()
             .setColor(0xffffff)
             .setFooter("Réagissez pour voter")
-            .setTitle(question)
-            .setAuthor("Sondage crée par " + message.author.username)
-        for (let i = 0; i < choices.length; i++) {
-            pollEmbed.addField("Choix " + i + 1, emojisNombre[i] + " " + choices[i], false)
-        }
+            .setTitle(question.charAt(0).toUpperCase() + question.slice(1))
+            .setAuthor("Sondage crée par " + message.author.username) for (let i = 0; i < choices.length; i++) {
+                pollEmbed.addField("Choix " + i + 1, emojisNombre[i] + " " + choices[i].charAt(0).toUpperCase() + choices[i].slice(1), false)
+            }
         message.channel.send(pollEmbed)
             .then(function(poll) {
                 for (let i = 0; i < choices.length; i++) {
@@ -302,8 +301,7 @@ client.on('message', message => {
 
 client.on('reconnecting', () => {
     console.log('Reconnecting!')
-})
-client.on('disconnect', () => {
+}) client.on('disconnect', () => {
     console.log('Disconnect!')
     client.user.setActivity("la maintenance", { type: "WATCHING" })
 })
