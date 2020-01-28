@@ -266,7 +266,7 @@ client.on('message', message => {
         // QUEUE
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
-            message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
+            message.channel.send('File d\'aatente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
         } else {
             message.channel.send("Aucune musique dans la file d'attente")
         }
@@ -327,7 +327,7 @@ function setMusicEmbed(id, video) {
         .push(new Discord.RichEmbed()
             .setTitle(video.title)
             .setDescription("Durée : " + video.timestamp)
-            .setAuthor(video.author.name, "https://icons-for-free.com/iconfiles/png/512/social+square+youtube+icon-1320185494902500914.png", "https://youtube.com/channel/" + video.author.id)
+            .setAuthor(video.author.name, "https://upload.wikimedia.org/wikipedia/commons/7/79/YouTube_social_red_square_%282017%29.svg", "https://youtube.com/channel/" + video.author.id)
             .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
             .setColor('#FF0000')
             .setURL("https://youtube.com" + video.url)
