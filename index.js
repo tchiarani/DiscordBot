@@ -133,7 +133,11 @@ client.on('message', message => {
         // STOP
     } else if ((message.content === prefix + 'stop') || (message.content === prefix + 's')) {
         if (message.member.voiceChannel === message.guild.me.voiceChannel) {
+            data[message.guild.id]['queue'] = [];
+            data[message.guild.id]['dataQueue'] = [];
+            data[message.guild.id]['dataVideoEmbed'] = [];
             message.member.voiceChannel.leave();
+            message.channel.send('Déconnexion de ' + message.member.voiceChannel.name);
         } else {
             message.channel.send('Je ne suis pas connecté dans un salon avec vous !');
             message.react('🛑');
