@@ -90,7 +90,6 @@ function end(connection, message, action) {
     }
     if (data[message.guild.id]['queue'].length == 0) {
         message.channel.send('Déconnexion de ' + message.member.voiceChannel.name)
-        setTimeout(message.channel.bulkDelete(1).catch(console.error), 5000)
         connection.disconnect()
     } else {
         play(connection, message, 'Skip')
