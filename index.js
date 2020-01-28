@@ -209,7 +209,7 @@ client.on('message', message => {
         }
 
         // VOLUME
-    } else if ((message.content.startsWith(prefix + 'volume ')) || (message.content.startsWith(prefix + 'v '))) {
+    } else if ((message.content.startsWith(prefix + 'volume')) || (message.content.startsWith(prefix + 'v'))) {
         console.log(words)
         if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
             let words = message.content.split(' ')
@@ -280,7 +280,7 @@ client.on('message', message => {
         }
 
         // QUEUE
-    } else if ((message.content.startsWith(prefix + 'queue ')) || (message.content.startsWith(prefix + 'q '))) {
+    } else if ((message.content.startsWith(prefix + 'queue')) || (message.content.startsWith(prefix + 'q'))) {
         let queueNumber = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1)
         if (queueNumber >= 0 && queueNumber <= 100) {
             if (data[message.guild.id]['dataQueue'][queueNumber] != undefined) {
