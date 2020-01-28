@@ -110,12 +110,12 @@ client.on('ready', function() {
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
     botAvatar = 'https://cdn.discordapp.com/avatars/' + client.users.first().id + '/' + client.users.first().avatar + '.png'
-    console.log(botAvatar)
 })
 
 client.on('message', message => {
     // Voice only works in guilds, if the message does not come from a guild, we ignore it
     //console.log(message.guild.id)
+    console.log(botAvatar)
     if (!message.guild) return
     if (!message.content.startsWith(prefix)) return
     message.content = message.content.toLowerCase()
