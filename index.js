@@ -208,7 +208,7 @@ client.on('message', message => {
     } else if (message.content === prefix + 'volume ' || message.content === prefix + 'v ') {
         message.channel.send("🔊 Volume : " + data[message.guild.id]['song'].volume)
     } else if ((message.content.startsWith(prefix + 'volume ')) || (message.content.startsWith(prefix + 'v '))) {
-        if (message.member.voiceChannel) {
+        if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
             var words = message.content.split(' ')
             if (words[1] >= 0 && words[1] <= 200) {
                 data[message.guild.id]['song'].setVolume(words[1] / 5000)
