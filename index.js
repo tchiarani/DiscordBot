@@ -281,22 +281,22 @@ client.on('message', message => {
         // QUEUE
     } else if ((message.content.startsWith(prefix + 'queue ')) || (message.content.startsWith(prefix + 'q'))) {
         //let queueNumber = message.content.split(' ')
-        let queueNumber = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(' ')
+        let queueNumber = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1)
         console.log("OK" + queueNumber)
-        if (queueNumber[1] == undefined) {
+        if (queueNumber == undefined) {
             if (data[message.guild.id]['dataQueue'].length != 0) {
                 message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
             } else {
                 message.channel.send("Aucune musique dans la file d'attente.")
             }
         } else {
-            if (data[message.guild.id]['dataQueue'][queueNumber[1]] != undefined) {
-                if (data[message.guild.id]['dataQueue'][queueNumber[1]] == 0) {
-                    message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][queueNumber[1]])
-                } else if (data[message.guild.id]['dataQueue'][queueNumber[1]] <= 9) {
-                    message.channel.send(emojisNombre[queueNumber[1] - 1] + ' ' + data[message.guild.id]['dataQueue'][queueNumber[1]])
+            if (data[message.guild.id]['dataQueue'][queueNumber] != undefined) {
+                if (data[message.guild.id]['dataQueue'][queueNumber] == 0) {
+                    message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][queueNumber])
+                } else if (data[message.guild.id]['dataQueue'][queueNumber] <= 9) {
+                    message.channel.send(emojisNombre[queueNumber - 1] + ' ' + data[message.guild.id]['dataQueue'][queueNumber])
                 } else {
-                    message.channel.send(queueNumber[1] + ' ' + data[message.guild.id]['dataQueue'][queueNumber[1]])
+                    message.channel.send(queueNumber + ' ' + data[message.guild.id]['dataQueue'][queueNumber])
                 }
             } else {
                 message.channel.send("Pas ce numéro dans la file d'attente.")
