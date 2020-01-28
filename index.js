@@ -11,7 +11,7 @@ const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/5529
 let authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png"
 let botAvatar = ""
 
-const commandes = ["play", "skip", "queue", "volume", "stop", "pause", "resume", "join", "radios", "musiques", "radio", "purge", "poll", "help"]
+const commandes = ["play", "skip", "queue", "volume", "stop", "pause", "resume", "radios", "musiques", "radio", "purge", "poll", "help"]
 
 const radios = {
     'dnb': ['http://195.201.98.51:8000/dnbradio_main.mp3', 'drum\'n\'bass'],
@@ -110,6 +110,7 @@ client.on('ready', function() {
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
     botAvatar = 'https://cdn.discordapp.com/avatars/' + client.users.first().id + '/' + client.users.first().avatar + '.png'
+    console.log(botAvatar)
 })
 
 client.on('message', message => {
