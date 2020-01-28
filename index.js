@@ -108,6 +108,9 @@ client.on('ready', function() {
     client.user.setActivity("unikorn.ga | 🦄", { type: "WATCHING" })
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
+    console.log(client)
+    console.log(client.users)
+    console.log(client.user)
 })
 
 client.on('message', message => {
@@ -356,7 +359,7 @@ const dataHelp2 = new Discord.RichEmbed()
     .setTitle("Liste des commandes")
     .setDescription("Préfix : **" + prefix + "**")
     .setAuthor("Besoin d'aide ?", photoDr, "https://unikorn.ga/bot")
-    .setColor('#0000FF')
+    .setColor('7506394')
     .setFooter("/help | unikorn.ga", "")
     .addField("----------------", commandes.slice(0, commandes.length / 2).join("\n"), true)
     .addField("----------------", commandes.slice(commandes.length / 2, commandes.length).join("\n"), true)
