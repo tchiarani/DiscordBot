@@ -234,6 +234,16 @@ client.on('message', message => {
         message.react('📜')
         message.channel.send(dataHelp)
 
+        // RADIOS
+    } else if (message.content === prefix + "radios") {
+        message.react('📻')
+        message.channel.send(radiosList)
+
+        // MUSIQUES
+    } else if (message.content === prefix + "musiques") {
+        message.react('🎵')
+        message.channel.send(musiquesList)
+
         // BOB
     } else if (message.content === prefix + 'bob') {
         const attachment = new Discord.Attachment(photoBob)
@@ -334,18 +344,44 @@ const dataHelp = {
                 "name": "__**----------------------**__",
                 "value": "/vol *[0-200]*\n/pause\n/resume\n/purge *[nombre]*\n/join\n/stop",
                 "inline": true
-            },
-            {
-                "name": "__Radios :__",
-                "value": JSON.stringify(Object.keys(radios)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
-                "inline": false
-            },
-            {
-                "name": "__Musiques :__",
-                "value": JSON.stringify(Object.keys(musiques)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
-                "inline": true
             }
         ]
+    }
+}
+
+const radiosList = {
+    "embed": {
+        "description": "Écouter une radio : **" + prefix + "p *[radio]* **",
+        "color": 7506394,
+        "footer": {
+            "text": "/radios | unikorn.ga"
+        },
+        "author": {
+            "name": "Liste des radios"
+        },
+        "fields": [{
+            "name": "__Radios :__",
+            "value": JSON.stringify(Object.keys(radios)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
+            "inline": true
+        }]
+    }
+}
+
+const musiquesList = {
+    "embed": {
+        "description": "Écouter une musique : **" + prefix + "p *[musique]* **",
+        "color": 7506394,
+        "footer": {
+            "text": "/musiques | unikorn.ga"
+        },
+        "author": {
+            "name": "Liste des musiques"
+        },
+        "fields": [{
+            "name": "__Musiques :__",
+            "value": JSON.stringify(Object.keys(musiques)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
+            "inline": true
+        }]
     }
 }
 
