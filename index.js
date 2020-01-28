@@ -155,7 +155,7 @@ client.on('message', message => {
                             data[message.guild.id]['song'].setVolume(1 / 50);
                             var words = message.content.split(' ');
                             if (words[2] >= 0 && words[2] <= 200) {
-                                song.setVolume(words[2] / 5000);
+                                data[message.guild.id]['song'].setVolume(words[2] / 5000);
                             }
                             find = true;
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**');
@@ -165,7 +165,7 @@ client.on('message', message => {
                             data[message.guild.id]['song'].setVolume(1 / 50);
                             var words = message.content.split(' ');
                             if (words[2] >= 0 && words[2] <= 200) {
-                                song.setVolume(words[2] / 5000);
+                                data[message.guild.id]['song'].setVolume(words[2] / 5000);
                             }
                             find = true;
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(musiques)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**');
@@ -345,5 +345,5 @@ function setMusicEmbed(id, video) {
     data[id]['dataVideoEmbed2'] = new Discord.RichEmbed()
     .setTitle(video.title)
     .setDescription("Durée : " + video.timestamp)
-    .addAuthor(video.author.name, "https://youtube.com/channel/" + video.author.id, "")
+    .setAuthor(video.author.name, "https://youtube.com/channel/" + video.author.id, "")
 }
