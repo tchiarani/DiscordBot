@@ -48,18 +48,18 @@ function initGuild(id) {
     data[id]['firstResult'] = ''
     data[id]['queue'] = []
     data[id]['dataQueue'] = []
-    data[id]['dataVideoEmbed'] = {}
+    data[id]['dataVideoEmbed'] = []
 }
 
 function play(connection, message, action) {
     if (action == "Add") {
         if (data[message.guild.id]['queue'].length == 1) {
-            message.channel.send(data[message.guild.id]['dataVideoEmbed']);
+            message.channel.send(data[message.guild.id]['dataVideoEmbed'][0]);
         } else {
             message.channel.send('**' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ') ajoutée à la file');
         }
     } else if (action == "Skip") {
-        message.channel.send('Vous écoutez ' + data[message.guild.id]['dataQueue'][0] + ' dans ' + message.member.voiceChannel.name);
+        message.channel.send(data[message.guild.id]['dataVideoEmbed'][0]);
     }
     if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action != "Add" && data[message.guild.id]['queue'].length >= 1) {
         data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0], { filter: 'audioonly' }));
@@ -80,9 +80,11 @@ function end(connection, message, action) {
     if (action == 'Skip' || action == "Skip end") {
         data[message.guild.id]['queue'].shift();
         data[message.guild.id]['dataQueue'].shift();
+        data[message.guild.id]['dataVideoEmbed'].shift();
     } else if (action == 'Stop') {
         data[message.guild.id]['queue'] = [];
         data[message.guild.id]['dataQueue'] = [];
+        data[message.guild.id]['dataVideoEmbed'] = [];
     }
     if (data[message.guild.id]['queue'].length == 0) {
         message.channel.send('Déconnexion de ' + message.member.voiceChannel.name);
@@ -318,11 +320,13 @@ const dataHelp = {
 }
 
 function setMusicEmbed(id, video) {
-    data[id]['dataVideoEmbed'] = new Discord.RichEmbed()
-    .setTitle(video.title)
-    .setDescription(":clock4: " + video.timestamp)
-    .setAuthor(video.author.name, "https://icons-for-free.com/iconfiles/png/512/social+square+youtube+icon-1320185494902500914.png", "https://youtube.com/channel/" + video.author.id)
-    .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
-    .setColor('#FF0000')
-	.setURL("https://youtube.com" + video.url)
+    data[id]['dataVideoEmbed']
+        .push(new Discord.RichEmbed()
+            .setTitle(video.title)
+            .setDescription(":clock4: " + video.timestamp)
+            .setAuthor(video.author.name, "https://icons-for-free.com/iconfiles/png/512/social+square+youtube+icon-1320185494902500914.png", "https://youtube.com/channel/" + video.author.id)
+            .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
+            .setColor('#FF0000')
+            .setURL("https://youtube.com" + video.url)
+        )
 }
