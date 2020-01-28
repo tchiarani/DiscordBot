@@ -7,9 +7,9 @@ const client = new Discord.Client()
 const token = process.env.TOKEN
 const prefix = '/'
 
-const photoBob = 'https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg'
-let authorAvatar = 'https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png'
-let botAvatar
+const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
+let authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png"
+let botAvatar = ""
 
 const commandes = ["play", "skip", "queue", "volume", "stop", "pause", "resume", "radios", "musiques", "radio", "purge", "poll", "help"]
 
@@ -278,7 +278,7 @@ client.on('message', message => {
         // QUEUE
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
-            message.channel.send('File d\'aatente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
+            message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
         } else {
             message.channel.send("Aucune musique dans la file d'attente.")
         }
@@ -333,9 +333,21 @@ const dataHelp = new Discord.RichEmbed()
     .setDescription("Préfix : **" + prefix + "**")
     .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
     .setColor('#7289DA')
-    .setFooter("/help | unikorn.ga", authorAvatar)
+    .setFooter("unikorn.ga | /help", authorAvatar)
     .addField("----------------", commandes.slice(0, commandes.length / 2).join("\n"), true)
     .addField("----------------", commandes.slice(commandes.length / 2, commandes.length).join("\n"), true)
+
+function setMusicEmbed(id, video) {
+    data[id]['dataVideoEmbed']
+        .push(new Discord.RichEmbed()
+            .setTitle(video.title)
+            .setDescription("Durée : " + video.timestamp)
+            .setAuthor(video.author.name, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/YouTube_social_red_square_%282017%29.svg/300px-YouTube_social_red_square_%282017%29.svg.png", "https://youtube.com/channel/" + video.author.id)
+            .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
+            .setColor('#FF0000')
+            .setURL("https://youtube.com" + video.url)
+        )
+}
 
 const radiosList = {
     "embed": {
@@ -346,7 +358,8 @@ const radiosList = {
             "text": "unikorn.ga | /radios"
         },
         "author": {
-            "name": "Liste des radios"
+            "name": "Liste des radios",
+            "url": "https://unikorn.ga/bot"
         },
         "fields": [{
             "name": "__Radios :__",
@@ -362,11 +375,11 @@ const musiquesList = {
         "color": 7506394,
         "footer": {
             "icon_url": authorAvatar,
-            "text": "/musiques | unikorn.ga"
-
+            "text": "unikorn.ga | /musiques"
         },
         "author": {
-            "name": "Liste des musiques"
+            "name": "Liste des musiques",
+            "url": "https://unikorn.ga/bot"
         },
         "fields": [{
             "name": "__Musiques :__",
@@ -374,16 +387,4 @@ const musiquesList = {
             "inline": true
         }]
     }
-}
-
-function setMusicEmbed(id, video) {
-    data[id]['dataVideoEmbed']
-        .push(new Discord.RichEmbed()
-            .setTitle(video.title)
-            .setDescription("Durée : " + video.timestamp)
-            .setAuthor(video.author.name, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/YouTube_social_red_square_%282017%29.svg/300px-YouTube_social_red_square_%282017%29.svg.png", "https://youtube.com/channel/" + video.author.id)
-            .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
-            .setColor('#FF0000')
-            .setURL("https://youtube.com" + video.url)
-        )
 }
