@@ -293,12 +293,12 @@ const dataHelp = {
             "icon_url": photoDr
         },
         "fields": [{
-                "name": "__**----------------------**__       Commandes",
+                "name": "__**---------------------------**__       Commandes",
                 "value": "/play *[mots clés]*\n/play *[url]*\n/play *[radio]*\n/play *[musique]*\n/radio *[url]*\n/skip",
                 "inline": true
             },
             {
-                "name": "__**----------------------**__",
+                "name": "__**---------------------------**__",
                 "value": "/vol *[0-200]*\n/pause\n/resume\n/purge *[nombre]*\n/join\n/stop",
                 "inline": true
             },
