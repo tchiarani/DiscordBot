@@ -115,7 +115,6 @@ client.on('ready', function() {
 client.on('message', message => {
     // Voice only works in guilds, if the message does not come from a guild, we ignore it
     //console.log(message.guild.id)
-    console.log(botAvatar)
     if (!message.guild) return
     if (!message.content.startsWith(prefix)) return
     message.content = message.content.toLowerCase()
@@ -283,6 +282,7 @@ client.on('message', message => {
     } else if (message.content.startsWith(prefix + 'queue ') || message.content.startsWith(prefix + 'q ')) {
         let words = message.content.split(' ')
         console.log(typeof words[1])
+        console.log(words[1])
         console.log(data[message.guild.id]['dataQueue'][words[1]])
         if (words[1] == undefined) {
             if (data[message.guild.id]['dataQueue'].length != 0) {
@@ -290,21 +290,17 @@ client.on('message', message => {
             } else {
                 message.channel.send("Aucune musique dans la file d'attente.")
             }
-        } else if (typeof words[1] == undefined) {
-            if (data[message.guild.id]['dataQueue'][words[1]] != undefined) {
-                message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
+        } else {
+            if (words[1] != undefined) {
+                message.channel.send(data[message.guild.id]['dataQueue'][words[1]].map((value, index) => emojisNombre[index] + ' ' + value))
             } else {
-                message.channel.send("Aucune musique dans la file d'attente.")
+                message.channel.send("Pas ce numéro dans la file d'attente.")
             }
         }
 
         // REMOVE
     } else if (message.content.startsWith(prefix + 'remove ') || message.content.startsWith(prefix + 'r ')) {
-        if (data[message.guild.id]['dataQueue'].length != 0) {
-            message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
-        } else {
-            message.channel.send("Aucune musique dans la file d'attente.")
-        }
+
 
         // POLL
     } else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
