@@ -218,87 +218,86 @@ client.on('message', message => {
                 message.react('🛑')
             }
         }
+
+        // SKIP
+    } else if (message.content === prefix + "skip") {
+        if (message.member.voiceChannel) {
+            message.member.voiceChannel.join()
+                .then(connection => {
+                    message.react('⏭')
+                    end(connection, message, "Skip")
+                }).catch(console.log)
+        }
+
+        // HELP
+    } else if ((message.content === prefix + "help") || (message.content === prefix + "h")) {
+        message.react('📜')
+        message.channel.send(dataHelp)
+
+        // BOB
+    } else if (message.content === prefix + 'bob') {
+        const attachment = new Discord.Attachment(photoBob)
+        message.channel.send(attachment)
+
+        // PURGE
+    } else if (message.content.startsWith(prefix + 'purge ')) {
+        var args = message.content.split(' ')
+        if (!args[1] || args[1] < 1 || args[1] > 100) return message.reply("Veuillez rentrer un nombre compris entre 1 et 100.")
+        message.channel.bulkDelete(args[1] + 1).catch(console.error)
+
+        // PAUSE
+    } else if (message.content === prefix + 'pause') {
+        if (message.member.voiceChannel) {
+            message.react('⏸')
+            data[message.guild.id]['song'].pause()
+            data[message.guild.id]['song'].setSpeaking(false)
+        }
+
+        // RESUME
+    } else if (message.content === prefix + 'resume') {
+        if (message.member.voiceChannel) {
+            message.react('⏯')
+            data[message.guild.id]['song'].resume()
+            data[message.guild.id]['song'].setSpeaking(true)
+        }
+
+        // QUEUE
+    } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
+        if (data[message.guild.id]['dataQueue'].length != 0) {
+            message.channel.send('File d\'aatente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
+        } else {
+            message.channel.send("Aucune musique dans la file d'attente")
+        }
+
+        // POLL
+    } else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
+        let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
+        var choices = message.content.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
+        if (!choices[1] || choices.length > 9) {
+            message.reply('Utilisation de ' + prefix + 'poll : ' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
+            return
+        }
+        const pollEmbed = new Discord.RichEmbed()
+            .setColor(0xffffff)
+            .setFooter("Réagissez pour voter")
+            .setTitle(capitalize(question))
+            .setAuthor("Sondage crée par " + message.author.username)
+        for (let i = 0; i < choices.length; i++) {
+            pollEmbed.addField(emojisNombre[i], capitalize(choices[i]), false)
+        }
+        message.channel.send(pollEmbed)
+            .then(function(poll) {
+                for (let i = 0; i < choices.length; i++) {
+                    poll.react(emojisNombre[i])
+                }
+            }).catch(console.log())
+        message.delete()
+
+        // TEST 
+    } else if (message.content === prefix + 'test') {
+        message.channel.send("Test réussi !")
+        console.log("---------------------------------------")
     }
-
-    // SKIP
-} else if (message.content === prefix + "skip") {
-    if (message.member.voiceChannel) {
-        message.member.voiceChannel.join()
-            .then(connection => {
-                message.react('⏭')
-                end(connection, message, "Skip")
-            }).catch(console.log)
-    }
-
-    // HELP
-} else if ((message.content === prefix + "help") || (message.content === prefix + "h")) {
-    message.react('📜')
-    message.channel.send(dataHelp)
-
-    // BOB
-} else if (message.content === prefix + 'bob') {
-    const attachment = new Discord.Attachment(photoBob)
-    message.channel.send(attachment)
-
-    // PURGE
-} else if (message.content.startsWith(prefix + 'purge ')) {
-    var args = message.content.split(' ')
-    if (!args[1] || args[1] < 1 || args[1] > 100) return message.reply("Veuillez rentrer un nombre compris entre 1 et 100.")
-    message.channel.bulkDelete(args[1] + 1).catch(console.error)
-
-    // PAUSE
-} else if (message.content === prefix + 'pause') {
-    if (message.member.voiceChannel) {
-        message.react('⏸')
-        data[message.guild.id]['song'].pause()
-        data[message.guild.id]['song'].setSpeaking(false)
-    }
-
-    // RESUME
-} else if (message.content === prefix + 'resume') {
-    if (message.member.voiceChannel) {
-        message.react('⏯')
-        data[message.guild.id]['song'].resume()
-        data[message.guild.id]['song'].setSpeaking(true)
-    }
-
-    // QUEUE
-} else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
-    if (data[message.guild.id]['dataQueue'].length != 0) {
-        message.channel.send('File d\'aatente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
-    } else {
-        message.channel.send("Aucune musique dans la file d'attente")
-    }
-
-    // POLL
-} else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
-    let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
-    var choices = message.content.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
-    if (!choices[1] || choices.length > 9) {
-        message.reply('Utilisation de ' + prefix + 'poll : ' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
-        return
-    }
-    const pollEmbed = new Discord.RichEmbed()
-        .setColor(0xffffff)
-        .setFooter("Réagissez pour voter")
-        .setTitle(capitalize(question))
-        .setAuthor("Sondage crée par " + message.author.username)
-    for (let i = 0; i < choices.length; i++) {
-        pollEmbed.addField(emojisNombre[i], capitalize(choices[i]), false)
-    }
-    message.channel.send(pollEmbed)
-        .then(function(poll) {
-            for (let i = 0; i < choices.length; i++) {
-                poll.react(emojisNombre[i])
-            }
-        }).catch(console.log())
-    message.delete()
-
-    // TEST 
-} else if (message.content === prefix + 'test') {
-    message.channel.send("Test réussi !")
-    console.log("---------------------------------------")
-}
 })
 
 client.on('reconnecting', () => {
