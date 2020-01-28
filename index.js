@@ -284,7 +284,7 @@ client.on('message', message => {
             .setDescription(choices)
             .setTitle(question)
             .setAuthor("Sondage crée par " + message.user.name)
-        let msg = await message.channel.send(pollEmbed)
+        message.channel.send(pollEmbed)
 
         // TEST 
     } else if (message.content === prefix + 'test') {
