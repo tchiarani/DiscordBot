@@ -66,9 +66,12 @@ function play(connection, message, action) {
         data[message.guild.id]['song'].setVolume(1 / 50);
 
         data[message.guild.id]['song'].on("end", (reason) => {
-            console.log(reason)
-            if (reason != "Skip") {
+            console.log(typeof reason)
+            if (reason != "Skip" && reason != undefined) {
                 end(connection, message, "Skip end")
+            }
+            else if (reason == undefined) {
+                end(connection, message, "Stop")
             }
         })
     }
@@ -133,11 +136,7 @@ client.on('message', message => {
         // STOP
     } else if ((message.content === prefix + 'stop') || (message.content === prefix + 's')) {
         if (message.member.voiceChannel === message.guild.me.voiceChannel) {
-            data[message.guild.id]['queue'] = [];
-            data[message.guild.id]['dataQueue'] = [];
-            data[message.guild.id]['dataVideoEmbed'] = [];
             message.member.voiceChannel.leave();
-            message.channel.send('Déconnexion de ' + message.member.voiceChannel.name);
         } else {
             message.channel.send('Je ne suis pas connecté dans un salon avec vous !');
             message.react('🛑');
@@ -328,7 +327,7 @@ function setMusicEmbed(id, video) {
     data[id]['dataVideoEmbed']
         .push(new Discord.RichEmbed()
             .setTitle(video.title)
-            .setDescription(":clock4: " + video.timestamp)
+            .setDescription("Durée : " + video.timestamp)
             .setAuthor(video.author.name, "https://icons-for-free.com/iconfiles/png/512/social+square+youtube+icon-1320185494902500914.png", "https://youtube.com/channel/" + video.author.id)
             .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
             .setColor('#FF0000')
