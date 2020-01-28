@@ -108,9 +108,7 @@ client.on('ready', function() {
     client.user.setActivity("unikorn.ga | 🦄", { type: "WATCHING" })
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
-    console.log(client)
     console.log(client.users)
-    console.log(client.user)
 })
 
 client.on('message', message => {
