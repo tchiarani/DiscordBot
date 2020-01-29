@@ -220,10 +220,10 @@ client.on('message', message => {
 
         // RADIO
     } else if (message.content === prefix + 'radio') {
-        message.reply(
-            'Utilisation :\n' +
-            prefix + 'radio *[url]* Lance une webradio\n'
-        )
+        let helpDescriptions = "Lance une webradio"
+        let helpCommands = prefix + 'radio *[url]*'
+        setSpecificHelp(message.guild.id, "radio", helpCommands, helpDescriptions)
+        message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if (message.content.startsWith(prefix + 'radio ')) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
@@ -286,8 +286,10 @@ client.on('message', message => {
 
         // PURGE
     } else if (message.content === prefix + 'purge') {
-        message.reply(
-            'Utilisation :\n' + prefix + 'purge *0~100*')
+        let helpDescriptions = "Supprime les *[0-100]* derniers messages"
+        let helpCommands = prefix + 'purge *[0-100]*'
+        setSpecificHelp(message.guild.id, "purge", helpCommands, helpDescriptions)
+        message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if (message.content.startsWith(prefix + 'purge')) {
         let args = message.content.split(' ')
         if (args[1] == undefined || args[1] < 1 || args[1] > 100) {
@@ -346,7 +348,10 @@ client.on('message', message => {
 
         // POLL
     } else if ((message.content === prefix + 'poll') || (message.content === prefix + 'sondage')) {
-        message.reply('Utilisation :\n' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
+        let helpDescriptions = "Crée un sondage"
+        let helpCommands = prefix + 'poll Faut-il poser une question ? "Oui" "Non"'
+        setSpecificHelp(message.guild.id, "poll", helpCommands, helpDescriptions)
+        message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
         let question = contenuMessage.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
         let choices = contenuMessage.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
@@ -402,10 +407,10 @@ client.on('error', () => {
 function setSpecificHelp(id, command, helpCommands, helpDescritions) {
     data[id]['specificHelpEmbed'] = new Discord.RichEmbed()
         .setTitle("Commande(s) disponible(s) pour :")
-        .setDescription(prefix + command)
+        .setDescription("**" + prefix + command + "**")
         .setAuthor("Besoin d'aide ?⁢⁢", botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
-        .setFooter("unikorn.ga | " + prefix + command + " help", authorAvatar)
+        .setFooter("unikorn.ga | " + prefix + command, authorAvatar)
         .addField("**Commandes :**", helpCommands, true)
         .addField("**Descriptions :**", helpDescritions, true)
 }
