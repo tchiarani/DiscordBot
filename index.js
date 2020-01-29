@@ -12,7 +12,7 @@ let authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/444500
 let botAvatar = ""
 let dataHelp = {}
 
-const commandes = ["play", "skip", "queue", "volume", "stop", "pause", "resume", "radios", "musiques", "radio", "purge", "poll", "help"]
+const commandes = ["play", "skip", "queue", "stop", "pause", "resume", "remove", "volume", "radios", "musiques", "radio", "purge", "poll", "help"]
 
 const radios = {
     'dnb': ['http://195.201.98.51:8000/dnbradio_main.mp3', 'drum\'n\'bass'],
