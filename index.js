@@ -315,7 +315,7 @@ client.on('message', message => {
         let question = contenuMessage.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
         let choices = contenuMessage.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
         if (question[1] == undefined || choices[1] == undefined || choices.length > 9) {
-            message.reply('Utilisation de **' + prefix + 'poll** :\n' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
+            message.reply('Utilisation :\n' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
             return
         }
         const pollEmbed = new Discord.RichEmbed()
@@ -357,7 +357,7 @@ const dataHelp = new Discord.RichEmbed()
     .setColor('#7289DA')
     .setFooter("unikorn.ga | /help", authorAvatar)
     .addField("----------------", prefix + commandes.slice(0, commandes.length / 2 + 1).join("\n" + prefix), true)
-    .addField("----------------", prefix + commandes.slice(commandes.length / 2 - 1, commandes.length).join("\n" + prefix), true)
+    .addField("----------------", prefix + commandes.slice(commandes.length / 2 + 1, commandes.length).join("\n" + prefix), true)
 
 function setMusicEmbed(id, video) {
     data[id]['dataVideoEmbed']
@@ -381,7 +381,8 @@ const radiosList = {
         },
         "author": {
             "name": "Liste des radios",
-            "url": "https://unikorn.ga/bot"
+            "url": "https://unikorn.ga/bot",
+            "icon_url": botAvatar
         },
         "fields": [{
             "name": "__Radios :__",
