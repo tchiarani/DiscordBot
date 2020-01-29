@@ -342,9 +342,22 @@ client.on('message', message => {
 
         // REMOVE
     } else if ((message.content === prefix + 'remove') || (message.content === prefix + 'r')) {
-        message.reply("Pas encore implémenté. Bisous")
+        let helpDescriptions = "Supprime les musiques en paramètre"
+        let helpCommands = prefix + 'remove *1 3 4...*'
+        setSpecificHelp(message.guild.id, "remove", helpCommands, helpDescriptions)
+        message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if (message.content.startsWith(prefix + 'remove ') || message.content.startsWith(prefix + 'r ')) {
-        message.reply("Pas encore implémenté. Bisous")
+        let queueNumbers = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(" ")
+        for (let i = 0; i < queueNumbers.length; i++) {
+            if (data[message.guild.id]['dataQueue'][queueNumbers[i]] != undefined) {
+                message.channel.send('❌ ' + data[message.guild.id]['dataQueue'][queueNumber])
+                data[message.guild.id]['queue'][queueNumber[i]].splice(queueNumber[i], 0)
+                data[message.guild.id]['dataQueue'][queueNumber[i]].splice(queueNumber[i], 0)
+                data[message.guild.id]['dataVideoEmbed'][queueNumber[i]].splice(queueNumber[i], 0)
+            } else {
+                message.channel.send("Pas ce numéro dans la file d'attente.")
+            }
+        }
 
         // POLL
     } else if ((message.content === prefix + 'poll') || (message.content === prefix + 'sondage')) {
@@ -411,8 +424,8 @@ function setSpecificHelp(id, command, helpCommands, helpDescritions) {
         .setAuthor("Besoin d'aide ?⁢⁢", botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
         .setFooter("unikorn.ga | " + prefix + command, authorAvatar)
-        .addField("**Commandes :**", helpCommands, true)
-        .addField("**Descriptions :**", helpDescritions, true)
+        .addField("**Commande :**", helpCommands, true)
+        .addField("**Description :**", helpDescritions, true)
 }
 
 function setMusicEmbed(id, video) {
