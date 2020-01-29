@@ -148,15 +148,15 @@ client.on('message', message => {
 
         // PLAY
     } else if ((message.content === prefix + 'play') || (message.content === prefix + 'p')) {
-        let helpText = 'Utilisation :\n' +
-            prefix + 'play *[mots-clés]* Lance une musique depuis YouTube\n' +
+        let helpCommands = "Lance une musique depuis YouTube\n\nLance une radio enregistrée\n\nLance une musique enregistrée"
+        let helpDescriptions =
+            prefix + 'play *[mots-clés]*\n' +
             prefix + 'play *[url]*\n' +
-            prefix + 'play *[radio]* Lance une radio enregistrée\n' +
+            prefix + 'play *[radio]*\n' +
             prefix + 'play *[radio] [volume]*\n' +
-            prefix + 'play *[musique]* Lance une musique enregistrée\n' +
+            prefix + 'play *[musique]*\n' +
             prefix + 'play *[musique] [volume]*\n'
-        message.reply(helpText)
-        setSpecificHelp(message.guild.id, "play", helpText)
+        setSpecificHelp(message.guild.id, "play", helpCommands, helpDescriptions)
         message.reply(data[message.guild.id]['specificHelpEmbed'])
     } else if ((message.content.startsWith(prefix + 'play ')) || (message.content.startsWith(prefix + 'p '))) {
         if (message.member.voiceChannel) {
@@ -386,14 +386,15 @@ const dataHelp = new Discord.RichEmbed()
     .addField("----------------", prefix + commandes.slice(0, commandes.length / 2 + 1).join("\n" + prefix), true)
     .addField("----------------", prefix + commandes.slice(commandes.length / 2 + 1, commandes.length).join("\n" + prefix), true)
 
-function setSpecificHelp(id, command, helpText) {
+function setSpecificHelp(id, command, helpCommands, helpDescritions) {
     data[id]['specificHelpEmbed'] = new Discord.RichEmbed()
-        .setTitle("Aide : " + prefix + command)
-        .setDescription(helpText)
-        /*.setAuthor(video.author.name, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/YouTube_social_red_square_%282017%29.svg/300px-YouTube_social_red_square_%282017%29.svg.png", "https://youtube.com/channel/" + video.author.id)
-        .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
-        .setColor('#FF0000')
-        .setURL("https://youtube.com" + video.url)*/
+        .setTitle("Besoin d'aide ?")
+        .setDescription(" ⁢⁢")
+        .setAuthor(" ⁢⁢", botAvatar, "https://unikorn.ga/bot")
+        .setColor('#7289DA')
+        .setFooter("unikorn.ga | " + prefix + command + " help", authorAvatar)
+        .addField("**Commandes :**", helpCommands, true)
+        .addField("**Descriptions :**", helpDescritions, true)
 }
 
 function setMusicEmbed(id, video) {
