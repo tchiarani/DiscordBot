@@ -348,14 +348,14 @@ client.on('message', message => {
         message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if (message.content.startsWith(prefix + 'remove ') || message.content.startsWith(prefix + 'r ')) {
         let queueNumbers = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(" ")
-        console.log('Tableau : ' + queueNumbers)
+        let nbRemoved = 0
         for (let i = 0; i < queueNumbers.length; i++) {
-            console.log('Valeur ' + i + ' : ' + queueNumbers[i])
             if (data[message.guild.id]['dataQueue'][queueNumbers[i]] != undefined) {
                 message.channel.send('❌ ' + data[message.guild.id]['dataQueue'][queueNumbers[i]])
-                data[message.guild.id]['queue'].splice(queueNumbers[i], 1)
-                data[message.guild.id]['dataQueue'].splice(queueNumbers[i], 1)
-                data[message.guild.id]['dataVideoEmbed'].splice(queueNumbers[i], 1)
+                data[message.guild.id]['queue'].splice(queueNumbers[i] + nbRemoved, 1)
+                data[message.guild.id]['dataQueue'].splice(queueNumbers[i] + nbRemoved, 1)
+                data[message.guild.id]['dataVideoEmbed'].splice(queueNumbers[i] + nbRemoved, 1)
+                nbRemoved++
             } else {
                 message.channel.send("Pas ce numéro dans la file d'attente.")
             }
