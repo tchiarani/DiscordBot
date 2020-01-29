@@ -112,6 +112,7 @@ client.on('ready', function() {
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
     botAvatar = 'https://cdn.discordapp.com/avatars/' + client.users.first().id + '/' + client.users.first().avatar + '.png'
+    console.log("Attachment, Web builds")
     dataHelp = new Discord.RichEmbed()
         .setTitle("Liste des commandes")
         .setDescription("Préfix : **" + prefix + "**")
