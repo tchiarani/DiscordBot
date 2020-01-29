@@ -356,8 +356,8 @@ const dataHelp = new Discord.RichEmbed()
     .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
     .setColor('#7289DA')
     .setFooter("unikorn.ga | /help", authorAvatar)
-    .addField("----------------", commandes.slice(0, commandes.length / 2).join("\n"), true)
-    .addField("----------------", '/' + commandes.slice(commandes.length / 2, commandes.length).join("\n/"), true)
+    .addField("----------------", prefix + commandes.slice(0, commandes.length / 2 + 1).join("\n" + prefix), true)
+    .addField("----------------", prefix + commandes.slice(commandes.length / 2 - 1, commandes.length).join("\n" + prefix), true)
 
 function setMusicEmbed(id, video) {
     data[id]['dataVideoEmbed']
