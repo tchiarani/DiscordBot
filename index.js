@@ -10,6 +10,7 @@ const prefix = '/'
 const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
 let authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png"
 let botAvatar = ""
+let dataHelp = {}
 
 const commandes = ["play", "skip", "queue", "volume", "stop", "pause", "resume", "radios", "musiques", "radio", "purge", "poll", "help"]
 
@@ -111,6 +112,14 @@ client.on('ready', function() {
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
     botAvatar = 'https://cdn.discordapp.com/avatars/' + client.users.first().id + '/' + client.users.first().avatar + '.png'
+    dataHelp = new Discord.RichEmbed()
+        .setTitle("Liste des commandes")
+        .setDescription("Préfix : **" + prefix + "**")
+        .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
+        .setColor('#7289DA')
+        .setFooter("unikorn.ga | /help", authorAvatar)
+        .addField("----------------", prefix + commandes.slice(0, commandes.length / 2 + 1).join("\n" + prefix), true)
+        .addField("----------------", prefix + commandes.slice(commandes.length / 2 + 1, commandes.length).join("\n" + prefix), true)
 })
 
 client.on('message', message => {
@@ -382,17 +391,6 @@ client.on('error', () => {
     console.log('Error! :)')
     client.user.setActivity("la maintenance", { type: "WATCHING" })
     client.user.setStatus('dnd')
-})
-
-client.on('ready', () => {
-    const dataHelp = new Discord.RichEmbed()
-        .setTitle("Liste des commandes")
-        .setDescription("Préfix : **" + prefix + "**")
-        .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
-        .setColor('#7289DA')
-        .setFooter("unikorn.ga | /help", authorAvatar)
-        .addField("----------------", prefix + commandes.slice(0, commandes.length / 2 + 1).join("\n" + prefix), true)
-        .addField("----------------", prefix + commandes.slice(commandes.length / 2 + 1, commandes.length).join("\n" + prefix), true)
 })
 
 function setSpecificHelp(id, command, helpCommands, helpDescritions) {
