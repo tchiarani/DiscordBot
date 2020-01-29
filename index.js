@@ -351,9 +351,9 @@ client.on('message', message => {
         for (let i = 0; i < queueNumbers.length; i++) {
             if (data[message.guild.id]['dataQueue'][queueNumbers[i]] != undefined) {
                 message.channel.send('❌ ' + data[message.guild.id]['dataQueue'][queueNumbers[i]])
-                data[message.guild.id]['queue'][queueNumbers[i]].splice(queueNumbers[i], 0)
-                data[message.guild.id]['dataQueue'][queueNumbers[i]].splice(queueNumbers[i], 0)
-                data[message.guild.id]['dataVideoEmbed'][queueNumbers[i]].splice(queueNumbers[i], 0)
+                data[message.guild.id]['queue'].splice(queueNumbers[i], 0)
+                data[message.guild.id]['dataQueue'].splice(queueNumbers[i], 0)
+                data[message.guild.id]['dataVideoEmbed'].splice(queueNumbers[i], 0)
             } else {
                 message.channel.send("Pas ce numéro dans la file d'attente.")
             }
