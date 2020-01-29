@@ -350,14 +350,14 @@ client.on('message', message => {
         let queueNumbers = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(" ")
         let nbRemoved = 0
         for (let i = 0; i < queueNumbers.length; i++) {
-            if (data[message.guild.id]['dataQueue'][queueNumbers[i]] != undefined) {
-                message.channel.send('❌ ' + data[message.guild.id]['dataQueue'][queueNumbers[i]])
-                data[message.guild.id]['queue'].splice(queueNumbers[i] + nbRemoved, 1)
-                data[message.guild.id]['dataQueue'].splice(queueNumbers[i] + nbRemoved, 1)
-                data[message.guild.id]['dataVideoEmbed'].splice(queueNumbers[i] + nbRemoved, 1)
+            if (data[message.guild.id]['dataQueue'][queueNumbers[i] - nbRemoved] != undefined) {
+                message.channel.send('❌ ' + data[message.guild.id]['dataQueue'][queueNumbers[i] - nbRemoved])
+                data[message.guild.id]['queue'].splice(queueNumbers[i] - nbRemoved, 1)
+                data[message.guild.id]['dataQueue'].splice(queueNumbers[i] - nbRemoved, 1)
+                data[message.guild.id]['dataVideoEmbed'].splice(queueNumbers[i] - nbRemoved, 1)
                 nbRemoved++
             } else {
-                message.channel.send("Pas ce numéro dans la file d'attente.")
+                message.channel.send("Pas de numéro **" + i + "** dans la file d'attente.")
             }
         }
 
