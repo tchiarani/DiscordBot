@@ -117,6 +117,7 @@ client.on('message', message => {
     //console.log(message.guild.id)
     if (!message.guild) return
     if (!message.content.startsWith(prefix)) return
+    let contenuMessage = message.content;
     message.content = message.content.toLowerCase()
 
     // JOIN
@@ -307,8 +308,8 @@ client.on('message', message => {
 
         // POLL
     } else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
-        let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
-        let choices = message.content.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
+        let question = contenuMessage.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
+        let choices = contenuMessage.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
         if (question[1] == undefined || choices[1] == undefined || choices.length > 9) {
             message.reply('Utilisation de **' + prefix + 'poll** :\n' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
             return
@@ -316,10 +317,10 @@ client.on('message', message => {
         const pollEmbed = new Discord.RichEmbed()
             .setColor(0xffffff)
             .setFooter("Réagissez pour voter")
-            .setTitle(capitalize(question))
+            .setTitle(question)
             .setAuthor("Sondage crée par " + message.author.username)
         for (let i = 0; i < choices.length; i++) {
-            pollEmbed.addField(emojisNombre[i], capitalize(choices[i]), false)
+            pollEmbed.addField(emojisNombre[i], choices[i], false)
         }
         message.channel.send(pollEmbed)
             .then(function(poll) {
@@ -344,11 +345,6 @@ client.on('disconnect', () => {
     console.log('Disconnect!')
     client.user.setActivity("la maintenance", { type: "WATCHING" })
 })
-
-const capitalize = (s) => {
-    if (typeof s !== 'string') return ''
-    return s.charAt(0).toUpperCase() + s.slice(1)
-}
 
 const dataHelp = new Discord.RichEmbed()
     .setTitle("Liste des commandes")
