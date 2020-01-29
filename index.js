@@ -260,7 +260,7 @@ client.on('message', message => {
         // PURGE
     } else if (message.content.startsWith(prefix + 'purge')) {
         let args = message.content.split(' ')
-        if (args[1] == undefined || args[1] < 1 || args[1] > 100){
+        if (args[1] == undefined || args[1] < 1 || args[1] > 100) {
             message.reply('Utilisation de **' + prefix + 'purge** : ' + prefix + 'purge *0~100*')
         } else {
             message.delete()
@@ -357,7 +357,7 @@ const dataHelp = new Discord.RichEmbed()
     .setColor('#7289DA')
     .setFooter("unikorn.ga | /help", authorAvatar)
     .addField("----------------", commandes.slice(0, commandes.length / 2).join("\n"), true)
-    .addField("----------------", commandes.slice(commandes.length / 2, commandes.length).join("\n"), true)
+    .addField("----------------", '/' + commandes.slice(commandes.length / 2, commandes.length).join("\n/"), true)
 
 function setMusicEmbed(id, video) {
     data[id]['dataVideoEmbed']
