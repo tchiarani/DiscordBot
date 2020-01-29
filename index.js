@@ -52,6 +52,7 @@ function initGuild(id) {
     data[id]['queue'] = []
     data[id]['dataQueue'] = []
     data[id]['dataVideoEmbed'] = []
+    data[id]['specificHelpEmbed'] = {}
 }
 
 function play(connection, message, action) {
@@ -147,15 +148,16 @@ client.on('message', message => {
 
         // PLAY
     } else if ((message.content === prefix + 'play') || (message.content === prefix + 'p')) {
-        message.reply(
-            'Utilisation :\n' +
+        let helpText = 'Utilisation :\n' +
             prefix + 'play *[mots-clés]* Lance une musique depuis YouTube\n' +
             prefix + 'play *[url]*\n' +
             prefix + 'play *[radio]* Lance une radio enregistrée\n' +
             prefix + 'play *[radio] [volume]*\n' +
             prefix + 'play *[musique]* Lance une musique enregistrée\n' +
             prefix + 'play *[musique] [volume]*\n'
-        )
+        message.reply(helpText)
+        setSpecificHelp(message.guild.id, "play", helpText)
+        message.reply(data.[message.guild.id]['specificHelpEmbed'])
     } else if ((message.content.startsWith(prefix + 'play ')) || (message.content.startsWith(prefix + 'p '))) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
@@ -303,7 +305,13 @@ client.on('message', message => {
         }
 
         // QUEUE
-    } else if ((message.content.startsWith(prefix + 'queue')) || (message.content.startsWith(prefix + 'q'))) {
+    } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
+        if (data[message.guild.id]['dataQueue'].length != 0) {
+            message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
+        } else {
+            message.channel.send("Aucune musique dans la file d'attente.")
+        }
+    } else if ((message.content.startsWith(prefix + 'queue ')) || (message.content.startsWith(prefix + 'q '))) {
         let queueNumber = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1)
         if (queueNumber >= 0 && queueNumber <= 100) {
             if (data[message.guild.id]['dataQueue'][queueNumber] != undefined) {
@@ -318,19 +326,19 @@ client.on('message', message => {
                 message.channel.send("Pas ce numéro dans la file d'attente.")
             }
         } else {
-            if (data[message.guild.id]['dataQueue'].length != 0) {
-                message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
-            } else {
-                message.channel.send("Aucune musique dans la file d'attente.")
-            }
+            message.channel.send("La valeur doit être comprise entre 1 et 100.")
         }
 
         // REMOVE
+    } else if ((message.content === prefix + 'remove') || (message.content === prefix + 'r')) {
+        message.reply("Pas encore implémenté. Bisous")
     } else if (message.content.startsWith(prefix + 'remove ') || message.content.startsWith(prefix + 'r ')) {
-
+        message.reply("Pas encore implémenté. Bisous")
 
         // POLL
-    } else if (message.content.startsWith(prefix + 'poll') || message.content.startsWith(prefix + 'sondage')) {
+    } else if ((message.content === prefix + 'poll') || (message.content === prefix + 'sondage')) {
+        message.reply('Utilisation :\n' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
+    } else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
         let question = contenuMessage.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
         let choices = contenuMessage.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
         if (question[1] == undefined || choices[1] == undefined || choices.length > 9) {
@@ -377,6 +385,16 @@ const dataHelp = new Discord.RichEmbed()
     .setFooter("unikorn.ga | /help", authorAvatar)
     .addField("----------------", prefix + commandes.slice(0, commandes.length / 2 + 1).join("\n" + prefix), true)
     .addField("----------------", prefix + commandes.slice(commandes.length / 2 + 1, commandes.length).join("\n" + prefix), true)
+
+function setSpecificHelp(id, command, helpText) {
+    data[id]['specificHelpEmbed'] = new Discord.RichEmbed()
+        .setTitle("Aide : " + prefix + command)
+        .setDescription(helpText)
+        /*.setAuthor(video.author.name, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/YouTube_social_red_square_%282017%29.svg/300px-YouTube_social_red_square_%282017%29.svg.png", "https://youtube.com/channel/" + video.author.id)
+        .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
+        .setColor('#FF0000')
+        .setURL("https://youtube.com" + video.url)*/
+}
 
 function setMusicEmbed(id, video) {
     data[id]['dataVideoEmbed']
