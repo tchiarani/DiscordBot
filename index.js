@@ -375,12 +375,19 @@ client.on('reconnecting', () => {
 client.on('disconnect', () => {
     console.log('Disconnect!')
     client.user.setActivity("la maintenance", { type: "WATCHING" })
+    client.user.setStatus('dnd')
+})
+
+client.on('error', () => {
+    console.log('Error! :)')
+    client.user.setActivity("la maintenance", { type: "WATCHING" })
+    client.user.setStatus('dnd')
 })
 
 const dataHelp = new Discord.RichEmbed()
     .setTitle("Liste des commandes")
     .setDescription("Préfix : **" + prefix + "**")
-    .setAuthor("Aide", botAvatar, "https://unikorn.ga/bot")
+    .setAuthor(" ", botAvatar, "https://unikorn.ga/bot")
     .setColor('#7289DA')
     .setFooter("unikorn.ga | /help", authorAvatar)
     .addField("----------------", prefix + commandes.slice(0, commandes.length / 2 + 1).join("\n" + prefix), true)
