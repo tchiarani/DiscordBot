@@ -348,7 +348,9 @@ client.on('message', message => {
         message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if (message.content.startsWith(prefix + 'remove ') || message.content.startsWith(prefix + 'r ')) {
         let queueNumbers = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(" ")
+        console.log('Tableau : ' + queueNumbers)
         for (let i = 0; i < queueNumbers.length; i++) {
+            console.log('Valeur ' + i + ' : ' + queueNumbers[i])
             if (data[message.guild.id]['dataQueue'][queueNumbers[i]] != undefined) {
                 message.channel.send('❌ ' + data[message.guild.id]['dataQueue'][queueNumbers[i]])
                 data[message.guild.id]['queue'].splice(queueNumbers[i], 1)
