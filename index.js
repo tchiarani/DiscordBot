@@ -146,6 +146,16 @@ client.on('message', message => {
         }
 
         // PLAY
+    } else if ((message.content === prefix + 'play') || (message.content === prefix + 'p')) {
+        message.reply(
+            'Utilisation :\n' +
+            prefix + 'play *[mots-clés]* Lance une musique depuis YouTube\n' +
+            prefix + 'play *[url]*\n' +
+            prefix + 'play *[radio]* Lance une radio enregistrée\n' +
+            prefix + 'play *[radio] [volume]*\n' +
+            prefix + 'play *[musique]* Lance une musique enregistrée\n' +
+            prefix + 'play *[musique] [volume]*\n'
+        )
     } else if ((message.content.startsWith(prefix + 'play ')) || (message.content.startsWith(prefix + 'p '))) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
@@ -198,6 +208,11 @@ client.on('message', message => {
         }
 
         // RADIO
+    } else if (message.content === prefix + 'radio') {
+        message.reply(
+            'Utilisation :\n' +
+            prefix + 'radio *[url]* Lance une webradio\n'
+        )
     } else if (message.content.startsWith(prefix + 'radio ')) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
@@ -210,20 +225,21 @@ client.on('message', message => {
         }
 
         // VOLUME
+    } else if ((message.content === prefix + 'volume') || (message.content === prefix + 'v')) {
+        if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
+            message.reply("🔊 Volume : " + data[message.guild.id]['song'].volume)
+        } else {
+            message.reply("Aucune musique dans la file d'attente")
+        }
     } else if ((message.content.startsWith(prefix + 'volume')) || (message.content.startsWith(prefix + 'v'))) {
         if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
             let words = message.content.split(' ')
-            if (words[1] == undefined) {
-                message.channel.send("🔊 Volume : " + data[message.guild.id]['song'].volume * 2500)
+            if (words[1] >= 0 && words[1] <= 200) {
+                data[message.guild.id]['song'].setVolume(words[1] / 2500)
+                message.react('🔊')
             } else {
-                if (words[1] >= 0 && words[1] <= 200) {
-                    data[message.guild.id]['song'].setVolume(words[1] / 2500)
-                    message.react('🔊')
-                } else {
-                    message.channel.send('Fais pas l\'fou gamin ! ' + words[1] + ' c\'est trop fort...')
-                    message.react('🛑')
-                }
-
+                message.channel.send('Fais pas l\'fou gamin ! ' + words[1] + ' c\'est trop fort...')
+                message.react('🛑')
             }
         }
 
@@ -258,10 +274,13 @@ client.on('message', message => {
         message.channel.send(attachment)
 
         // PURGE
+    } else if (message.content === prefix + 'purge') {
+        message.reply(
+            'Utilisation :\n' + prefix + 'purge *0~100*')
     } else if (message.content.startsWith(prefix + 'purge')) {
         let args = message.content.split(' ')
         if (args[1] == undefined || args[1] < 1 || args[1] > 100) {
-            message.reply('Utilisation de **' + prefix + 'purge** : ' + prefix + 'purge *0~100*')
+            message.reply('La valeur doit être comprise entre 0 et 100.')
         } else {
             message.delete()
             message.channel.bulkDelete(args[1]).catch(console.error)
