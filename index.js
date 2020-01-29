@@ -118,8 +118,8 @@ client.on('ready', function() {
         .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
         .setFooter("unikorn.ga | /help", authorAvatar)
-        .addField("----------------", prefix + commandes.slice(0, commandes.length / 2 + 1).join("\n" + prefix), true)
-        .addField("----------------", prefix + commandes.slice(commandes.length / 2 + 1, commandes.length).join("\n" + prefix), true)
+        .addField("----------------", prefix + commandes.slice(0, commandes.length + 1 / 2).join("\n" + prefix), true)
+        .addField("----------------", prefix + commandes.slice(commandes.length + 1 / 2, commandes.length).join("\n" + prefix), true)
 })
 
 client.on('message', message => {
@@ -293,7 +293,7 @@ client.on('message', message => {
     } else if (message.content.startsWith(prefix + 'purge')) {
         let args = message.content.split(' ')
         if (args[1] == undefined || args[1] < 1 || args[1] > 100) {
-            message.reply('La valeur doit être comprise entre 0 et 100.')
+            message.reply('La valeur doit être comprise entre 1 et 100.')
         } else {
             message.delete()
             message.channel.bulkDelete(args[1]).catch(console.error)
