@@ -157,7 +157,7 @@ client.on('message', message => {
             prefix + 'play *[musique] [volume]*\n'
         message.reply(helpText)
         setSpecificHelp(message.guild.id, "play", helpText)
-        message.reply(data.[message.guild.id]['specificHelpEmbed'])
+        message.reply(data[message.guild.id]['specificHelpEmbed'])
     } else if ((message.content.startsWith(prefix + 'play ')) || (message.content.startsWith(prefix + 'p '))) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
