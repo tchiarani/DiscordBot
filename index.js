@@ -61,7 +61,7 @@ function play(connection, message, action) {
         if (data[message.guild.id]['queue'].length == 1) {
             message.channel.send(data[message.guild.id]['dataVideoEmbed'][0])
         } else {
-            message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
+            message.channel.send('✅ **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
         }
     } else if (action == "Skip") {
         message.channel.send(data[message.guild.id]['dataVideoEmbed'][0])
