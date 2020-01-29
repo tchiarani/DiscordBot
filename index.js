@@ -357,7 +357,7 @@ client.on('message', message => {
                 data[message.guild.id]['dataVideoEmbed'].splice(queueNumbers[i] - nbRemoved, 1)
                 nbRemoved++
             } else {
-                message.channel.send("Pas de numéro **" + i + "** dans la file d'attente.")
+                message.channel.send("Pas de numéro **" + queueNumbers[i] + "** dans la file d'attente.")
             }
         }
 
