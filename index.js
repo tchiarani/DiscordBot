@@ -307,7 +307,7 @@ client.on('message', message => {
 
 
         // POLL
-    } else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
+    } else if (message.content.startsWith(prefix + 'poll') || message.content.startsWith(prefix + 'sondage')) {
         let question = contenuMessage.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
         let choices = contenuMessage.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
         if (question[1] == undefined || choices[1] == undefined || choices.length > 9) {
