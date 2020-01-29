@@ -258,10 +258,14 @@ client.on('message', message => {
         message.channel.send(attachment)
 
         // PURGE
-    } else if (message.content.startsWith(prefix + 'purge ')) {
+    } else if (message.content.startsWith(prefix + 'purge')) {
         let args = message.content.split(' ')
-        if (args[1] == undefined || args[1] < 1 || args[1] > 100) return message.reply('Utilisation de **' + prefix + 'purge** : ' + prefix + 'purge *0~100*')
-        message.channel.bulkDelete(args[1] + 1).catch(console.error)
+        if (args[1] == undefined || args[1] < 1 || args[1] > 100){
+            message.reply('Utilisation de **' + prefix + 'purge** : ' + prefix + 'purge *0~100*')
+        } else {
+            message.delete()
+            message.channel.bulkDelete(args[1]).catch(console.error)
+        }
 
         // PAUSE
     } else if (message.content === prefix + 'pause') {
