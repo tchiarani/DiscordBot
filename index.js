@@ -387,8 +387,14 @@ client.on('disconnect', () => {
     client.user.setStatus('dnd')
 })
 
+client.on('warn', () => {
+    console.log('Error! : ' + error)
+    client.user.setActivity("la maintenance", { type: "WATCHING" })
+    client.user.setStatus('dnd')
+})
+
 client.on('error', () => {
-    console.log('Error! :)')
+    console.log('Warn!')
     client.user.setActivity("la maintenance", { type: "WATCHING" })
     client.user.setStatus('dnd')
 })
