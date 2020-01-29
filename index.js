@@ -350,7 +350,7 @@ client.on('message', message => {
         let queueNumbers = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(" ")
         for (let i = 0; i < queueNumbers.length; i++) {
             if (data[message.guild.id]['dataQueue'][queueNumbers[i]] != undefined) {
-                message.channel.send('❌ ' + data[message.guild.id]['dataQueue'][queueNumber])
+                message.channel.send('❌ ' + data[message.guild.id]['dataQueue'][queueNumber[i]])
                 data[message.guild.id]['queue'][queueNumber[i]].splice(queueNumber[i], 0)
                 data[message.guild.id]['dataQueue'][queueNumber[i]].splice(queueNumber[i], 0)
                 data[message.guild.id]['dataVideoEmbed'][queueNumber[i]].splice(queueNumber[i], 0)
