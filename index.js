@@ -148,8 +148,8 @@ client.on('message', message => {
 
         // PLAY
     } else if ((message.content === prefix + 'play') || (message.content === prefix + 'p')) {
-        let helpCommands = "Lance une musique depuis YouTube\n\nLance une radio enregistrée\n\nLance une musique enregistrée"
-        let helpDescriptions =
+        let helpDescriptions = "Lance une musique depuis YouTube\n\nLance une radio enregistrée\n\nLance une musique enregistrée"
+        let helpCommands =
             prefix + 'play *[mots-clés]*\n' +
             prefix + 'play *[url]*\n' +
             prefix + 'play *[radio]*\n' +
@@ -157,7 +157,7 @@ client.on('message', message => {
             prefix + 'play *[musique]*\n' +
             prefix + 'play *[musique] [volume]*\n'
         setSpecificHelp(message.guild.id, "play", helpCommands, helpDescriptions)
-        message.reply(data[message.guild.id]['specificHelpEmbed'])
+        message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if ((message.content.startsWith(prefix + 'play ')) || (message.content.startsWith(prefix + 'p '))) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
@@ -380,7 +380,7 @@ client.on('disconnect', () => {
 const dataHelp = new Discord.RichEmbed()
     .setTitle("Liste des commandes")
     .setDescription("Préfix : **" + prefix + "**")
-    .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
+    .setAuthor("Aide", botAvatar, "https://unikorn.ga/bot")
     .setColor('#7289DA')
     .setFooter("unikorn.ga | /help", authorAvatar)
     .addField("----------------", prefix + commandes.slice(0, commandes.length / 2 + 1).join("\n" + prefix), true)
