@@ -8,10 +8,11 @@ const token = process.env.TOKEN
 const prefix = '/'
 
 const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
-let botAvatar, authorAvatar
+let authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png"
+let botAvatar = ""
 let dataHelp = {}
 
-const commandes = ["play", "skip", "queue", "stop", "pause", "resume", "remove", "volume", "radios", "musiques", "radio", "purge", "poll", "help"]
+const commandes = ["play", "skip", "queue", "volume", "stop", "pause", "resume", "radios", "musiques", "radio", "purge", "poll", "help"]
 
 const radios = {
     'dnb': ['http://195.201.98.51:8000/dnbradio_main.mp3', 'drum\'n\'bass'],
@@ -60,7 +61,7 @@ function play(connection, message, action) {
         if (data[message.guild.id]['queue'].length == 1) {
             message.channel.send(data[message.guild.id]['dataVideoEmbed'][0])
         } else {
-            message.channel.send('✅ **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
+            message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
         }
     } else if (action == "Skip") {
         message.channel.send(data[message.guild.id]['dataVideoEmbed'][0])
@@ -110,17 +111,15 @@ client.on('ready', function() {
     client.user.setActivity("unikorn.ga | 🦄", { type: "WATCHING" })
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
-    authorAvatar = new Attachment('https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png')
-    botAvatar = new Attachment('https://cdn.discordapp.com/avatars/' + client.users.first().id + '/' + client.users.first().avatar + '.png')
-    console.log("Attachment, Web builds")
+    botAvatar = 'https://cdn.discordapp.com/avatars/' + client.users.first().id + '/' + client.users.first().avatar + '.png'
     dataHelp = new Discord.RichEmbed()
         .setTitle("Liste des commandes")
         .setDescription("Préfix : **" + prefix + "**")
         .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
         .setFooter("unikorn.ga | /help", authorAvatar)
-        .addField("----------------", prefix + commandes.slice(0, (commandes.length + 1) / 2).join("\n" + prefix), true)
-        .addField("----------------", prefix + commandes.slice((commandes.length + 1) / 2, commandes.length).join("\n" + prefix), true)
+        .addField("----------------", prefix + commandes.slice(0, commandes.length / 2 + 1).join("\n" + prefix), true)
+        .addField("----------------", prefix + commandes.slice(commandes.length / 2 + 1, commandes.length).join("\n" + prefix), true)
 })
 
 client.on('message', message => {
@@ -294,7 +293,7 @@ client.on('message', message => {
     } else if (message.content.startsWith(prefix + 'purge')) {
         let args = message.content.split(' ')
         if (args[1] == undefined || args[1] < 1 || args[1] > 100) {
-            message.reply('La valeur doit être comprise entre 1 et 100.')
+            message.reply('La valeur doit être comprise entre 0 et 100.')
         } else {
             message.delete()
             message.channel.bulkDelete(args[1]).catch(console.error)
@@ -436,7 +435,7 @@ function setMusicEmbed(id, video) {
         .push(new Discord.RichEmbed()
             .setTitle(video.title)
             .setDescription("Durée : " + video.timestamp)
-            .setAuthor(video.author.name, "https://i.imgur.com/MBNSqyF.png", "https://youtube.com/channel/" + video.author.id)
+            .setAuthor(video.author.name, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/YouTube_social_red_square_%282017%29.svg/300px-YouTube_social_red_square_%282017%29.svg.png", "https://youtube.com/channel/" + video.author.id)
             .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
             .setColor('#FF0000')
             .setURL("https://youtube.com" + video.url)
