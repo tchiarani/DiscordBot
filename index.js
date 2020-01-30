@@ -8,11 +8,11 @@ const token = process.env.TOKEN
 const prefix = '/'
 
 const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
-let authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png"
+const authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png"
 let botAvatar = ""
 let dataHelp = {}
 
-const commandes = ["play", "skip", "queue", "volume", "stop", "pause", "resume", "radios", "musiques", "radio", "purge", "poll", "help"]
+const commandes = ["play", "skip", "stop", "queue", "volume", "remove", "purge", "pause", "resume", "radio", "radios", "musiques", "poll", "help"]
 
 const radios = {
     'dnb': ['http://195.201.98.51:8000/dnbradio_main.mp3', 'drum\'n\'bass'],
@@ -123,8 +123,7 @@ client.on('ready', function() {
 })
 
 client.on('message', message => {
-    // Voice only works in guilds, if the message does not come from a guild, we ignore it
-    //console.log(message.guild.id)
+
     if (!message.guild) return
     if (!message.content.startsWith(prefix)) return
     let contenuMessage = message.content;
@@ -133,7 +132,7 @@ client.on('message', message => {
     // JOIN
     if (message.content === prefix + 'join') {
         if (message.guild.me.voiceChannel) return message.channel.send('Désolé, je suis déjà connecté dans ' + message.guild.me.voiceChannel.name)
-            // Only try to join the sender's voice channel if they are in one themselves
+
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {
@@ -157,7 +156,7 @@ client.on('message', message => {
 
         // PLAY
     } else if ((message.content === prefix + 'play') || (message.content === prefix + 'p')) {
-        let helpDescriptions = "Lance une musique depuis YouTube\n\nLance une radio enregistrée\n\nLance une musique enregistrée"
+        let helpDescriptions = "Lance ou ajoute une musique depuis YouTube\n\nLance une radio enregistrée\n\nLance une musique enregistrée"
         let helpCommands =
             prefix + 'play *[mots-clés]*\n' +
             prefix + 'play *[url]*\n' +
@@ -421,7 +420,7 @@ client.on('error', () => {
 
 function setSpecificHelp(guild, command, alias, helpCommands, helpDescritions) {
     data[guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
-        .setTitle("Commande(s) disponible(s) pour " + prefix + command + " :")
+        .setTitle("Commandes disponibles pour " + prefix + command + " :")
         .setAuthor("Besoin d'aide ?⁢⁢", botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
         .setFooter("unikorn.ga | " + prefix + command, authorAvatar)
