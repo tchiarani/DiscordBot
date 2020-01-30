@@ -8,7 +8,7 @@ const token = process.env.TOKEN
 const prefix = '/'
 
 const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
-const authorAvatar = new Attachment('https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png')
+const authorAvatar = new Attachment('https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png', 'authorAvatar')
 let botAvatar = ""
 let dataHelp = {}
 
