@@ -165,7 +165,7 @@ client.on('message', message => {
             prefix + 'play *[radio] [volume]*\n' +
             prefix + 'play *[musique]*\n' +
             prefix + 'play *[musique] [volume]*\n'
-        setSpecificHelp(message.guild, "play", helpCommands, helpDescriptions)
+        setSpecificHelp(message.guild, "play", ["p"], helpCommands, helpDescriptions)
         message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if ((message.content.startsWith(prefix + 'play ')) || (message.content.startsWith(prefix + 'p '))) {
         if (message.member.voiceChannel) {
@@ -222,7 +222,7 @@ client.on('message', message => {
     } else if (message.content === prefix + 'radio') {
         let helpDescriptions = "Lance une webradio"
         let helpCommands = prefix + 'radio *[url]*'
-        setSpecificHelp(message.guild, "radio", helpCommands, helpDescriptions)
+        setSpecificHelp(message.guild, "radio", [], helpCommands, helpDescriptions)
         message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if (message.content.startsWith(prefix + 'radio ')) {
         if (message.member.voiceChannel) {
@@ -288,7 +288,7 @@ client.on('message', message => {
     } else if (message.content === prefix + 'purge') {
         let helpDescriptions = "Supprime les *[0-100]* derniers messages"
         let helpCommands = prefix + 'purge *[0-100]*'
-        setSpecificHelp(message.guild, "purge", helpCommands, helpDescriptions)
+        setSpecificHelp(message.guild, "purge", [], helpCommands, helpDescriptions)
         message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if (message.content.startsWith(prefix + 'purge')) {
         let args = message.content.split(' ')
@@ -344,7 +344,7 @@ client.on('message', message => {
     } else if ((message.content === prefix + 'remove') || (message.content === prefix + 'r')) {
         let helpDescriptions = "Supprime les musiques en paramètre"
         let helpCommands = prefix + 'remove *1 3 4...*'
-        setSpecificHelp(message.guild, "remove", helpCommands, helpDescriptions)
+        setSpecificHelp(message.guild, "remove", ["r"], helpCommands, helpDescriptions)
         message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if (message.content.startsWith(prefix + 'remove ') || message.content.startsWith(prefix + 'r ')) {
         let queueNumbers = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(" ")
@@ -365,7 +365,7 @@ client.on('message', message => {
     } else if ((message.content === prefix + 'poll') || (message.content === prefix + 'sondage')) {
         let helpDescriptions = "Crée un sondage"
         let helpCommands = prefix + 'poll Faut-il poser une question ? "Oui" "Non"'
-        setSpecificHelp(message.guild, "poll", helpCommands, helpDescriptions)
+        setSpecificHelp(message.guild, "poll", ["sondage"], helpCommands, helpDescriptions)
         message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
         let question = contenuMessage.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
@@ -419,16 +419,19 @@ client.on('error', () => {
     client.user.setStatus('dnd')
 })
 
-function setSpecificHelp(guild, command, helpCommands, helpDescritions) {
+function setSpecificHelp(guild, command, alias, helpCommands, helpDescritions) {
     data[guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
-        .setTitle("Commande(s) disponible(s) pour :")
-        .setDescription("**" + prefix + command + "**")
+        .setTitle("Commande(s) disponible(s) pour " + prefix + command + " :")
         .setAuthor("Besoin d'aide ?⁢⁢", botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
         .setFooter("unikorn.ga | " + prefix + command, authorAvatar)
         .addField("**Commande :**", helpCommands, true)
         .addField("**Description :**", helpDescritions, true)
-        .setThumbnail(guild.iconURL)
+    if (alias.length == 0) {
+        data[guild.id]['specificHelpEmbed'].setDescription("Aucun alias")
+    } else {
+        data[guild.id]['specificHelpEmbed'].setDescription("Alias : " + prefix + alias.join(", " + prefix))
+    }
 }
 
 function setMusicEmbed(id, video) {
