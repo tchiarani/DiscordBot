@@ -443,7 +443,6 @@ function setMusicEmbed(id, video) {
             .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
             .setColor('#FF0000')
             .setURL("https://youtube.com" + video.url)
-            .setVideo("https://youtube.com" + video.url)
         )
 }
 
