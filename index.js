@@ -118,8 +118,8 @@ client.on('ready', function() {
         .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
         .setFooter("unikorn.ga | /help", authorAvatar)
-        .addField("----------------", prefix + commandes.slice(0, commandes.length / 2 + 1).join("\n" + prefix), true)
-        .addField("----------------", prefix + commandes.slice(commandes.length / 2 + 1, commandes.length).join("\n" + prefix), true)
+        .addField("----------------", prefix + commandes.slice(0, commandes.length + 1 / 2).join("\n" + prefix), true)
+        .addField("----------------", prefix + commandes.slice(commandes.length + 1 / 2, commandes.length).join("\n" + prefix), true)
 })
 
 client.on('message', message => {
@@ -136,7 +136,6 @@ client.on('message', message => {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {
-                    message.channel.send('Connecté dans ' + message.member.voiceChannel.name)
                     message.react('✅')
                 }).catch(console.log)
         } else {
