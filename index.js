@@ -440,7 +440,7 @@ function setMusicEmbed(id, video) {
             .setTitle(video.title)
             .setDescription("Durée : " + video.timestamp)
             .setAuthor(video.author.name, "https://i.imgur.com/MBNSqyF.png", "https://youtube.com/channel/" + video.author.id)
-            .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg", 50, 50)
+            .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
             .setColor('#FF0000')
             .setURL("https://youtube.com" + video.url)
         )
