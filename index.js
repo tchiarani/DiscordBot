@@ -8,7 +8,7 @@ const token = process.env.TOKEN
 const prefix = '/'
 
 const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
-let authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png"
+const authorAvatar = new Attachment('https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png')
 let botAvatar = ""
 let dataHelp = {}
 
@@ -111,7 +111,7 @@ client.on('ready', function() {
     client.user.setActivity("unikorn.ga | 🦄", { type: "WATCHING" })
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
-    botAvatar = 'https://cdn.discordapp.com/avatars/' + client.users.first().id + '/' + client.users.first().avatar + '.png'
+    botAvatar = new Attachment('https://cdn.discordapp.com/avatars/' + client.users.first().id + '/' + client.users.first().avatar + '.png')
     console.log("Attachment, Web builds")
     dataHelp = new Discord.RichEmbed()
         .setTitle("Liste des commandes")
