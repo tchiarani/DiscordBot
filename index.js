@@ -3,6 +3,7 @@ const Attachment = require('discord.js')
 const search = require('yt-search')
 const ytdl = require('ytdl-core')
 const client = new Discord.Client()
+const help = require('./help.js')
 
 const token = process.env.TOKEN
 const prefix = '/'
@@ -63,12 +64,12 @@ function initGuild(id) {
 function play(connection, message, action) {
     if (action == "Add") {
         if (data[message.guild.id]['queue'].length == 1) {
-            message.channel.send("Vous écoutez :", data[message.guild.id]['dataMusicEmbed'][0])
+            message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
         } else {
             message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
         }
     } else if (action == "Skip") {
-        message.channel.send("Vous écoutez :", data[message.guild.id]['dataMusicEmbed'][0])
+        message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
     }
     if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action != "Add" && data[message.guild.id]['queue'].length >= 1) {
         data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
@@ -410,8 +411,7 @@ client.on('message', message => {
 
         // TEST 
     } else if (message.content === prefix + 'test') {
-        message.channel.send("Test réussi ! En ligne depuis : " + msToTime(client.uptime))
-        console.log("---------------------------------------")
+        help
     }
 })
 
@@ -484,7 +484,7 @@ function setMusicEmbed(id, video) {
     if (video.timestamp == "0") {
         data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription("🔴 Live")
     } else {
-        data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription("⏱️ " + video.timestamp)
+        data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription(video.timestamp)
     }
 }
 
