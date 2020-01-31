@@ -422,14 +422,14 @@ function msToTime(s) {
         return ('00' + n).slice(-z)
     }
 
-    var ms = s % 1000
+    let days = s % 86400000
+    let ms = s % 1000
     s = (s - ms) / 1000
-    var secs = s % 60
+    let secs = s % 60
     s = (s - secs) / 60
-    var mins = s % 60
-    var hrs = (s - mins) / 60
+    let mins = s % 60
+    let hrs = (s - mins) / 60
     s = (s - hrs) / 60
-    var days = s % 24
 
     if (days != 0) return pad(days) + 'j' + pad(hrs) + 'h' + pad(mins) + 'm' + pad(secs) + 's'
     if (hrs != 0) return pad(hrs) + 'h' + pad(mins) + 'm' + pad(secs) + 's'
