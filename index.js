@@ -410,10 +410,29 @@ client.on('message', message => {
 
         // TEST 
     } else if (message.content === prefix + 'test') {
-        message.channel.send("Test réussi ! Status : " + client.status)
+        message.channel.send("Test réussi ! Uptime : " + msToTime(client.uptime))
         console.log("---------------------------------------")
     }
 })
+
+function msToTime(s) {
+
+    function pad(n, z) {
+        z = z || 2
+        return ('00' + n).slice(-z)
+    }
+
+    var ms = s % 1000
+    s = (s - ms) / 1000
+    var secs = s % 60
+    s = (s - secs) / 60
+    var mins = s % 60
+    var hrs = (s - mins) / 60
+    s = (s - ms) / 60
+    var days = s % 24
+
+    return pad(days) + 'j' + pad(hrs) + 'h' + pad(mins) + 'm' + pad(secs) + 's'
+}
 
 client.on('reconnecting', () => {
     console.log('Reconnecting!')
@@ -470,12 +489,10 @@ function setMusicEmbed(id, video) {
 
 function setQueueEmbed(guild, musicTitle, musicDuration) {
     data[guild.id]['queueEmbed'] = new Discord.RichEmbed()
-        .setTitle("File d'attente :")
-        .setAuthor("YouTube⁢⁢", "https://i.imgur.com/MBNSqyF.png", "https://youtube.com")
+        .setTitle("**File** d'attente :")
         .setColor('#FF0000')
         .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
-        //.setDescription('🔊 **' + musicTitle[0] + '** (' + musicDuration[0] + ')')
-        .addField("**Titre :**", musicTitle.slice(0, 9).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
+        .addField("Titre :", musicTitle.slice(0, 9).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
         .addField("Durée :", musicDuration.slice(0, 9), true)
 }
 
