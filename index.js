@@ -3,7 +3,6 @@ const Attachment = require('discord.js')
 const search = require('yt-search')
 const ytdl = require('ytdl-core')
 const client = new Discord.Client()
-const help = require('./help.js')
 
 const token = process.env.TOKEN
 const prefix = '/'
@@ -131,10 +130,13 @@ client.on('ready', function() {
         .addField("----------------", prefix + commandes.slice((commandes.length + 1) / 2, commandes.length).join("\n" + prefix), true)
 })
 
-client.on('message', message => {
+client.on('message', async message => {
 
+    if (message.author.bot) return
     if (!message.guild) return
     if (!message.content.startsWith(prefix)) return
+    if (!message.member) message.member = await message.guild.fetchMember(message)
+
     let contenuMessage = message.content;
     message.content = message.content.toLowerCase()
 
@@ -411,7 +413,8 @@ client.on('message', message => {
 
         // TEST 
     } else if (message.content === prefix + 'test') {
-        help
+        message.channel.send("Test réussi ! En ligne depuis : " + msToTime(client.uptime))
+        console.log("---------------------------------------")
     }
 })
 
