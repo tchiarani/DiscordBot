@@ -59,12 +59,12 @@ function initGuild(id) {
 function play(connection, message, action) {
     if (action == "Add") {
         if (data[message.guild.id]['queue'].length == 1) {
-            message.channel.send(data[message.guild.id]['dataVideoEmbed'][0])
+            message.channel.send("Vous écoutez :", data[message.guild.id]['dataVideoEmbed'][0])
         } else {
             message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
         }
     } else if (action == "Skip") {
-        message.channel.send(data[message.guild.id]['dataVideoEmbed'][0])
+        message.channel.send("Vous écoutez :", data[message.guild.id]['dataVideoEmbed'][0])
     }
     if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action != "Add" && data[message.guild.id]['queue'].length >= 1) {
         data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
@@ -203,7 +203,11 @@ client.on('message', message => {
                             if (err) throw err
                             videos = r.videos
                             data[message.guild.id]['firstResult'] = videos[0]
-                            dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (' + videos[0].timestamp + ')'
+                            if (videos[0].timestamp == 0) {
+                                dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (🔴 Live)'
+                            } else {
+                                dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (⏳ ' + videos[0].timestamp + ' ⏱️)'
+                            }
                             let music = 'https://www.youtube.com' + videos[0].url
                             setMusicEmbed(message.guild.id, videos[0])
                             data[message.guild.id]['queue'].push(music)
@@ -441,7 +445,6 @@ function setMusicEmbed(id, video) {
             .setColor('#FF0000')
             .setURL("https://youtube.com" + video.url)
         )
-    console.log(data[id]['dataVideoEmbed'][data[id]['dataVideoEmbed'].length - 1])
     if (video.timestamp == "0") {
         data[id]['dataVideoEmbed'][data[id]['dataVideoEmbed'].length - 1].setDescription("🔴 Live")
     } else {
