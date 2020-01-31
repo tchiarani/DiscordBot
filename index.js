@@ -52,20 +52,23 @@ function initGuild(id) {
     data[id]['firstResult'] = ''
     data[id]['queue'] = []
     data[id]['dataQueue'] = []
-    data[id]['dataVideoEmbed'] = []
+    data[id]['dataMusicEmbed'] = []
     data[id]['specificHelpEmbed'] = {}
+
     data[id]['queueEmbed'] = {}
+    data[id]['musicTitle'] = []
+    data[id]['musicDuration'] = []
 }
 
 function play(connection, message, action) {
     if (action == "Add") {
         if (data[message.guild.id]['queue'].length == 1) {
-            message.channel.send("Vous écoutez :", data[message.guild.id]['dataVideoEmbed'][0])
+            message.channel.send("Vous écoutez :", data[message.guild.id]['dataMusicEmbed'][0])
         } else {
             message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
         }
     } else if (action == "Skip") {
-        message.channel.send("Vous écoutez :", data[message.guild.id]['dataVideoEmbed'][0])
+        message.channel.send("Vous écoutez :", data[message.guild.id]['dataMusicEmbed'][0])
     }
     if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action != "Add" && data[message.guild.id]['queue'].length >= 1) {
         data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
@@ -88,11 +91,11 @@ function end(connection, message, action) {
     if (action == 'Skip' || action == "Skip end") {
         data[message.guild.id]['queue'].shift()
         data[message.guild.id]['dataQueue'].shift()
-        data[message.guild.id]['dataVideoEmbed'].shift()
+        data[message.guild.id]['dataMusicEmbed'].shift()
     } else if (action == 'Stop') {
         data[message.guild.id]['queue'] = []
         data[message.guild.id]['dataQueue'] = []
-        data[message.guild.id]['dataVideoEmbed'] = []
+        data[message.guild.id]['dataMusicEmbed'] = []
     }
     if (data[message.guild.id]['queue'].length == 0) {
         connection.disconnect()
@@ -209,6 +212,8 @@ client.on('message', message => {
                             } else {
                                 dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (⏳ ' + videos[0].timestamp + ' ⏱️)'
                             }
+                            data[message.guild.id]['musicTitle'].push(videos[0].title)
+                            data[message.guild.id]['musicDuration'].push(videos[0].timestamp)
                             let music = 'https://www.youtube.com' + videos[0].url
                             setMusicEmbed(message.guild.id, videos[0])
                             data[message.guild.id]['queue'].push(music)
@@ -322,7 +327,7 @@ client.on('message', message => {
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
             message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
-            setQueueEmbed(message.guild, data[message.guild.id]['dataQueue'], data[message.guild.id]['dataQueue'])
+            setQueueEmbed(message.guild, data[message.guild.id]['musicTitle'], data[message.guild.id]['musicDuration'])
             message.channel.send(data[message.guild.id]['queueEmbed'])
         } else {
             message.channel.send("Aucune musique dans la file d'attente.")
@@ -359,7 +364,7 @@ client.on('message', message => {
                 message.channel.send('❌ ' + data[message.guild.id]['dataQueue'][queueNumbers[i] - nbRemoved])
                 data[message.guild.id]['queue'].splice(queueNumbers[i] - nbRemoved, 1)
                 data[message.guild.id]['dataQueue'].splice(queueNumbers[i] - nbRemoved, 1)
-                data[message.guild.id]['dataVideoEmbed'].splice(queueNumbers[i] - nbRemoved, 1)
+                data[message.guild.id]['dataMusicEmbed'].splice(queueNumbers[i] - nbRemoved, 1)
                 nbRemoved++
             } else {
                 message.channel.send("Pas de numéro **" + queueNumbers[i] + "** dans la file d'attente.")
@@ -440,7 +445,7 @@ function setSpecificHelp(guild, command, alias, helpCommands, helpDescritions) {
 }
 
 function setMusicEmbed(id, video) {
-    data[id]['dataVideoEmbed']
+    data[id]['dataMusicEmbed']
         .push(new Discord.RichEmbed()
             .setTitle(video.title)
             .setAuthor(video.author.name, "https://i.imgur.com/MBNSqyF.png", "https://youtube.com/channel/" + video.author.id)
@@ -449,9 +454,9 @@ function setMusicEmbed(id, video) {
             .setURL("https://youtube.com" + video.url)
         )
     if (video.timestamp == "0") {
-        data[id]['dataVideoEmbed'][data[id]['dataVideoEmbed'].length - 1].setDescription("🔴 Live")
+        data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription("🔴 Live")
     } else {
-        data[id]['dataVideoEmbed'][data[id]['dataVideoEmbed'].length - 1].setDescription("Durée : " + video.timestamp)
+        data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription("Durée : " + video.timestamp)
     }
 }
 
