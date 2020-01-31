@@ -54,6 +54,7 @@ function initGuild(id) {
     data[id]['dataQueue'] = []
     data[id]['dataVideoEmbed'] = []
     data[id]['specificHelpEmbed'] = {}
+    data[id]['queueEmbed'] = {}
 }
 
 function play(connection, message, action) {
@@ -321,6 +322,8 @@ client.on('message', message => {
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
             message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
+            setQueueEmbed(message.guild, data[message.guild.id]['dataQueue'], data[message.guild.id]['dataQueue'])
+            message.channel.send(data[guild.id]['queueEmbed'])
         } else {
             message.channel.send("Aucune musique dans la file d'attente.")
         }
@@ -450,6 +453,16 @@ function setMusicEmbed(id, video) {
     } else {
         data[id]['dataVideoEmbed'][data[id]['dataVideoEmbed'].length - 1].setDescription("Durée : " + video.timestamp)
     }
+}
+
+function setQueueEmbed(guild, musicTitle, musicDuration) {
+    data[guild.id]['queueEmbed'] = new Discord.RichEmbed()
+        .setTitle("File d'attente :")
+        .setAuthor("YouTube⁢⁢", "https://i.imgur.com/MBNSqyF.png", "https://youtube.com")
+        .setColor('#7289DA')
+        .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
+        .addField("**Titre :**", musicTitle, true)
+        .addField("**Durée :**", musicDuration, true)
 }
 
 const radiosList = {
