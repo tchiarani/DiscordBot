@@ -323,7 +323,7 @@ client.on('message', message => {
         if (data[message.guild.id]['dataQueue'].length != 0) {
             message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
             setQueueEmbed(message.guild, data[message.guild.id]['dataQueue'], data[message.guild.id]['dataQueue'])
-            message.channel.send(data[guild.id]['queueEmbed'])
+            message.channel.send(data[message.guild.id]['queueEmbed'])
         } else {
             message.channel.send("Aucune musique dans la file d'attente.")
         }
