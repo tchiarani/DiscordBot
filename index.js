@@ -442,9 +442,9 @@ function setMusicEmbed(id, video) {
             .setURL("https://youtube.com" + video.url)
         )
     if (video.timestamp == 0) {
-        data[id]['dataVideoEmbed'].setDescription("🔴 Live")
+        data[id]['dataVideoEmbed'].slice(-1).setDescription("🔴 Live")
     } else {
-        data[id]['dataVideoEmbed'].setDescription("Durée : " + video.timestamp)
+        data[id]['dataVideoEmbed'].slice(-1).setDescription("Durée : " + video.timestamp)
     }
 }
 
