@@ -203,23 +203,28 @@ client.on('message', message => {
                     if (!find) {
                         let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
                         search(words, function(err, r) {
-                            message.react('▶')
-                            if (err) throw err
-                            videos = r.videos
-                            data[message.guild.id]['firstResult'] = videos[0]
-                            if (videos[0].timestamp == 0) {
-                                videos[0].timestamp = '(🔴 Live)'
+                            if (r.videos != undefined) {
+                                message.react('▶')
+                                if (err) throw err
+                                videos = r.videos
+                                data[message.guild.id]['firstResult'] = videos[0]
+                                if (videos[0].timestamp == 0) {
+                                    videos[0].timestamp = '(🔴 Live)'
+                                } else {
+                                    videos[0].timestamp = '(⏳ ' + videos[0].timestamp + ' ⏱️)'
+                                }
+                                dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' ' + videos[0].timestamp
+                                data[message.guild.id]['musicTitle'].push(videos[0].title)
+                                data[message.guild.id]['musicDuration'].push(videos[0].timestamp)
+                                let music = 'https://www.youtube.com' + videos[0].url
+                                setMusicEmbed(message.guild.id, videos[0])
+                                data[message.guild.id]['queue'].push(music)
+                                data[message.guild.id]['dataQueue'].push(dataMusic)
+                                play(connection, message, 'Add')
                             } else {
-                                videos[0].timestamp = '(⏳ ' + videos[0].timestamp + ' ⏱️)'
+                                message.react('❓')
                             }
-                            dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' ' + videos[0].timestamp
-                            data[message.guild.id]['musicTitle'].push(videos[0].title)
-                            data[message.guild.id]['musicDuration'].push(videos[0].timestamp)
-                            let music = 'https://www.youtube.com' + videos[0].url
-                            setMusicEmbed(message.guild.id, videos[0])
-                            data[message.guild.id]['queue'].push(music)
-                            data[message.guild.id]['dataQueue'].push(dataMusic)
-                            play(connection, message, 'Add')
+
                         })
                     }
                 }).catch(console.log)
