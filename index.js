@@ -472,8 +472,9 @@ function setQueueEmbed(guild, musicTitle, musicDuration) {
         .setAuthor("YouTube⁢⁢", "https://i.imgur.com/MBNSqyF.png", "https://youtube.com")
         .setColor('#7289DA')
         .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
-        .addField("**Titre :**", '🔊 ' + musicTitle.slice(1, 10).map((value, index) => value + "\n" + emojisNombre[index]), true)
-        .addField("**Durée :**", musicDuration, true)
+        .setDescription('🔊 ' + musicTitle[0] + ' ' + musicDuration[0])
+        .addField("**Titre :**", musicTitle.slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join('\n'), true)
+        .addField("**Durée :**", musicDuration.slice(1, 10), true)
 }
 
 const radiosList = {
