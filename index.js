@@ -410,7 +410,7 @@ client.on('message', message => {
 
         // TEST 
     } else if (message.content === prefix + 'test') {
-        message.channel.send("Test réussi ! Uptime : " + msToTime(client.uptime))
+        message.channel.send("Test réussi ! En ligne depuis : " + msToTime(client.uptime))
         console.log("---------------------------------------")
     }
 })
@@ -428,7 +428,7 @@ function msToTime(s) {
     s = (s - secs) / 60
     var mins = s % 60
     var hrs = (s - mins) / 60
-    s = (s - ms) / 60
+    s = (s - hrs) / 60
     var days = s % 24
 
     return pad(days) + 'j' + pad(hrs) + 'h' + pad(mins) + 'm' + pad(secs) + 's'
@@ -489,7 +489,7 @@ function setMusicEmbed(id, video) {
 
 function setQueueEmbed(guild, musicTitle, musicDuration) {
     data[guild.id]['queueEmbed'] = new Discord.RichEmbed()
-        .setTitle("**File** d'attente :")
+        .setTitle("File d'attente :")
         .setColor('#FF0000')
         .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
         .addField("Titre :", musicTitle.slice(0, 9).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
