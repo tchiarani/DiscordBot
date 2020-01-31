@@ -38,7 +38,7 @@ const musiques = {
         /*  'musique' : ['chemin', 'texte']  */
 }
 
-const emojisNombre = ['⏯️', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
+const emojisNombre = ['🔊', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
 
 let data = []
 
@@ -334,7 +334,7 @@ client.on('message', message => {
         // QUEUE
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
-            message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
+            //message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
             setQueueEmbed(message.guild, data[message.guild.id]['musicTitle'], data[message.guild.id]['musicDuration'])
             message.channel.send(data[message.guild.id]['queueEmbed'])
         } else {
@@ -347,7 +347,7 @@ client.on('message', message => {
                 if (queueNumber == 0) {
                     message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][queueNumber])
                 } else if (queueNumber <= 9) {
-                    message.channel.send(emojisNombre[queueNumber - 1] + ' ' + data[message.guild.id]['dataQueue'][queueNumber])
+                    message.channel.send(emojisNombre[queueNumber] + ' ' + data[message.guild.id]['dataQueue'][queueNumber])
                 } else {
                     message.channel.send(queueNumber + '. ' + data[message.guild.id]['dataQueue'][queueNumber])
                 }
