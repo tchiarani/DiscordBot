@@ -431,7 +431,10 @@ function msToTime(s) {
     s = (s - hrs) / 60
     var days = s % 24
 
-    return pad(days) + 'j' + pad(hrs) + 'h' + pad(mins) + 'm' + pad(secs) + 's'
+    if (days != 0) return pad(days) + 'j' + pad(hrs) + 'h' + pad(mins) + 'm' + pad(secs) + 's'
+    if (hrs != 0) return pad(hrs) + 'h' + pad(mins) + 'm' + pad(secs) + 's'
+    if (mins != 0) return pad(mins) + 'm' + pad(secs) + 's'
+    else return pad(secs) + 's'
 }
 
 client.on('reconnecting', () => {
