@@ -92,10 +92,14 @@ function end(connection, message, action) {
         data[message.guild.id]['queue'].shift()
         data[message.guild.id]['dataQueue'].shift()
         data[message.guild.id]['dataMusicEmbed'].shift()
+        data[message.guild.id]['musicTitle'].shift()
+        data[message.guild.id]['musicDuration'].shift()
     } else if (action == 'Stop') {
         data[message.guild.id]['queue'] = []
         data[message.guild.id]['dataQueue'] = []
         data[message.guild.id]['dataMusicEmbed'] = []
+        data[message.guild.id]['musicTitle'] = []
+        data[message.guild.id]['musicDuration'] = []
     }
     if (data[message.guild.id]['queue'].length == 0) {
         connection.disconnect()
@@ -211,7 +215,7 @@ client.on('message', message => {
                                 if (videos[0].timestamp == 0) {
                                     videos[0].timestamp = 'Live'
                                 }
-                                dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' ' + videos[0].timestamp
+                                dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (' + videos[0].timestamp + ')'
                                 data[message.guild.id]['musicTitle'].push(videos[0].title)
                                 data[message.guild.id]['musicDuration'].push(videos[0].timestamp)
                                 let music = 'https://www.youtube.com' + videos[0].url
@@ -460,7 +464,7 @@ function setMusicEmbed(id, video) {
     if (video.timestamp == "0") {
         data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription("🔴 Live")
     } else {
-        data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription("Durée : " + video.timestamp)
+        data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription("⏱️ " + video.timestamp)
     }
 }
 
@@ -468,11 +472,11 @@ function setQueueEmbed(guild, musicTitle, musicDuration) {
     data[guild.id]['queueEmbed'] = new Discord.RichEmbed()
         .setTitle("File d'attente :")
         .setAuthor("YouTube⁢⁢", "https://i.imgur.com/MBNSqyF.png", "https://youtube.com")
-        .setColor('#7289DA')
+        .setColor('#FF0000')
         .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
-        .setDescription('🔊 ' + musicTitle[0] + ' (' + musicDuration[0] + ')')
-        .addField("**Titre :**", musicTitle.slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join('\n'), true)
-        .addField("**Durée :**", musicDuration.slice(1, 10), true)
+        //.setDescription('🔊 **' + musicTitle[0] + '** (' + musicDuration[0] + ')')
+        .addField("**Titre :**", "⏯️ " + musicTitle.slice(0, 9).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n'), true)
+        .addField("**Durée :**", musicDuration.slice(0, 9), true)
 }
 
 const radiosList = {
