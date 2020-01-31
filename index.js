@@ -436,12 +436,16 @@ function setMusicEmbed(id, video) {
     data[id]['dataVideoEmbed']
         .push(new Discord.RichEmbed()
             .setTitle(video.title)
-            .setDescription("Durée : " + video.timestamp)
             .setAuthor(video.author.name, "https://i.imgur.com/MBNSqyF.png", "https://youtube.com/channel/" + video.author.id)
             .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
             .setColor('#FF0000')
             .setURL("https://youtube.com" + video.url)
         )
+    if (video.timestamp == 0) {
+        data[id]['dataVideoEmbed'].setDescription("🔴 Live")
+    } else {
+        data[id]['dataVideoEmbed'].setDescription("Durée : " + video.timestamp)
+    }
 }
 
 const radiosList = {
