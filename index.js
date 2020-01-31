@@ -38,7 +38,7 @@ const musiques = {
         /*  'musique' : ['chemin', 'texte']  */
 }
 
-const emojisNombre = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
+const emojisNombre = ['⏯️', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
 
 let data = []
 
@@ -475,8 +475,8 @@ function setQueueEmbed(guild, musicTitle, musicDuration) {
         .setColor('#FF0000')
         .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
         //.setDescription('🔊 **' + musicTitle[0] + '** (' + musicDuration[0] + ')')
-        .addField("**Titre :**", "⏯️ " + musicTitle.slice(0, 9).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n'), true)
-        .addField("**Durée :**", musicDuration.slice(0, 9), true)
+        .addField("**Titre :**", "⏯️ " + musicTitle.slice(0, 9).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
+        .addField("Durée :", musicDuration.slice(0, 9), true)
 }
 
 const radiosList = {
