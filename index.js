@@ -467,7 +467,7 @@ function setQueueEmbed(guild, musicTitle, musicDuration) {
         .setAuthor("YouTube⁢⁢", "https://i.imgur.com/MBNSqyF.png", "https://youtube.com")
         .setColor('#7289DA')
         .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
-        .addField("**Titre :**", '🔊 ' + musicTitle.slice(1, 10).map((value, index) => value).join("\n" + emojisNombre[index]), true)
+        .addField("**Titre :**", '🔊 ' + musicTitle.slice(1, 10).map((value, index) => value.join("\n" + emojisNombre[index])), true)
         .addField("**Durée :**", musicDuration, true)
 }
 
