@@ -422,7 +422,6 @@ function msToTime(s) {
         return ('00' + n).slice(-z)
     }
 
-    let days = s % 86400000
     let ms = s % 1000
     s = (s - ms) / 1000
     let secs = s % 60
@@ -431,7 +430,6 @@ function msToTime(s) {
     let hrs = (s - mins) / 60
     s = (s - hrs) / 60
 
-    if (days != 0) return pad(days) + 'j' + pad(hrs) + 'h' + pad(mins) + 'm' + pad(secs) + 's'
     if (hrs != 0) return pad(hrs) + 'h' + pad(mins) + 'm' + pad(secs) + 's'
     if (mins != 0) return pad(mins) + 'm' + pad(secs) + 's'
     else return pad(secs) + 's'
