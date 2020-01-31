@@ -208,10 +208,11 @@ client.on('message', message => {
                             videos = r.videos
                             data[message.guild.id]['firstResult'] = videos[0]
                             if (videos[0].timestamp == 0) {
-                                dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (🔴 Live)'
+                                videos[0].timestamp = '(🔴 Live)'
                             } else {
-                                dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (⏳ ' + videos[0].timestamp + ' ⏱️)'
+                                videos[0].timestamp = '(⏳ ' + videos[0].timestamp + ' ⏱️)'
                             }
+                            dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' ' + videos[0].timestamp
                             data[message.guild.id]['musicTitle'].push(videos[0].title)
                             data[message.guild.id]['musicDuration'].push(videos[0].timestamp)
                             let music = 'https://www.youtube.com' + videos[0].url
@@ -466,7 +467,7 @@ function setQueueEmbed(guild, musicTitle, musicDuration) {
         .setAuthor("YouTube⁢⁢", "https://i.imgur.com/MBNSqyF.png", "https://youtube.com")
         .setColor('#7289DA')
         .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
-        .addField("**Titre :**", musicTitle, true)
+        .addField("**Titre :**", '🔊 ' + musicTitle.slice(1, 10).map((value, index) => value).join("\n" + emojisNombre[index]), true)
         .addField("**Durée :**", musicDuration, true)
 }
 
