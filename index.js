@@ -118,8 +118,8 @@ client.on('ready', function() {
         .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
         .setFooter("unikorn.ga | /help", authorAvatar)
-        .addField("----------------", prefix + commandes.slice(0, commandes.length + 1 / 2).join("\n" + prefix), true)
-        .addField("----------------", prefix + commandes.slice(commandes.length + 1 / 2, commandes.length).join("\n" + prefix), true)
+        .addField("----------------", prefix + commandes.slice(0, (commandes.length + 1) / 2).join("\n" + prefix), true)
+        .addField("----------------", prefix + commandes.slice((commandes.length + 1) / 2, commandes.length).join("\n" + prefix), true)
 })
 
 client.on('message', message => {
@@ -442,6 +442,11 @@ function setMusicEmbed(id, video) {
             .setColor('#FF0000')
             .setURL("https://youtube.com" + video.url)
         )
+    if (video.timestamp == "0") {
+        data[id]['dataVideoEmbed'].slice(-1).setDescription("🔴 Live")
+    } else {
+        data[id]['dataVideoEmbed'].slice(-1).setDescription("Durée : " + video.timestamp)
+    }
 }
 
 const radiosList = {
