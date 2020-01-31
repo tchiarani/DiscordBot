@@ -441,11 +441,11 @@ function setMusicEmbed(id, video) {
             .setColor('#FF0000')
             .setURL("https://youtube.com" + video.url)
         )
-    console.log(data[id]['dataVideoEmbed'][length - 1])
+    console.log(data[id]['dataVideoEmbed'][data[id]['dataVideoEmbed'].length - 1])
     if (video.timestamp == "0") {
-        data[id]['dataVideoEmbed'][length - 1].setDescription("🔴 Live")
+        data[id]['dataVideoEmbed'][data[id]['dataVideoEmbed'].length - 1].setDescription("🔴 Live")
     } else {
-        data[id]['dataVideoEmbed'][length - 1].setDescription("Durée : " + video.timestamp)
+        data[id]['dataVideoEmbed'][data[id]['dataVideoEmbed'].length - 1].setDescription("Durée : " + video.timestamp)
     }
 }
 
