@@ -209,9 +209,7 @@ client.on('message', message => {
                                 videos = r.videos
                                 data[message.guild.id]['firstResult'] = videos[0]
                                 if (videos[0].timestamp == 0) {
-                                    videos[0].timestamp = '(🔴 Live)'
-                                } else {
-                                    videos[0].timestamp = '(⏳ ' + videos[0].timestamp + ' ⏱️)'
+                                    videos[0].timestamp = 'Live'
                                 }
                                 dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' ' + videos[0].timestamp
                                 data[message.guild.id]['musicTitle'].push(videos[0].title)
@@ -472,7 +470,7 @@ function setQueueEmbed(guild, musicTitle, musicDuration) {
         .setAuthor("YouTube⁢⁢", "https://i.imgur.com/MBNSqyF.png", "https://youtube.com")
         .setColor('#7289DA')
         .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
-        .setDescription('🔊 ' + musicTitle[0] + ' ' + musicDuration[0])
+        .setDescription('🔊 ' + musicTitle[0] + ' (' + musicDuration[0] + ')')
         .addField("**Titre :**", musicTitle.slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join('\n'), true)
         .addField("**Durée :**", musicDuration.slice(1, 10), true)
 }
