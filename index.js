@@ -119,7 +119,7 @@ client.on('ready', function() {
     client.user.setActivity("unikorn.ga | 🦄", { type: "WATCHING" })
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
-    botAvatar = 'https://cdn.discordapp.com/avatars/' + client.users.first().id + '/' + client.users.first().avatar + '.png'
+    botAvatar = client.user.avatarURL
     dataHelp = new Discord.RichEmbed()
         .setTitle("Liste des commandes")
         .setDescription("Préfix : **" + prefix + "**")
