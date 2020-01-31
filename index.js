@@ -67,7 +67,7 @@ function play(connection, message, action) {
         message.channel.send(data[message.guild.id]['dataVideoEmbed'][0])
     }
     if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action != "Add" && data[message.guild.id]['queue'].length >= 1) {
-        data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0], { filter: 'audioonly' }))
+        data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
         data[message.guild.id]['song'].setVolume(1 / 25)
 
         data[message.guild.id]['song'].on("end", (reason) => {
