@@ -72,7 +72,7 @@ function play(connection, message, action) {
         if (data[message.guild.id]['queue'].length == 1) {
             message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
         } else {
-            //message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
+            message.channel.send('Playlist ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (**' + data[message.guild.id]['firstResult'].total_items + '** musiques)')
         }
     } else if (action == "Skip") {
         message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
@@ -220,11 +220,9 @@ client.on('message', async message => {
                             ytpl(args[1].match(regExp)[2], function(err, playlist) {
                                 if (err) console.log(err)
                                 message.react('▶')
-                                console.log(playlist)
-                                data[message.guild.id]['firstResult'].title = playlist.title
+                                data[message.guild.id]['firstResult'] = playlist
                                 data[message.guild.id]['firstResult'].author.name = playlist.author.name
                                 data[message.guild.id]['firstResult'].timestamp = playlist.total_items + " musiques"
-                                    //message.channel.send("Playlist ajoutée : **" + playlist.title + "**\n**" + playlist.total_items + "** musiques ajoutées à la file !")
                                 for (let i = 0; i < playlist.items.length; i++) {
                                     dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
                                     data[message.guild.id]['musicTitle'].push(playlist.items[i].title)
@@ -234,7 +232,7 @@ client.on('message', async message => {
                                     data[message.guild.id]['queue'].push(music)
                                     data[message.guild.id]['dataQueue'].push(dataMusic)
                                 }
-                                play(connection, message, 'Add')
+                                play(connection, message, 'Add playlist')
                             });
                         } else {
                             let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
