@@ -112,14 +112,14 @@ function end(connection, message, action) {
 }
 
 function setMyActivity() {
-    client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
+    client.user.setActivity("unikorn.ga • /help", { type: "WATCHING" })
 }
 
 client.login(token)
 
 client.on('ready', function() {
     console.log(`-----\nBot connecté dans ${client.guilds.size} serveurs différents, pour ${client.users.size} utilisateurs.\n-----`)
-    client.user.setActivity("unikorn.ga | 🦄", { type: "WATCHING" })
+    client.user.setActivity("unikorn.ga • 🦄", { type: "WATCHING" })
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
     botAvatar = client.user.avatarURL
@@ -524,11 +524,15 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
         .setColor('#FF0000')
         .addField("Actuellement :", "🔊 **" + musicTitle[0] + "**", false)
     if (musicTitle.length == 1) {
-        data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + "1 musique")
+        data[message.guild.id]['queueEmbed'].setFooter("1 musique")
     } else {
         data[message.guild.id]['queueEmbed'].addField("Prochainement :", musicTitle.slice(indexMin, indexMax).map((value, index) => index + 1 + '. **' + value).join('**\n') + "**", true)
         data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
-        data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + musicTitle.length + " musiques")
+        if (nbPages == 1) {
+            data[message.guild.id]['queueEmbed'].setFooter(musicTitle.length + " musiques")
+        } else {
+            data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + musicTitle.length + " musiques")
+        }
     }
     message.channel.send(data[message.guild.id]['queueEmbed'])
         .then(msg => {
@@ -555,7 +559,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                             data[message.guild.id]['queueEmbed'].fields[2].value = " "
                             data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + "1 musique")
                         } else {
-                            data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + indexMin * (page - 1) + '. **' + value).join('**\n') + "**"
+                            data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + indexMin + '. **' + value).join('**\n') + "**"
                             data[message.guild.id]['queueEmbed'].fields[2].value = musicDuration.slice(indexMin, indexMax).join('\n')
                             data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + musicTitle.length + " musiques")
                         }
@@ -575,7 +579,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                             data[message.guild.id]['queueEmbed'].fields[2].value = " "
                             data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + "1 musique")
                         } else {
-                            data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + indexMin * (page - 1) + '. **' + value).join('**\n') + "**"
+                            data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + indexMin + '. **' + value).join('**\n') + "**"
                             data[message.guild.id]['queueEmbed'].fields[2].value = musicDuration.slice(indexMin, indexMax).join('\n')
                             data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + musicTitle.length + " musiques")
                         }
