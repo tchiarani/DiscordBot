@@ -530,37 +530,39 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
         data[message.guild.id]['queueEmbed'].setDescription(musicTitle.length + " musiques")
     }
     message.channel.send(data[message.guild.id]['queueEmbed'])
-        .then(msg => msg.react('⬅️'))
-        .then(r => msg.react('➡️'))
+        .then(msg => {
+            msg.react('⬅️').then(r => {
+                msg.react('➡️')
 
-    const backwardsFilter = (reaction, user) => reaction.emoji.name === '⬅️' //&& user.id === message.author.id
-    const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' //&& user.id === message.author.id
+                const backwardsFilter = (reaction, user) => reaction.emoji.name === '⬅️' //&& user.id === message.author.id
+                const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' //&& user.id === message.author.id
 
-    const backwards = msg.createReactionsCollector(backwardsFilter)
-    const forwards = msg.createReactionsCollector(forwardsFilter)
+                const backwards = msg.createReactionsCollector(backwardsFilter)
+                const forwards = msg.createReactionsCollector(forwardsFilter)
 
-    backwards.on('collect', r => {
-        if (page == 1) return
-        page--
-        indexMin -= 10
-        indexMax -= 10
-        data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
-        data[message.guild.id]['queueEmbed'].addField("Titre :", musicTitle.slice(indexMin, indexMax).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
-        data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
-            // msg.edit(data[message.guild.id]['queueEmbed'])
-    })
+                backwards.on('collect', r => {
+                    if (page == 1) return
+                    page--
+                    indexMin -= 10
+                    indexMax -= 10
+                    data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
+                    data[message.guild.id]['queueEmbed'].addField("Titre :", musicTitle.slice(indexMin, indexMax).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
+                    data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
+                        // msg.edit(data[message.guild.id]['queueEmbed'])
+                })
 
-    forwards.on('collect', r => {
-        if (page == nbPages) return
-        page++
-        indexMin += 10
-        indexMax += 10
-        data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
-        data[message.guild.id]['queueEmbed'].addField("Titre :", musicTitle.slice(indexMin, indexMax).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
-        data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
-            // msg.edit(data[message.guild.id]['queueEmbed'])
-    })
-
+                forwards.on('collect', r => {
+                    if (page == nbPages) return
+                    page++
+                    indexMin += 10
+                    indexMax += 10
+                    data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
+                    data[message.guild.id]['queueEmbed'].addField("Titre :", musicTitle.slice(indexMin, indexMax).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
+                    data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
+                        // msg.edit(data[message.guild.id]['queueEmbed'])
+                })
+            })
+        })
 }
 
 
