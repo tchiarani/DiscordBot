@@ -514,12 +514,16 @@ function setMusicEmbed(id, video, videoId, author_id, url, duration) {
 }
 
 function setQueueEmbed(message, musicTitle, musicDuration) {
+    let nbPages = musicTitle.length / 10
+    let page = 1
+    let indexMin = 0
+    let indexMax = 10
     data[message.guild.id]['queueEmbed'] = new Discord.RichEmbed()
         .setTitle("File d'attente :")
         .setColor('#FF0000')
-        .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
-        .addField("Titre :", musicTitle.slice(0, 10).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
-        .addField("Durée :", musicDuration.slice(0, 10), true)
+        .setFooter("Page : " + page + '/' + nbPages)
+        .addField("Titre :", musicTitle.slice(indexMin, indexMax).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
+        .addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
     if (musicTitle.length == 1) {
         data[message.guild.id]['queueEmbed'].setDescription("1 musique")
     } else {
@@ -527,38 +531,36 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
     }
     message.channel.send(data[message.guild.id]['queueEmbed'])
         .then(msg => msg.react('⬅️'))
-        .then(mReaction => mReaction.message.react('➡️'))
-        .then(mReaction => {
-            const reactionFilter = (reaction, user) => reaction.emoji.name === '➡️'
-                // createReactionCollector - responds on each react, AND again at the end.
-            const collector = mReaction.message
-                .createReactionCollector(reactionFilter)
+        .then(r => msg.react('➡️'))
 
-            // set collector events
-            collector.on('collect', r => {
-                console.log(r)
+    const backwardsFilter = (reaction, user) => reaction.emoji.name === '⬅️' //&& user.id === message.author.id
+    const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' //&& user.id === message.author.id
 
-                // immutably copy embed's Like field to new obj
-                let embedLikeField = Object.assign({}, data[message.guild.id]['queueEmbed'].fields[0])
+    const backwards = msg.createReactionsCollector(backwardsFilter)
+    const forwards = msg.createReactionsCollector(forwardsFilter)
 
-                // update 'field' with new value
-                embedLikeField.value = '<3 <3 <3'
+    backwards.on('collect', r => {
+        if (page == 1) return
+        page--
+        indexMin -= 10
+        indexMax -= 10
+        data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
+        data[message.guild.id]['queueEmbed'].addField("Titre :", musicTitle.slice(indexMin, indexMax).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
+        data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
+            // msg.edit(data[message.guild.id]['queueEmbed'])
+    })
 
-                // create new embed with old title & description, new field
-                const newEmbed = new Discord.RichEmbed({
-                    title: data[message.guild.id]['queueEmbed'].title,
-                    description: data[message.guild.id]['queueEmbed'].description,
-                    fields: [embedLikeField]
-                })
+    forwards.on('collect', r => {
+        if (page == nbPages) return
+        page++
+        indexMin += 10
+        indexMax += 10
+        data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
+        data[message.guild.id]['queueEmbed'].addField("Titre :", musicTitle.slice(indexMin, indexMax).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
+        data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
+            // msg.edit(data[message.guild.id]['queueEmbed'])
+    })
 
-                // edit message with new embed
-                // NOTE: can only edit messages you author
-                r.message.edit(newEmbed)
-                    .then(newMsg => console.log(`new embed added`))
-                    .catch(console.log)
-            })
-        })
-        .catch(console.log)
 }
 
 
