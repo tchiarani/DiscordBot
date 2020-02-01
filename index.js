@@ -537,8 +537,8 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                 const backwardsFilter = (reaction, user) => reaction.emoji.name === '⬅️' //&& user.id === message.author.id
                 const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' //&& user.id === message.author.id
 
-                const backwards = msg.createReactionsCollector(backwardsFilter)
-                const forwards = msg.createReactionsCollector(forwardsFilter)
+                const backwards = msg.createReactionCollector(backwardsFilter)
+                const forwards = msg.createReactionCollector(forwardsFilter)
 
                 backwards.on('collect', r => {
                     if (page == 1) return
