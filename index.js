@@ -551,12 +551,12 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                         indexMax -= maxQueueDisplay
                         data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
                         if (musicTitle.length == 1) {
+                            data[message.guild.id]['queueEmbed'].fields[1].value = " "
                             data[message.guild.id]['queueEmbed'].fields[2].value = " "
-                            data[message.guild.id]['queueEmbed'].fields[3].value = " "
                             data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + "1 musique")
                         } else {
-                            data[message.guild.id]['queueEmbed'].fields[2].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + indexMin * (page - 1) + '. **' + value).join('**\n') + "**"
-                            data[message.guild.id]['queueEmbed'].fields[3].value = musicDuration.slice(indexMin, indexMax).join('\n')
+                            data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + indexMin * (page - 1) + '. **' + value).join('**\n') + "**"
+                            data[message.guild.id]['queueEmbed'].fields[2].value = musicDuration.slice(indexMin, indexMax).join('\n')
                             data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + musicTitle.length + " musiques")
                         }
                         msg.edit(data[message.guild.id]['queueEmbed'])
@@ -571,12 +571,12 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                         indexMax += maxQueueDisplay
                         data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
                         if (musicTitle.length == 1) {
+                            data[message.guild.id]['queueEmbed'].fields[1].value = " "
                             data[message.guild.id]['queueEmbed'].fields[2].value = " "
-                            data[message.guild.id]['queueEmbed'].fields[3].value = " "
                             data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + "1 musique")
                         } else {
-                            data[message.guild.id]['queueEmbed'].fields[2].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + indexMin * (page - 1) + '. **' + value).join('**\n') + "**"
-                            data[message.guild.id]['queueEmbed'].fields[3].value = musicDuration.slice(indexMin, indexMax).join('\n')
+                            data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + indexMin * (page - 1) + '. **' + value).join('**\n') + "**"
+                            data[message.guild.id]['queueEmbed'].fields[2].value = musicDuration.slice(indexMin, indexMax).join('\n')
                             data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + musicTitle.length + " musiques")
                         }
                         msg.edit(data[message.guild.id]['queueEmbed'])
