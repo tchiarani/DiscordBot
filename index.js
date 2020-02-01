@@ -359,8 +359,7 @@ client.on('message', async message => {
         // QUEUE
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
-            setQueueEmbed(message.guild, data[message.guild.id]['musicTitle'], data[message.guild.id]['musicDuration'])
-            message.channel.send(data[message.guild.id]['queueEmbed'])
+            setQueueEmbed(message, data[message.guild.id]['musicTitle'], data[message.guild.id]['musicDuration'])
         } else {
             message.channel.send("Aucune musique dans la file d'attente.")
         }
@@ -514,18 +513,55 @@ function setMusicEmbed(id, video, videoId, author_id, url, duration) {
     }
 }
 
-function setQueueEmbed(guild, musicTitle, musicDuration) {
-    data[guild.id]['queueEmbed'] = new Discord.RichEmbed()
+function setQueueEmbed(message, musicTitle, musicDuration) {
+    data[message.guild.id]['queueEmbed'] = new Discord.RichEmbed()
         .setTitle("File d'attente :")
         .setColor('#FF0000')
         .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
         .addField("Titre :", musicTitle.slice(0, 10).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
         .addField("Durée :", musicDuration.slice(0, 10), true)
     if (musicTitle.length == 1) {
-        data[guild.id]['queueEmbed'].setDescription("1 musique")
+        data[message.guild.id]['queueEmbed'].setDescription("1 musique")
     } else {
-        data[guild.id]['queueEmbed'].setDescription(musicTitle.length + " musiques")
+        data[message.guild.id]['queueEmbed'].setDescription(musicTitle.length + " musiques")
     }
+    message.channel.send(data[message.guild.id]['queueEmbed'])
+        .then(msg => msg.react('⬅️'))
+        .then(mReaction => mReaction.message.react('➡️'))
+        .then(mReaction => {
+            const reactionFilter = (reaction, user) => reaction.emoji.name === '➡️'
+                // createReactionCollector - responds on each react, AND again at the end.
+            const collector = mReaction.message
+                .createReactionCollector(reactionFilter, {
+                    time: 15000
+                })
+
+            // set collector events
+            collector.on('collect', r => {
+                // immutably copy embed's Like field to new obj
+                let embedLikeField = Object.assign({}, data[message.guild.id]['queueEmbed'].fields[0])
+
+                // update 'field' with new value
+                embedLikeField.value = '<3 <3 <3'
+
+                // create new embed with old title & description, new field
+                const newEmbed = new Discord.RichEmbed({
+                    title: data[message.guild.id]['queueEmbed'].title,
+                    description: data[message.guild.id]['queueEmbed'].description,
+                    fields: [embedLikeField]
+                })
+
+                // edit message with new embed
+                // NOTE: can only edit messages you author
+                r.message.edit(newEmbed)
+                    .then(newMsg => console.log(`new embed added`))
+                    .catch(console.log)
+            });
+            collector.on('end', collected => console.log(`Collected ${collected.size} reactions`))
+        })
+        .catch(console.log)
+
+})
 }
 
 const radiosList = {
