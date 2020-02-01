@@ -560,9 +560,8 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
             collector.on('end', collected => console.log(`Collected ${collected.size} reactions`))
         })
         .catch(console.log)
-
-})
 }
+
 
 const radiosList = {
     "embed": {
