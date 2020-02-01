@@ -545,7 +545,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
 
                     backwards.on('collect', r => {
                         console.log(r)
-                        console.log(r.users[1].id)
+                        if (r.users[1] != undefined) console.log(r.users[1].id)
                         if (page == 1) return
                         page--
                         indexMin -= maxQueueDisplay
