@@ -214,7 +214,8 @@ client.on('message', async message => {
                             ytpl(args[1].match(regExp)[2], function(err, playlist) {
                                 if (err) console.log(err)
                                 message.react('▶')
-                                console.log(playlist.items[1])
+                                console.log(playlist.items[0])
+                                console.log(playlist.items[0].title)
                                 message.channel.send("Playlist ajoutée : **" + playlist.title + "**\n**" + playlist.total_items + "** musiques ajoutées à la file !")
                                 for (let i = 0; i < playlist.total_items; i++) {
                                     dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
