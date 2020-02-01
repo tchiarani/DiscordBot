@@ -524,12 +524,12 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
         .setColor('#FF0000')
         .setFooter("Page : " + page + '/' + nbPages)
         .addField("Actuellement :", "🔊 **" + musicTitle[0] + "**", false)
-        .addField("Prochainement :", musicTitle.slice(indexMin, indexMax).map((value, index) => index + '. **' + value).join('**\n') + "**", true)
-        .addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
     if (musicTitle.length == 1) {
         data[message.guild.id]['queueEmbed'].setDescription("1 musique")
     } else {
         data[message.guild.id]['queueEmbed'].setDescription(musicTitle.length + " musiques")
+        data[message.guild.id]['queueEmbed'].addField("Prochainement :", musicTitle.slice(indexMin, indexMax).map((value, index) => index + '. **' + value).join('**\n') + "**", true)
+        data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
     }
     message.channel.send(data[message.guild.id]['queueEmbed'])
         .then(msg => {
@@ -544,7 +544,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     const forwards = msg.createReactionCollector(forwardsFilter)
 
                     backwards.on('collect', r => {
-                        console.log(r)
+                        console.log(r.users)
                         if (page == 1) return
                         page--
                         indexMin -= maxQueueDisplay
