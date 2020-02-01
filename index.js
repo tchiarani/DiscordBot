@@ -426,9 +426,9 @@ client.on('message', async message => {
             pollEmbed.addField(emojisNombre[i + 1], choices[i], false)
         }
         message.channel.send(pollEmbed)
-            .then(function(poll) {
+            .then(async function(poll) {
                 for (let i = 0; i < choices.length; i++) {
-                    poll.react(emojisNombre[i + 1])
+                    await poll.react(emojisNombre[i + 1])
                 }
             }).catch(console.log())
         message.delete()
@@ -529,6 +529,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
     } else {
         data[message.guild.id]['queueEmbed'].setDescription(musicTitle.length + " musiques")
     }
+    console.log(data[message.guild.id]['queueEmbed'].fields)
     message.channel.send(data[message.guild.id]['queueEmbed'])
         .then(msg => {
             msg.react('⬅️').then(r => {
