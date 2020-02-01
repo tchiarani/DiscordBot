@@ -359,7 +359,6 @@ client.on('message', async message => {
         // QUEUE
     } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
-            //message.channel.send('File d\'attente :\n🔊 ' + data[message.guild.id]['dataQueue'][0] + '\n' + data[message.guild.id]['dataQueue'].slice(1, 10).map((value, index) => emojisNombre[index] + ' ' + value).join("\n"))
             setQueueEmbed(message.guild, data[message.guild.id]['musicTitle'], data[message.guild.id]['musicDuration'])
             message.channel.send(data[message.guild.id]['queueEmbed'])
         } else {
@@ -398,6 +397,8 @@ client.on('message', async message => {
                 data[message.guild.id]['queue'].splice(queueNumbers[i] - nbRemoved, 1)
                 data[message.guild.id]['dataQueue'].splice(queueNumbers[i] - nbRemoved, 1)
                 data[message.guild.id]['dataMusicEmbed'].splice(queueNumbers[i] - nbRemoved, 1)
+                data[message.guild.id]['musicTitle'].splice(queueNumbers[i] - nbRemoved, 1)
+                data[message.guild.id]['musicDuration'].splice(queueNumbers[i] - nbRemoved, 1)
                 nbRemoved++
             } else {
                 message.channel.send("Pas de numéro **" + queueNumbers[i] + "** dans la file d'attente.")
