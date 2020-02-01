@@ -541,13 +541,13 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     msg.react('➡️')
 
                     const backwardsFilter = (reaction, user) => reaction.emoji.name === '⬅️' //&& user.id === message.author.id
-                    const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' && user.id === message.author.id
+                    const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' //&& user.id === message.author.id
 
                     const backwards = msg.createReactionCollector(backwardsFilter)
                     const forwards = msg.createReactionCollector(forwardsFilter)
 
                     backwards.on('collect', r => {
-                        if (r.users[1] != undefined) r.remove(r.users[1])
+                        if (r.users[1] != undefined) r.remove(r.users.filter(u => !u.bot))
                         if (r.count == 1 || page == 1) return
                         page--
                         nbPages = Math.ceil(musicTitle.length / 10)
@@ -567,7 +567,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     })
 
                     forwards.on('collect', r => {
-                        if (r.users[1] != undefined) r.remove(r.users[1])
+                        if (r.users[1] != undefined) r.remove(r.users.filter(u => !u.bot))
                         if (r.count == 1 || page == nbPages) return
                         page++
                         nbPages = Math.ceil(musicTitle.length / 10)
