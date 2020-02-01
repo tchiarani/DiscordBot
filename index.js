@@ -66,7 +66,7 @@ function play(connection, message, action) {
         if (data[message.guild.id]['queue'].length == 1) {
             message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
         } else {
-            message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
+            //message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
         }
     } else if (action == "Skip") {
         message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
@@ -217,7 +217,6 @@ client.on('message', async message => {
                                 console.log(playlist.items[0])
                                 message.channel.send("Playlist ajoutée : **" + playlist.title + "**\n**" + playlist.total_items + "** musiques ajoutées à la file !")
                                 for (let i = 0; i < playlist.items.length; i++) {
-                                    console.log(playlist.items[i].author.name)
                                     dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
                                     data[message.guild.id]['musicTitle'].push(playlist.items[i].title)
                                     data[message.guild.id]['musicDuration'].push(playlist.items[i].duration)
