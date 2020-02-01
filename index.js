@@ -548,7 +548,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
                     data[message.guild.id]['queueEmbed'].addField("Titre :", musicTitle.slice(indexMin, indexMax).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
                     data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
-                        // msg.edit(data[message.guild.id]['queueEmbed'])
+                    msg.edit(data[message.guild.id]['queueEmbed'])
                 })
 
                 forwards.on('collect', r => {
@@ -559,7 +559,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
                     data[message.guild.id]['queueEmbed'].addField("Titre :", musicTitle.slice(indexMin, indexMax).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
                     data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
-                        // msg.edit(data[message.guild.id]['queueEmbed'])
+                    msg.edit(data[message.guild.id]['queueEmbed'])
                 })
             })
         })
