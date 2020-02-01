@@ -518,7 +518,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
     let nbPages = musicTitle.length / 10
     let page = 1
     let indexMin = 1
-    let indexMax = maxQueueDisplay
+    let indexMax = maxQueueDisplay + 1
     data[message.guild.id]['queueEmbed'] = new Discord.RichEmbed()
         .setTitle("File d'attente :")
         .setColor('#FF0000')
@@ -528,13 +528,13 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
         data[message.guild.id]['queueEmbed'].setDescription("1 musique")
     } else {
         data[message.guild.id]['queueEmbed'].setDescription(musicTitle.length + " musiques")
-        data[message.guild.id]['queueEmbed'].addField("Prochainement :", musicTitle.slice(indexMin, indexMax).map((value, index) => index + '. **' + value).join('**\n') + "**", true)
+        data[message.guild.id]['queueEmbed'].addField("Prochainement :", musicTitle.slice(indexMin, indexMax).map((value, index) => index + 1 + '. **' + value).join('**\n') + "**", true)
         data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
     }
     message.channel.send(data[message.guild.id]['queueEmbed'])
         .then(msg => {
             if (musicTitle.length > maxQueueDisplay) {
-                msg.react('⬅️').then(r => {
+                msg.react('⬅️').then(res => {
                     msg.react('➡️')
 
                     const backwardsFilter = (reaction, user) => reaction.emoji.name === '⬅️' //&& user.id === message.author.id
@@ -544,14 +544,15 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     const forwards = msg.createReactionCollector(forwardsFilter)
 
                     backwards.on('collect', r => {
-                        console.log(r.users)
+                        console.log(r)
+                        console.log(r.users[1].id)
                         if (page == 1) return
                         page--
                         indexMin -= maxQueueDisplay
                         indexMax -= maxQueueDisplay
                         data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
                         data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
-                        data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + maxQueueDisplay * (page - 1) + '. **' + value).join('**\n') + "**"
+                        data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + indexMin * (page - 1) + '. **' + value).join('**\n') + "**"
                         data[message.guild.id]['queueEmbed'].fields[2].value = musicDuration.slice(indexMin, indexMax).join('\n')
                         msg.edit(data[message.guild.id]['queueEmbed'])
                     })
@@ -563,7 +564,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                         indexMax += maxQueueDisplay
                         data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
                         data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
-                        data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + maxQueueDisplay * (page - 1) + '. **' + value).join('**\n') + "**"
+                        data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + indexMin * (page - 1) + '. **' + value).join('**\n') + "**"
                         data[message.guild.id]['queueEmbed'].fields[2].value = musicDuration.slice(indexMin, indexMax).join('\n')
                         msg.edit(data[message.guild.id]['queueEmbed'])
                     })
