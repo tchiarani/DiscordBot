@@ -7,6 +7,7 @@ const client = new Discord.Client()
 
 const token = process.env.TOKEN
 const prefix = '/'
+const maxQueueDisplay = 10
 
 const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
 const authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png"
@@ -517,55 +518,57 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
     let nbPages = musicTitle.length / 10
     let page = 1
     let indexMin = 1
-    let indexMax = 10
+    let indexMax = maxQueueDisplay
     data[message.guild.id]['queueEmbed'] = new Discord.RichEmbed()
         .setTitle("File d'attente :")
         .setColor('#FF0000')
         .setFooter("Page : " + page + '/' + nbPages)
         .addField("Actuellement :", "🔊 **" + musicTitle[0] + "**", false)
-        .addField("Prochainement :", musicTitle.slice(indexMin, indexMax).map((value, index) => index + 1 + '. **' + value).join('**\n') + "**", true)
+        .addField("Prochainement :", musicTitle.slice(indexMin, indexMax).map((value, index) => index + '. **' + value).join('**\n') + "**", true)
         .addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
     if (musicTitle.length == 1) {
         data[message.guild.id]['queueEmbed'].setDescription("1 musique")
     } else {
         data[message.guild.id]['queueEmbed'].setDescription(musicTitle.length + " musiques")
     }
-    console.log(data[message.guild.id]['queueEmbed'].fields)
     message.channel.send(data[message.guild.id]['queueEmbed'])
         .then(msg => {
-            msg.react('⬅️').then(r => {
-                msg.react('➡️')
+            if (musicTitle.length > maxQueueDisplay) {
+                msg.react('⬅️').then(r => {
+                    msg.react('➡️')
 
-                const backwardsFilter = (reaction, user) => reaction.emoji.name === '⬅️' //&& user.id === message.author.id
-                const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' //&& user.id === message.author.id
+                    const backwardsFilter = (reaction, user) => reaction.emoji.name === '⬅️' //&& user.id === message.author.id
+                    const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' //&& user.id === message.author.id
 
-                const backwards = msg.createReactionCollector(backwardsFilter)
-                const forwards = msg.createReactionCollector(forwardsFilter)
+                    const backwards = msg.createReactionCollector(backwardsFilter)
+                    const forwards = msg.createReactionCollector(forwardsFilter)
 
-                backwards.on('collect', r => {
-                    if (page == 1) return
-                    page--
-                    indexMin -= 10
-                    indexMax -= 10
-                    data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
-                    data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
-                    data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + 10 * (page - 1) + '. **' + value).join('**\n') + "**"
-                    data[message.guild.id]['queueEmbed'].fields[2].value = musicDuration.slice(indexMin, indexMax).join('\n')
-                    msg.edit(data[message.guild.id]['queueEmbed'])
+                    backwards.on('collect', r => {
+                        console.log(r)
+                        if (page == 1) return
+                        page--
+                        indexMin -= maxQueueDisplay
+                        indexMax -= maxQueueDisplay
+                        data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
+                        data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
+                        data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + maxQueueDisplay * (page - 1) + '. **' + value).join('**\n') + "**"
+                        data[message.guild.id]['queueEmbed'].fields[2].value = musicDuration.slice(indexMin, indexMax).join('\n')
+                        msg.edit(data[message.guild.id]['queueEmbed'])
+                    })
+
+                    forwards.on('collect', r => {
+                        if (page == nbPages) return
+                        page++
+                        indexMin += maxQueueDisplay
+                        indexMax += maxQueueDisplay
+                        data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
+                        data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
+                        data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + maxQueueDisplay * (page - 1) + '. **' + value).join('**\n') + "**"
+                        data[message.guild.id]['queueEmbed'].fields[2].value = musicDuration.slice(indexMin, indexMax).join('\n')
+                        msg.edit(data[message.guild.id]['queueEmbed'])
+                    })
                 })
-
-                forwards.on('collect', r => {
-                    if (page == nbPages) return
-                    page++
-                    indexMin += 10
-                    indexMax += 10
-                    data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
-                    data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
-                    data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + 10 * (page - 1) + '. **' + value).join('**\n') + "**"
-                    data[message.guild.id]['queueEmbed'].fields[2].value = musicDuration.slice(indexMin, indexMax).join('\n')
-                    msg.edit(data[message.guild.id]['queueEmbed'])
-                })
-            })
+            }
         })
 }
 
