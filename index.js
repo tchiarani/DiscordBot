@@ -221,7 +221,10 @@ client.on('message', async message => {
                                 if (err) console.log(err)
                                 message.react('▶')
                                 console.log(playlist)
-                                message.channel.send("Playlist ajoutée : **" + playlist.title + "**\n**" + playlist.total_items + "** musiques ajoutées à la file !")
+                                data[message.guild.id]['firstResult'].title = playlist.title
+                                data[message.guild.id]['firstResult'].author.name = playlist.author.name
+                                data[message.guild.id]['firstResult'].timestamp = playlist.total_items + " musiques"
+                                    //message.channel.send("Playlist ajoutée : **" + playlist.title + "**\n**" + playlist.total_items + "** musiques ajoutées à la file !")
                                 for (let i = 0; i < playlist.items.length; i++) {
                                     dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
                                     data[message.guild.id]['musicTitle'].push(playlist.items[i].title)
@@ -231,7 +234,7 @@ client.on('message', async message => {
                                     data[message.guild.id]['queue'].push(music)
                                     data[message.guild.id]['dataQueue'].push(dataMusic)
                                 }
-                                play(connection, message, 'Add playlist')
+                                play(connection, message, 'Add')
                             });
                         } else {
                             let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
