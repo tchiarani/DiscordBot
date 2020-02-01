@@ -243,7 +243,7 @@ client.on('message', async message => {
                                     data[message.guild.id]['musicTitle'].push(videos[0].title)
                                     data[message.guild.id]['musicDuration'].push(videos[0].timestamp)
                                     let music = 'https://www.youtube.com' + videos[0].url
-                                    setMusicEmbed(message.guild.id, videos[0], videos[0].videoId, "https://youtube.com/channel/" + author_id, "https://youtube.com" + videos[0].url, videos[0].timestamp)
+                                    setMusicEmbed(message.guild.id, videos[0], videos[0].videoId, "https://youtube.com/channel/" + videos[0].author_id, "https://youtube.com" + videos[0].url, videos[0].timestamp)
                                     data[message.guild.id]['queue'].push(music)
                                     data[message.guild.id]['dataQueue'].push(dataMusic)
                                     play(connection, message, 'Add')
