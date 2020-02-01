@@ -77,7 +77,7 @@ function play(connection, message, action) {
     } else if (action == "Skip") {
         message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
     }
-    if ((action == "Add" || action == "Add playlist" && data[message.guild.id]['queue'].length <= 1) || (action == "Skip" && data[message.guild.id]['queue'].length >= 1)) {
+    if (action == "Add" || action == "Add playlist" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" && data[message.guild.id]['queue'].length >= 1) {
         data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
         data[message.guild.id]['song'].setVolume(1 / 25)
 
