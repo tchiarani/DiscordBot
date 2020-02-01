@@ -63,21 +63,18 @@ function initGuild(id) {
 
 function play(connection, message, action) {
     if (action == "Add") {
-        if (data[message.guild.id]['queue'].length == 1) {
-            message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
-        } else {
+        if (data[message.guild.id]['queue'].length > 1) {
             message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
         }
     } else if (action == "Add playlist") {
-        if (data[message.guild.id]['queue'].length == 1) {
-            message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
-        } else {
+        if (data[message.guild.id]['queue'].length > 1) {
             message.channel.send('Playlist ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (**' + data[message.guild.id]['firstResult'].items.length + '** musiques)')
         }
     } else if (action == "Skip") {
         message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
     }
-    if (action == "Add" || action == "Add playlist" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" && data[message.guild.id]['queue'].length >= 1) {
+    if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" || action == "Add playlist" && data[message.guild.id]['queue'].length >= 1) {
+        message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
         data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
         data[message.guild.id]['song'].setVolume(1 / 25)
 
@@ -222,10 +219,10 @@ client.on('message', async message => {
                                 message.react('▶')
                                 data[message.guild.id]['firstResult'] = playlist
                                 for (let i = 0; i < playlist.items.length; i++) {
-                                    dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
                                     data[message.guild.id]['musicTitle'].push(playlist.items[i].title)
                                     data[message.guild.id]['musicDuration'].push(playlist.items[i].duration)
                                     let music = playlist.items[i].url_simple
+                                    let dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
                                     setMusicEmbed(message.guild.id, playlist.items[i], playlist.items[i].id, playlist.items[i].author.ref, playlist.items[i].url_simple, playlist.items[i].duration)
                                     data[message.guild.id]['queue'].push(music)
                                     data[message.guild.id]['dataQueue'].push(dataMusic)
@@ -243,10 +240,10 @@ client.on('message', async message => {
                                     if (videos[0].timestamp == 0) {
                                         videos[0].timestamp = 'Live'
                                     }
-                                    dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (' + videos[0].timestamp + ')'
                                     data[message.guild.id]['musicTitle'].push(videos[0].title)
                                     data[message.guild.id]['musicDuration'].push(videos[0].timestamp)
                                     let music = 'https://www.youtube.com' + videos[0].url
+                                    let dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (' + videos[0].timestamp + ')'
                                     setMusicEmbed(message.guild.id, videos[0], videos[0].videoId, "https://youtube.com/channel/" + videos[0].author_id, "https://youtube.com" + videos[0].url, videos[0].timestamp)
                                     data[message.guild.id]['queue'].push(music)
                                     data[message.guild.id]['dataQueue'].push(dataMusic)
