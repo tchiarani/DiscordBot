@@ -70,10 +70,8 @@ function play(connection, message, action) {
         if (data[message.guild.id]['queue'].length > 1) {
             message.channel.send('Playlist ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (**' + data[message.guild.id]['firstResult'].items.length + '** musiques)')
         }
-    } else if (action == "Skip") {
-        message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
     }
-    if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" || action == "Add playlist" && data[message.guild.id]['queue'].length >= 1) {
+    if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" && data[message.guild.id]['queue'].length >= 1) {
         message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
         data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
         data[message.guild.id]['song'].setVolume(1 / 25)
@@ -226,6 +224,7 @@ client.on('message', async message => {
                                     setMusicEmbed(message.guild.id, playlist.items[i], playlist.items[i].id, playlist.items[i].author.ref, playlist.items[i].url_simple, playlist.items[i].duration)
                                     data[message.guild.id]['queue'].push(music)
                                     data[message.guild.id]['dataQueue'].push(dataMusic)
+                                    if (i == 0) play(connection, message, 'Add')
                                 }
                                 play(connection, message, 'Add playlist')
                             });
