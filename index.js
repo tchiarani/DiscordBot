@@ -526,8 +526,10 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
         .addField("Actuellement :", "🔊 **" + musicTitle[0] + "**", true)
     if (musicTitle.length == 1) {
         data[message.guild.id]['queueEmbed'].addField("Total :", "1 musique", true)
+        data[message.guild.id]['queueEmbed'].addBlankField()
     } else {
         data[message.guild.id]['queueEmbed'].addField("Total :", musicTitle.length + " musiques", true)
+        data[message.guild.id]['queueEmbed'].addBlankField()
         data[message.guild.id]['queueEmbed'].addField("Prochainement :", musicTitle.slice(indexMin, indexMax).map((value, index) => index + 1 + '. **' + value).join('**\n') + "**", true)
         data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
     }
