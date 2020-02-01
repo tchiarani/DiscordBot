@@ -217,7 +217,7 @@ client.on('message', async message => {
                                 console.log(playlist.items[0])
                                 console.log(playlist.items[0].title)
                                 message.channel.send("Playlist ajoutée : **" + playlist.title + "**\n**" + playlist.total_items + "** musiques ajoutées à la file !")
-                                for (let i = 0; i < playlist.total_items; i++) {
+                                for (let i = 0; i < playlist.items.length; i++) {
                                     dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
                                     data[message.guild.id]['musicTitle'].push(playlist.items[i].title)
                                     data[message.guild.id]['musicDuration'].push(playlist.items[i].duration)
