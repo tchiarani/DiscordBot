@@ -515,10 +515,10 @@ function setMusicEmbed(id, video, videoId, author_id, url, duration) {
 }
 
 function setQueueEmbed(message, musicTitle, musicDuration) {
-    let nbPages = musicTitle.length / 10
+    let nbPages = Math.ceil(musicTitle.length / 10)
     let page = 1
     let indexMin = 1
-    let indexMax = maxQueueDisplay + 1
+    let indexMax = maxQueueDisplay + 2
     data[message.guild.id]['queueEmbed'] = new Discord.RichEmbed()
         .setTitle("File d'attente :")
         .setColor('#FF0000')
@@ -544,10 +544,10 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     const forwards = msg.createReactionCollector(forwardsFilter)
 
                     backwards.on('collect', r => {
-                        console.log(r)
-                        if (r.users[1] != undefined) console.log(r.users[1].id)
-                        if (page == 1) return
+                        if (r.users[1] != undefined) r.remove(r.users[1].id)
+                        if (r.count == 1 || page == 1) return
                         page--
+                        nbPages = Math.ceil(musicTitle.length / 10)
                         indexMin -= maxQueueDisplay
                         indexMax -= maxQueueDisplay
                         data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
@@ -558,8 +558,10 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     })
 
                     forwards.on('collect', r => {
-                        if (page == nbPages) return
+                        if (r.users[1] != undefined) r.remove(r.users[1].id)
+                        if (r.count == 1 || page == nbPages) return
                         page++
+                        nbPages = Math.ceil(musicTitle.length / 10)
                         indexMin += maxQueueDisplay
                         indexMax += maxQueueDisplay
                         data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
