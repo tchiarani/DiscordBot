@@ -536,6 +536,8 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
 
             // set collector events
             collector.on('collect', r => {
+                console.log(r)
+
                 // immutably copy embed's Like field to new obj
                 let embedLikeField = Object.assign({}, data[message.guild.id]['queueEmbed'].fields[0])
 
@@ -554,8 +556,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                 r.message.edit(newEmbed)
                     .then(newMsg => console.log(`new embed added`))
                     .catch(console.log)
-            });
-            collector.on('end', collected => console.log(`Collected ${collected.size} reactions`))
+            })
         })
         .catch(console.log)
 }
