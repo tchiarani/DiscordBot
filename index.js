@@ -210,6 +210,7 @@ client.on('message', async message => {
                     }
                     if (!find) {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
+                        console.log(args[1].match(regExp))
                         if (args[1].match(regExp)) {
                             ytpl(args[1], function(err, playlist) {
                                 if (err) throw err
