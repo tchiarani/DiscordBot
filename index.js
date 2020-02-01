@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const Attachment = require('discord.js')
 const search = require('yt-search')
 const ytdl = require('ytdl-core')
+const ytpl = require('ytpl');
 const client = new Discord.Client()
 
 const token = process.env.TOKEN
