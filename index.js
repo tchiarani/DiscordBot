@@ -221,7 +221,6 @@ client.on('message', async message => {
                                 if (err) console.log(err)
                                 message.react('▶')
                                 data[message.guild.id]['firstResult'] = playlist
-                                console.log(playlist.items.length)
                                 for (let i = 0; i < playlist.items.length; i++) {
                                     dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
                                     data[message.guild.id]['musicTitle'].push(playlist.items[i].title)
