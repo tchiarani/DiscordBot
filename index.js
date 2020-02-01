@@ -212,7 +212,7 @@ client.on('message', async message => {
                     if (!find) {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
                         if (args[1].match(regExp)) {
-                            ytpl(args[1].match(regExp)[2], limit[Infinity], function(err, playlist) {
+                            ytpl(args[1].match(regExp)[2], { limit: Infinity }, function(err, playlist) {
                                 if (err) console.log(err)
                                 message.react('▶')
                                 data[message.guild.id]['firstResult'] = playlist
