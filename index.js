@@ -210,12 +210,12 @@ client.on('message', async message => {
                     }
                     if (!find) {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
-                        console.log(args[1].match(regExp)[2])
                         if (args[1].match(regExp)) {
                             ytpl(args[1].match(regExp)[2], function(err, playlist) {
                                 if (err) throw err
-                                    //dosth(playlist)
-                                console.log(playlist)
+                                console.log(playlist.items[1])
+                                message.channel.send("Playlist ajoutée : **" + playlist.title + "**\n**" + total_items + "** musiques ajoutées à la file !")
+                                dosth(playlist)
                             });
                         } else {
                             let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
