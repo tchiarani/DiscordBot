@@ -372,7 +372,7 @@ client.on('message', async message => {
         }
     } else if ((message.content.startsWith(prefix + 'queue ')) || (message.content.startsWith(prefix + 'q '))) {
         let queueNumber = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1)
-        if (queueNumber >= 0 && queueNumber <= 100) {
+        if (queueNumber >= 0 && queueNumber <= 1000) {
             if (data[message.guild.id]['dataQueue'][queueNumber] != undefined) {
                 if (queueNumber == 0) {
                     message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][queueNumber])
@@ -385,7 +385,7 @@ client.on('message', async message => {
                 message.channel.send("Pas ce numéro dans la file d'attente.")
             }
         } else {
-            message.channel.send("La valeur doit être comprise entre 1 et 100.")
+            message.channel.send("La valeur doit être comprise entre 1 et 1000.")
         }
 
         // REMOVE
