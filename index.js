@@ -532,9 +532,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
             const reactionFilter = (reaction, user) => reaction.emoji.name === '➡️'
                 // createReactionCollector - responds on each react, AND again at the end.
             const collector = mReaction.message
-                .createReactionCollector(reactionFilter, {
-                    time: 15000
-                })
+                .createReactionCollector(reactionFilter)
 
             // set collector events
             collector.on('collect', r => {
