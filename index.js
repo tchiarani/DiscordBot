@@ -215,7 +215,6 @@ client.on('message', async message => {
                                 if (err) throw err
                                 console.log(playlist.items[1])
                                 message.channel.send("Playlist ajoutée : **" + playlist.title + "**\n**" + playlist.total_items + "** musiques ajoutées à la file !")
-                                dosth(playlist)
                             });
                         } else {
                             let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
