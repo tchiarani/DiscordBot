@@ -527,6 +527,11 @@ function setQueueEmbed(guild, musicTitle, musicDuration) {
         .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
         .addField("Titre :", musicTitle.slice(0, 10).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
         .addField("Durée :", musicDuration.slice(0, 10), true)
+    if (musicTitle.length == 1) {
+        data[guild.id]['queueEmbed'].setDescription("1 musique")
+    } else {
+        data[guild.id]['queueEmbed'].setDescription(musicTitle.length + " musiques")
+    }
 }
 
 const radiosList = {
