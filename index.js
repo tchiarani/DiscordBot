@@ -212,9 +212,20 @@ client.on('message', async message => {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
                         if (args[1].match(regExp)) {
                             ytpl(args[1].match(regExp)[2], function(err, playlist) {
-                                if (err) throw err
+                                if (err) console.log(err)
+                                message.react('▶')
                                 console.log(playlist.items[1])
                                 message.channel.send("Playlist ajoutée : **" + playlist.title + "**\n**" + playlist.total_items + "** musiques ajoutées à la file !")
+                                for (let i = 0; i < playlist.total_items; i++) {
+                                    dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
+                                    data[message.guild.id]['musicTitle'].push(playlist.items[i].title)
+                                    data[message.guild.id]['musicDuration'].push(playlist.items[i].duration)
+                                    let music = playlist.items[i].url_simple
+                                    setMusicEmbed(message.guild.id, playlist.items[i], playlist.items[i].id, playlist.items[i].author.ref, playlist.items[i].url_simple, playlist.items[i].duration)
+                                    data[message.guild.id]['queue'].push(music)
+                                    data[message.guild.id]['dataQueue'].push(dataMusic)
+                                }
+                                play(connection, message, 'Add')
                             });
                         } else {
                             let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
@@ -231,7 +242,7 @@ client.on('message', async message => {
                                     data[message.guild.id]['musicTitle'].push(videos[0].title)
                                     data[message.guild.id]['musicDuration'].push(videos[0].timestamp)
                                     let music = 'https://www.youtube.com' + videos[0].url
-                                    setMusicEmbed(message.guild.id, videos[0])
+                                    setMusicEmbed(message.guild.id, videos[0], videos[0].videoId, "https://youtube.com/channel/" + author_id, videos[0].url, videos[0].timestamp)
                                     data[message.guild.id]['queue'].push(music)
                                     data[message.guild.id]['dataQueue'].push(dataMusic)
                                     play(connection, message, 'Add')
@@ -485,19 +496,19 @@ function setSpecificHelp(guild, command, alias, helpCommands, helpDescritions) {
     }
 }
 
-function setMusicEmbed(id, video) {
+function setMusicEmbed(id, video, videoId, author_id, url, duration) {
     data[id]['dataMusicEmbed']
         .push(new Discord.RichEmbed()
             .setTitle(video.title)
-            .setAuthor(video.author.name, "https://i.imgur.com/MBNSqyF.png", "https://youtube.com/channel/" + video.author.id)
-            .setThumbnail("https://img.youtube.com/vi/" + video.videoId + "/mqdefault.jpg")
+            .setAuthor(video.author.name, "https://i.imgur.com/MBNSqyF.png", author_id)
+            .setThumbnail("https://img.youtube.com/vi/" + videoId + "/mqdefault.jpg")
             .setColor('#FF0000')
-            .setURL("https://youtube.com" + video.url)
+            .setURL("https://youtube.com" + url)
         )
-    if (video.timestamp == "0") {
+    if (duration == "0") {
         data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription("🔴 Live")
     } else {
-        data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription(video.timestamp)
+        data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription(duration)
     }
 }
 
