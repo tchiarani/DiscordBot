@@ -66,7 +66,7 @@ function play(connection, message, action) {
         if (data[message.guild.id]['queue'].length == 1) {
             message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
         } else {
-            //message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
+            message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
         }
     } else if (action == "Skip") {
         message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
@@ -210,6 +210,7 @@ client.on('message', async message => {
                     }
                     if (!find) {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
+                        console.log(args[1].match(regExp))
                         if (args[1].match(regExp)) {
                             ytpl(args[1].match(regExp)[2], function(err, playlist) {
                                 if (err) console.log(err)
@@ -225,7 +226,7 @@ client.on('message', async message => {
                                     data[message.guild.id]['queue'].push(music)
                                     data[message.guild.id]['dataQueue'].push(dataMusic)
                                 }
-                                play(connection, message, 'Add')
+                                play(connection, message, 'Skip')
                             });
                         } else {
                             let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
@@ -517,8 +518,8 @@ function setQueueEmbed(guild, musicTitle, musicDuration) {
         .setTitle("File d'attente :")
         .setColor('#FF0000')
         .setFooter("unikorn.ga | " + prefix + "queue", authorAvatar)
-        .addField("Titre :", musicTitle.slice(0, 9).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
-        .addField("Durée :", musicDuration.slice(0, 9), true)
+        .addField("Titre :", musicTitle.slice(0, 10).map((value, index) => emojisNombre[index] + ' **' + value).join('**\n') + "**", true)
+        .addField("Durée :", musicDuration.slice(0, 10), true)
 }
 
 const radiosList = {
