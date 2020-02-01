@@ -214,7 +214,7 @@ client.on('message', async message => {
                             ytpl(args[1].match(regExp)[2], function(err, playlist) {
                                 if (err) throw err
                                 console.log(playlist.items[1])
-                                message.channel.send("Playlist ajoutée : **" + playlist.title + "**\n**" + total_items + "** musiques ajoutées à la file !")
+                                message.channel.send("Playlist ajoutée : **" + playlist.title + "**\n**" + playlist.total_items + "** musiques ajoutées à la file !")
                                 dosth(playlist)
                             });
                         } else {
