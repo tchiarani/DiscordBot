@@ -182,7 +182,7 @@ client.on('message', async message => {
             message.member.voiceChannel.join()
                 .then(connection => {
                     let find = false
-                    let args = message.content.split(' ')
+                    let args = contenuMessage.split(' ')
                     let maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length)
                     for (let i = 0; i < maxLength; i++) {
                         if (args[1] == Object.keys(radios)[i]) {
@@ -210,9 +210,9 @@ client.on('message', async message => {
                     }
                     if (!find) {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
-                        console.log(args[1].match(regExp))
+                        console.log(args[1].match(regExp)[2])
                         if (args[1].match(regExp)) {
-                            ytpl(args[1], function(err, playlist) {
+                            ytpl(args[1].match(regExp)[2], function(err, playlist) {
                                 if (err) throw err
                                     //dosth(playlist)
                                 console.log(playlist)
@@ -412,12 +412,12 @@ client.on('message', async message => {
             .setTitle(question)
             .setAuthor("Sondage crée par " + message.author.username)
         for (let i = 0; i < choices.length; i++) {
-            pollEmbed.addField(emojisNombre[i], choices[i], false)
+            pollEmbed.addField(emojisNombre[i + 1], choices[i], false)
         }
         message.channel.send(pollEmbed)
             .then(function(poll) {
                 for (let i = 0; i < choices.length; i++) {
-                    poll.react(emojisNombre[i])
+                    poll.react(emojisNombre[i + 1])
                 }
             }).catch(console.log())
         message.delete()
