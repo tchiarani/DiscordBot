@@ -548,7 +548,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     indexMax -= 10
                     data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
                     data[message.guild.id]['queueEmbed'].fields[0].value = musicTitle.slice(indexMin, indexMax).map((value, index) => emojisNombre[index] + index + ' **' + value).join('**\n') + "**"
-                    data[message.guild.id]['queueEmbed'].fields[1].value = musicDuration.slice(indexMin, indexMax)
+                    data[message.guild.id]['queueEmbed'].fields[1].value = musicDuration.slice(indexMin, indexMax).join('\n')
                     msg.edit(data[message.guild.id]['queueEmbed'])
                 })
 
@@ -559,7 +559,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     indexMax += 10
                     data[message.guild.id]['queueEmbed'].setFooter("Page : " + page + '/' + nbPages)
                     data[message.guild.id]['queueEmbed'].fields[0].value = musicTitle.slice(indexMin, indexMax).map((value, index) => emojisNombre[index] + index + ' **' + value).join('**\n') + "**"
-                    data[message.guild.id]['queueEmbed'].fields[1].value = musicDuration.slice(indexMin, indexMax)
+                    data[message.guild.id]['queueEmbed'].fields[1].value = musicDuration.slice(indexMin, indexMax).join('\n')
                     msg.edit(data[message.guild.id]['queueEmbed'])
                 })
             })
