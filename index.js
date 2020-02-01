@@ -541,7 +541,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     msg.react('➡️')
 
                     const backwardsFilter = (reaction, user) => reaction.emoji.name === '⬅️' //&& user.id === message.author.id
-                    const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' //&& user.id === message.author.id
+                    const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' && user.id === message.author.id
 
                     const backwards = msg.createReactionCollector(backwardsFilter)
                     const forwards = msg.createReactionCollector(forwardsFilter)
