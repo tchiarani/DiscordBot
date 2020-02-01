@@ -524,7 +524,6 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
         .setColor('#FF0000')
         .setFooter("Page : " + page + '/' + nbPages)
         .addField("Actuellement :", "🔊 **" + musicTitle[0] + "**", true)
-        .addField("Total :", "🔊 **" + musicTitle[0] + "**", true)
     if (musicTitle.length == 1) {
         data[message.guild.id]['queueEmbed'].addField("Total :", "1 musique", true)
     } else {
