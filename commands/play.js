@@ -5,8 +5,8 @@ const ytpl = require('ytpl')
 
 module.exports = {
     name: 'play',
-    description: 'Lance ou ajoute une musique depuis YouTube',
-    usage: '<mots-clés>',
+    description: ['Lance ou ajoute une musique depuis YouTube', '', 'Lance une radio enregistrée', '', 'Lance une musique enregistrée', ''],
+    usage: ['[mots-clés]', '[url]', '[radio]', '[radio] [volume]', '[musique]', '[musique] [volume]', ],
     alias: ['p'],
     execute(message, args, data, radios, musiques) {
         if (message.member.voiceChannel) {

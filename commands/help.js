@@ -3,9 +3,9 @@ const config = require('./../config')
 
 module.exports = {
     name: 'help',
-    description: "Affiche toutes les commandes ou des informations à propos d'une commande",
-    alias: ['commandes', 'commands'],
-    usage: '[commande]',
+    description: ["Affiche toutes les commandes", "Affiche des informations à propos d'une commande"],
+    alias: ['aide'],
+    usage: ['', 'commande'],
     execute(message, args, data) {
         const { commands } = message.client
 
@@ -34,8 +34,8 @@ module.exports = {
                 .setAuthor("Besoin d'aide ?⁢⁢", config.botAvatar, "https://unikorn.ga/bot")
                 .setColor('#7289DA')
                 .setFooter("unikorn.ga | " + config.prefix + "help " + command.name, config.authorAvatar)
-            if (command.usage) data[message.guild.id]['specificHelpEmbed'].addField("**Commande :**", command.usage, true)
-            if (command.description) data[message.guild.id]['specificHelpEmbed'].addField("**Description :**", command.description, true)
+            if (command.usage) data[message.guild.id]['specificHelpEmbed'].addField("**Commande :**", config.prefix + command.name + ' ' + command.usage.join("\n" + config.prefix + command.name), true)
+            if (command.description) data[message.guild.id]['specificHelpEmbed'].addField("**Description :**", command.description.join("\n"), true)
             if (command.alias) {
                 data[message.guild.id]['specificHelpEmbed'].setDescription("Alias : " + config.prefix + command.alias.join(", " + config.prefix))
             } else {
