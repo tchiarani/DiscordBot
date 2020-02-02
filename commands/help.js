@@ -7,7 +7,6 @@ module.exports = {
     alias: ['commandes', 'commands'],
     usage: '[commande]',
     execute(message, args, data) {
-        const data = []
         const { commands } = message.client
 
         if (!args.length) {
