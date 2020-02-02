@@ -1,5 +1,4 @@
 const config = {
-    name: 'help',
     token: process.env.TOKEN,
     prefix: '/',
     maxQueueDisplay: 10,

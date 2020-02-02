@@ -319,9 +319,9 @@ client.on('message', async message => {
         const attachment = new Discord.Attachment(canvas.toBuffer(), "userAvatar.png")
         message.channel.send(attachment)
 
-        // TEST 
-    } else if (commandName === 'test') {
-        client.commands.get('test').execute(client, message, args)
+        // UPTIME 
+    } else if (commandName === 'uptime') {
+        client.commands.get('uptime').execute(client, message, args)
     }
 })
 
