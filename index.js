@@ -141,6 +141,9 @@ client.on('message', async message => {
     if (!message.content.startsWith(prefix)) return
     if (!message.member) message.member = await message.guild.fetchMember(message)
 
+    const args = message.content.slice(prefix.length).split(' ');
+    const command = args.shift().toLowerCase();
+
     let contenuMessage = message.content;
     message.content = message.content.toLowerCase()
 
@@ -366,7 +369,7 @@ client.on('message', async message => {
             message.channel.send("Aucune musique dans la file d'attente.")
         }
     } else if ((message.content.startsWith(prefix + 'queue ')) || (message.content.startsWith(prefix + 'q '))) {
-        let queueNumber = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1)
+        const queueNumber = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1)
         if (queueNumber >= 0 && queueNumber <= 1000) {
             if (data[message.guild.id]['dataQueue'][queueNumber] != undefined) {
                 if (queueNumber == 0) {
@@ -385,12 +388,12 @@ client.on('message', async message => {
 
         // REMOVE
     } else if ((message.content === prefix + 'remove') || (message.content === prefix + 'r')) {
-        let helpDescriptions = "Supprime les musiques en paramètre"
-        let helpCommands = prefix + 'remove *1 3 4...*'
+        const helpDescriptions = "Supprime les musiques en paramètre"
+        const helpCommands = prefix + 'remove *1 3 4...*'
         setSpecificHelp(message.guild, "remove", ["r"], helpCommands, helpDescriptions)
         message.channel.send(data[message.guild.id]['specificHelpEmbed'])
     } else if (message.content.startsWith(prefix + 'remove ') || message.content.startsWith(prefix + 'r ')) {
-        let queueNumbers = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(" ")
+        const queueNumbers = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(" ")
         let nbRemoved = 0
         for (let i = 0; i < queueNumbers.length; i++) {
             if (data[message.guild.id]['dataQueue'][queueNumbers[i] - nbRemoved] != undefined) {
@@ -433,15 +436,20 @@ client.on('message', async message => {
             }).catch(console.log())
         message.delete()
 
-        // CANVA
-    } else if (message.content === prefix + 'canva') {
-        const canvas = Canvas.createCanvas(600, 600)
+        // AVATAR
+    } else if (command === 'avatar') {
+        let background
+        if (message.content === prefix + 'avatar') {
+            background = await Canvas.loadImage(message.author.avatarURL)
+        } else if (message.content.startsWith(prefix + 'avatar @')) {
+            const taggedUser = message.mentions.users.first()
+            if (taggedUser) background = await Canvas.loadImage(message.author.avatarURL)
+            else background = await Canvas.loadImage(message.author.avatarURL)
+        }
+        const canvas = Canvas.createCanvas(500, 500)
         const ctx = canvas.getContext("2d")
-        const background = await Canvas.loadImage(message.author.avatarURL)
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
-        ctx.strokeStyle = "#000"
-        ctx.strokeRect(8, 11, 580, 580)
-        const attachment = new Discord.Attachment(canvas.toBuffer(), "test-canvas.png")
+        const attachment = new Discord.Attachment(canvas.toBuffer(), "userAvatar.png")
         message.channel.send(attachment)
 
         // TEST 
