@@ -1,6 +1,6 @@
 module.exports = {
-    name: 'skip',
-    description: 'Passe à la musique suivante',
+    name: 'stop',
+    description: 'Déconnecte le bot du salon vocal et vide la file',
     usage: '',
     alias: ['s'],
     execute(message) {
