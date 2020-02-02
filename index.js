@@ -4,7 +4,7 @@ const search = require('yt-search')
 const ytdl = require('ytdl-core')
 const ytpl = require('ytpl');
 const Canvas = require('canvas')
-const config = require('config')
+const config = require('./config')
 const client = new Discord.Client()
 
 const token = process.env.TOKEN
