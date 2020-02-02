@@ -17,8 +17,8 @@ module.exports = {
                 .setAuthor("Besoin d'aide ?", config.botAvatar, "https://unikorn.ga/bot")
                 .setColor('#7289DA')
                 .setFooter("unikorn.ga | /help", config.authorAvatar)
-                .addField("----------------", config.prefix + commands.map(command => command.name).slice(0, (command.length + 1) / 2).join("\n" + config.prefix), true)
-                .addField("----------------", config.prefix + commands.map(command => command.name).slice((command.length + 1) / 2, command.length).join("\n" + config.prefix), true)
+                .addField("----------------", config.prefix + commands.map(command => command.name).slice(0, (commands.length + 1) / 2).join("\n" + config.prefix), true)
+                .addField("----------------", config.prefix + commands.map(command => command.name).slice((commands.length + 1) / 2, commands.length).join("\n" + config.prefix), true)
             message.channel.send(dataHelp)
 
         } else {
