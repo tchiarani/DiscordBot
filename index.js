@@ -439,7 +439,7 @@ client.on('message', async message => {
         const ctx = canvas.getContext("2d")
         const background = await Canvas.loadImage(message.author.avatarURL)
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
-        ctx.strokeStyle("#000")
+        ctx.strokeStyle = "#000"
         ctx.strokeRect(8, 11, 580, 580)
         const attachment = new Discord.Attachment(canvas.toBuffer(), "test-canvas.png")
         message.channel.send(attachment)
