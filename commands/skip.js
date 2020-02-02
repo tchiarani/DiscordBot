@@ -2,8 +2,6 @@ module.exports = {
     name: 'skip',
     description: 'Passe à la musique suivante',
     execute(message, data) {
-        console.log(message)
-        console.log(message.member)
         message.member.voiceChannel.join()
             .then(connection => {
                 message.react('⏭')
@@ -31,6 +29,31 @@ module.exports = {
                 connection.disconnect()
             } else {
                 play(connection, message, 'Skip')
+            }
+        }
+
+        function play(connection, message, action) {
+            if (action == "Add") {
+                if (data[message.guild.id]['queue'].length > 1) {
+                    message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
+                }
+            } else if (action == "Add playlist") {
+                if (data[message.guild.id]['queue'].length > 1) {
+                    message.channel.send('Playlist ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (**' + data[message.guild.id]['firstResult'].items.length + '** musiques)')
+                }
+            }
+            if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" && data[message.guild.id]['queue'].length >= 1) {
+                message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
+                data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
+                data[message.guild.id]['song'].setVolume(1 / 25)
+
+                data[message.guild.id]['song'].on("end", (reason) => {
+                    if (reason == undefined) {
+                        end(connection, message, "Stop")
+                    } else if (reason != "Skip") {
+                        end(connection, message, "Skip end")
+                    }
+                })
             }
         }
     }
