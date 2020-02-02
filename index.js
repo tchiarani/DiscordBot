@@ -128,7 +128,7 @@ client.on('message', async message => {
 
     const args = message.content.slice(config.prefix.length).split(' ')
     const commandName = args.shift().toLowerCase()
-    const command = client.commands.get(commandName)
+    const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.alias && cmd.alias.includes(commandName));
 
     let contenuMessage = message.content;
     message.content = message.content.toLowerCase()

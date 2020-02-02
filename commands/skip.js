@@ -1,6 +1,13 @@
+const Discord = require('discord.js')
+const search = require('yt-search')
+const ytdl = require('ytdl-core')
+const ytpl = require('ytpl')
+
 module.exports = {
     name: 'skip',
     description: 'Passe à la musique suivante',
+    usage: '',
+    alias: [],
     execute(message, data) {
         message.member.voiceChannel.join()
             .then(connection => {
