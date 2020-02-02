@@ -8,7 +8,6 @@ module.exports = {
     usage: '[commande]',
     execute(message, args) {
         const { commands } = message.client
-        console.log(commands)
 
         if (!args.length) {
 

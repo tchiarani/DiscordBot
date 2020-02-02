@@ -132,6 +132,8 @@ client.on('message', async message => {
     let contenuMessage = message.content;
     message.content = message.content.toLowerCase()
 
+    console.log(commandName)
+
     // JOIN
     if (commandName === 'join') {
         if (message.guild.me.voiceChannel) return message.channel.send('Désolé, je suis déjà connecté dans ' + message.guild.me.voiceChannel.name)
@@ -197,12 +199,6 @@ client.on('message', async message => {
         // SKIP
     } else if (commandName === "skip") {
         client.commands.get('skip').execute(message, data)
-
-        // HELP
-    } else if (commandName === "help") {
-        client.commands.get('help').execute(message, args)
-            // message.react('❓')
-            // message.channel.send(dataHelp)
 
         // RADIOS
     } else if (commandName === "radios") {
@@ -322,6 +318,10 @@ client.on('message', async message => {
         // UPTIME 
     } else if (commandName === 'uptime') {
         client.commands.get('uptime').execute(client, message, args)
+
+        // HELP
+    } else if (commandName === 'help') {
+        client.commands.get('help').execute(message, args)
     }
 })
 

@@ -1,7 +1,7 @@
 module.exports = {
-    name: 'sondage',
+    name: 'poll',
     description: "",
-    aliases: ['poll'],
+    aliases: ['sondage'],
     usage: '',
     execute(message, args) {
         // execute
