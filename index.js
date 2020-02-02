@@ -43,8 +43,8 @@ const radios = {
 }
 
 const musiques = {
-    'aspiradance': ['./Musique/eurodance.mp3', 'aspiradance'],
-    'sw': ['./Musique/SalleDesCoffres.mp3', 'la salle des coffres']
+    'aspiradance': ['./songs/eurodance.mp3', 'aspiradance'],
+    'sw': ['./songs/SalleDesCoffres.mp3', 'la salle des coffres']
         /*  'musique' : ['chemin', 'texte']  */
 }
 
@@ -471,7 +471,7 @@ client.on('message', async message => {
 
         // TEST 
     } else if (command === 'test') {
-        client.commands.get('test').execute(message, args)
+        client.commands.get('test').execute(client, message, args)
     }
 })
 

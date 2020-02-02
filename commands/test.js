@@ -1,7 +1,7 @@
 module.exports = {
     name: 'test',
     description: 'Test si le bot est connecté',
-    execute(message, args) {
+    execute(client, message, args) {
         message.channel.send("Test réussi ! En ligne depuis : " + msToTime(client.uptime))
         console.log("---------------------------------------")
     }
