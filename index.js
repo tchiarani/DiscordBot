@@ -2,15 +2,21 @@ const Discord = require('discord.js')
 const Attachment = require('discord.js')
 const search = require('yt-search')
 const ytdl = require('ytdl-core')
-const ytpl = require('ytpl');
+const ytpl = require('ytpl')
 const Canvas = require('canvas')
+const fs = require('fs')
 const config = require('./config')
 const client = new Discord.Client()
 
-const token = process.env.TOKEN
-const prefix = config.prefix
-const maxQueueDisplay = 10
+client.commands = new Discord.Collection()
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.name, command);
+}
+
+const maxQueueDisplay = config.maxQueueDisplay
 const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
 const authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png"
 let botAvatar = ""
@@ -117,7 +123,7 @@ function setMyActivity() {
     client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
 }
 
-client.login(token)
+client.login(config.token)
 
 client.on('ready', function() {
     console.log(`-----\nBot connecté dans ${client.guilds.size} serveurs différents, pour ${client.users.size} utilisateurs.\n-----`)
@@ -127,22 +133,22 @@ client.on('ready', function() {
     botAvatar = client.user.avatarURL
     dataHelp = new Discord.RichEmbed()
         .setTitle("Liste des commandes")
-        .setDescription("Préfix : **" + prefix + "**")
+        .setDescription("Préfix : **" + config.prefix + "**")
         .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
         .setFooter("unikorn.ga | /help", authorAvatar)
-        .addField("----------------", prefix + commandes.slice(0, (commandes.length + 1) / 2).join("\n" + prefix), true)
-        .addField("----------------", prefix + commandes.slice((commandes.length + 1) / 2, commandes.length).join("\n" + prefix), true)
+        .addField("----------------", config.prefix + commandes.slice(0, (commandes.length + 1) / 2).join("\n" + config.prefix), true)
+        .addField("----------------", config.prefix + commandes.slice((commandes.length + 1) / 2, commandes.length).join("\n" + config.prefix), true)
 })
 
 client.on('message', async message => {
 
     if (message.author.bot) return
     if (!message.guild) return
-    if (!message.content.startsWith(prefix)) return
+    if (!message.content.startsWith(config.prefix)) return
     if (!message.member) message.member = await message.guild.fetchMember(message)
 
-    const args = message.content.slice(prefix.length).split(' ');
+    const args = message.content.slice(config.prefix.length).split(' ');
     const command = args.shift().toLowerCase();
 
     let contenuMessage = message.content;
@@ -177,12 +183,12 @@ client.on('message', async message => {
         if (args.length === 0) {
             let helpDescriptions = "Lance ou ajoute une musique depuis YouTube\n\nLance une radio enregistrée\n\nLance une musique enregistrée"
             let helpCommands =
-                prefix + 'play *[mots-clés]*\n' +
-                prefix + 'play *[url]*\n' +
-                prefix + 'play *[radio]*\n' +
-                prefix + 'play *[radio] [volume]*\n' +
-                prefix + 'play *[musique]*\n' +
-                prefix + 'play *[musique] [volume]*\n'
+                config.prefix + 'play *[mots-clés]*\n' +
+                config.prefix + 'play *[url]*\n' +
+                config.prefix + 'play *[radio]*\n' +
+                config.prefix + 'play *[radio] [volume]*\n' +
+                config.prefix + 'play *[musique]*\n' +
+                config.prefix + 'play *[musique] [volume]*\n'
             setSpecificHelp(message.guild, "play", ["p"], helpCommands, helpDescriptions)
             message.channel.send(data[message.guild.id]['specificHelpEmbed'])
         } else {
@@ -276,7 +282,7 @@ client.on('message', async message => {
     } else if (command === 'radio') {
         if (args.length === 0) {
             let helpDescriptions = "Lance une webradio"
-            let helpCommands = prefix + 'radio *[url]*'
+            let helpCommands = config.prefix + 'radio *[url]*'
             setSpecificHelp(message.guild, "radio", [], helpCommands, helpDescriptions)
             message.channel.send(data[message.guild.id]['specificHelpEmbed'])
         } else {
@@ -345,10 +351,10 @@ client.on('message', async message => {
         // PURGE
     } else if (command === 'purge') {
         let helpDescriptions = "Supprime les *[0-100]* derniers messages"
-        let helpCommands = prefix + 'purge *[0-100]*'
+        let helpCommands = config.prefix + 'purge *[0-100]*'
         setSpecificHelp(message.guild, "purge", [], helpCommands, helpDescriptions)
         message.channel.send(data[message.guild.id]['specificHelpEmbed'])
-    } else if (message.content.startsWith(prefix + 'purge')) {
+    } else if (message.content.startsWith(config.prefix + 'purge')) {
         let args = message.content.split(' ')
         if (args[1] == undefined || args[1] < 1 || args[1] > 100) {
             message.reply('La valeur doit être comprise entre 0 et 100.')
@@ -380,7 +386,7 @@ client.on('message', async message => {
         } else {
             message.channel.send("Aucune musique dans la file d'attente.")
         }
-    } else if ((message.content.startsWith(prefix + 'queue ')) || (message.content.startsWith(prefix + 'q '))) {
+    } else if ((message.content.startsWith(config.prefix + 'queue ')) || (message.content.startsWith(config.prefix + 'q '))) {
         const queueNumber = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1)
         if (queueNumber >= 0 && queueNumber <= 1000) {
             if (data[message.guild.id]['dataQueue'][queueNumber] != undefined) {
@@ -401,10 +407,10 @@ client.on('message', async message => {
         // REMOVE
     } else if ((command === 'remove') || (command === 'r')) {
         const helpDescriptions = "Supprime les musiques en paramètre"
-        const helpCommands = prefix + 'remove *1 3 4...*'
+        const helpCommands = config.prefix + 'remove *1 3 4...*'
         setSpecificHelp(message.guild, "remove", ["r"], helpCommands, helpDescriptions)
         message.channel.send(data[message.guild.id]['specificHelpEmbed'])
-    } else if (message.content.startsWith(prefix + 'remove ') || message.content.startsWith(prefix + 'r ')) {
+    } else if (message.content.startsWith(config.prefix + 'remove ') || message.content.startsWith(config.prefix + 'r ')) {
         const queueNumbers = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(" ")
         let nbRemoved = 0
         for (let i = 0; i < queueNumbers.length; i++) {
@@ -424,14 +430,14 @@ client.on('message', async message => {
         // POLL
     } else if ((command === 'poll') || (command === 'sondage')) {
         let helpDescriptions = "Crée un sondage"
-        let helpCommands = prefix + 'poll Faut-il poser une question ? "Oui" "Non"'
+        let helpCommands = config.prefix + 'poll Faut-il poser une question ? "Oui" "Non"'
         setSpecificHelp(message.guild, "poll", ["sondage"], helpCommands, helpDescriptions)
         message.channel.send(data[message.guild.id]['specificHelpEmbed'])
-    } else if (message.content.startsWith(prefix + 'poll ') || message.content.startsWith(prefix + 'sondage ')) {
+    } else if (message.content.startsWith(config.prefix + 'poll ') || message.content.startsWith(config.prefix + 'sondage ')) {
         let question = contenuMessage.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
         let choices = contenuMessage.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
         if (question[1] == undefined || choices[1] == undefined || choices.length > 9) {
-            message.reply('Utilisation :\n' + prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
+            message.reply('Utilisation :\n' + config.prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
             return
         }
         const pollEmbed = new Discord.RichEmbed()
@@ -492,16 +498,16 @@ function msToTime(s) {
 
 function setSpecificHelp(guild, command, alias, helpCommands, helpDescritions) {
     data[guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
-        .setTitle("Commandes disponibles pour " + prefix + command + " :")
+        .setTitle("Commandes disponibles pour " + config.prefix + command + " :")
         .setAuthor("Besoin d'aide ?⁢⁢", botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
-        .setFooter("unikorn.ga | " + prefix + command, authorAvatar)
+        .setFooter("unikorn.ga | " + config.prefix + command, authorAvatar)
         .addField("**Commande :**", helpCommands, true)
         .addField("**Description :**", helpDescritions, true)
     if (alias.length == 0) {
         data[guild.id]['specificHelpEmbed'].setDescription("Aucun alias")
     } else {
-        data[guild.id]['specificHelpEmbed'].setDescription("Alias : " + prefix + alias.join(", " + prefix))
+        data[guild.id]['specificHelpEmbed'].setDescription("Alias : " + config.prefix + alias.join(", " + config.prefix))
     }
 }
 
@@ -600,7 +606,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
 
 const radiosList = {
     "embed": {
-        "description": "Écouter une radio : **" + prefix + "p *[radio]* **",
+        "description": "Écouter une radio : **" + config.prefix + "p *[radio]* **",
         "color": 7506394,
         "footer": {
             "icon_url": authorAvatar,
@@ -621,7 +627,7 @@ const radiosList = {
 
 const musiquesList = {
     "embed": {
-        "description": "Écouter une musique : **" + prefix + "p *[musique]* **",
+        "description": "Écouter une musique : **" + config.prefix + "p *[musique]* **",
         "color": 7506394,
         "footer": {
             "icon_url": authorAvatar,
