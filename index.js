@@ -132,8 +132,6 @@ client.on('message', async message => {
     let contenuMessage = message.content;
     message.content = message.content.toLowerCase()
 
-    console.log(commandName)
-
     // JOIN
     if (commandName === 'join') {
         if (message.guild.me.voiceChannel) return message.channel.send('Désolé, je suis déjà connecté dans ' + message.guild.me.voiceChannel.name)

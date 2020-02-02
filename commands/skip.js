@@ -5,8 +5,8 @@ const ytpl = require('ytpl')
 
 module.exports = {
     name: 'skip',
-    description: 'Passe à la musique suivante',
-    usage: '',
+    description: ['Passe à la musique suivante'],
+    usage: [''],
     alias: [],
     execute(message, data) {
         message.member.voiceChannel.join()
