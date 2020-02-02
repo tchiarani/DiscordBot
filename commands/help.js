@@ -13,7 +13,7 @@ module.exports = {
         if (!args.length) {
             data.push('Here\'s a list of all my commands:')
             data.push(commands.map(command => command.name).join(', '))
-            data.push(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`)
+            data.push(`\nYou can send \`${config.prefix}help [command name]\` to get info on a specific command!`)
 
             return message.author.send(data, { split: true })
                 .then(() => {
@@ -47,7 +47,7 @@ module.exports = {
 
             if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(', ')}`)
             if (command.description) data.push(`**Description:** ${command.description}`)
-            if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`)
+            if (command.usage) data.push(`**Usage:** ${config.prefix}${command.name} ${command.usage}`)
 
             data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`)
 
