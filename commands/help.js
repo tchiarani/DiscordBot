@@ -30,20 +30,20 @@ module.exports = {
                 return message.reply('cette commande n\'existe pas')
             }
 
-            data[guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
+            data[message.guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
                 .setTitle("Commandes disponibles pour " + config.prefix + command.name + " :")
                 .setAuthor("Besoin d'aide ?⁢⁢", config.botAvatar, "https://unikorn.ga/bot")
                 .setColor('#7289DA')
                 .setFooter("unikorn.ga | " + config.prefix + "help " + commandName, config.authorAvatar)
-            if (command.usage) data[guild.id]['specificHelpEmbed'].addField("**Commande :**", command.usage, true)
-            if (command.description) data[guild.id]['specificHelpEmbed'].addField("**Description :**", command.description, true)
+            if (command.usage) data[message.guild.id]['specificHelpEmbed'].addField("**Commande :**", command.usage, true)
+            if (command.description) data[message.guild.id]['specificHelpEmbed'].addField("**Description :**", command.description, true)
             if (command.alias) {
-                data[guild.id]['specificHelpEmbed'].setDescription("Alias : " + config.prefix + command.alias.join(", " + config.prefix))
+                data[message.guild.id]['specificHelpEmbed'].setDescription("Alias : " + config.prefix + command.alias.join(", " + config.prefix))
             } else {
-                data[guild.id]['specificHelpEmbed'].setDescription("Aucun alias")
+                data[message.guild.id]['specificHelpEmbed'].setDescription("Aucun alias")
             }
 
-            message.channel.send(data[guild.id]['specificHelpEmbed'])
+            message.channel.send(data[message.guild.id]['specificHelpEmbed'])
         }
     }
 }
