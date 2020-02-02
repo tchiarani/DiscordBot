@@ -94,3 +94,19 @@ module.exports = {
         }
     }
 }
+
+function setMusicEmbed(id, video, videoId, author_id, url, duration) {
+    data[id]['dataMusicEmbed']
+        .push(new Discord.RichEmbed()
+            .setTitle(video.title)
+            .setAuthor(video.author.name, "https://i.imgur.com/MBNSqyF.png", author_id)
+            .setThumbnail("https://img.youtube.com/vi/" + videoId + "/mqdefault.jpg")
+            .setColor('#FF0000')
+            .setURL(url)
+        )
+    if (duration == "0") {
+        data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription("🔴 Live")
+    } else {
+        data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription(duration)
+    }
+}
