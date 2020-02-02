@@ -3,7 +3,7 @@ module.exports = {
     description: ["Liste les radios enregistrées"],
     aliases: [],
     usage: [''],
-    execute(message) {
+    execute(message, radios) {
         message.react('📻')
         message.channel.send(radiosList)
     }

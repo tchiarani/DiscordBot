@@ -168,12 +168,11 @@ client.on('message', async message => {
 
         // RADIOS
     } else if (commandName === "radios") {
-        client.commands.get('radios').execute(message)
+        client.commands.get('radios').execute(message, radios)
 
         // MUSIQUES
     } else if (commandName === "musiques") {
-        message.react('🎵')
-        message.channel.send(musiquesList)
+        client.commands.get('musiques').execute(message, musiques)
 
         // BOB
     } else if (commandName === 'bob') {
@@ -337,25 +336,4 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                 })
             }
         })
-}
-
-
-const musiquesList = {
-    "embed": {
-        "description": "Écouter une musique : **" + config.prefix + "p *[musique]* **",
-        "color": 7506394,
-        "footer": {
-            "icon_url": config.authorAvatar,
-            "text": "unikorn.ga | /musiques"
-        },
-        "author": {
-            "name": "Liste des musiques",
-            "url": "https://unikorn.ga/bot"
-        },
-        "fields": [{
-            "name": "__Musiques :__",
-            "value": JSON.stringify(Object.keys(musiques)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
-            "inline": true
-        }]
-    }
 }
