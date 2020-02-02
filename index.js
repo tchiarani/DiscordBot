@@ -181,7 +181,7 @@ client.on('message', async message => {
 
         // PLAY
     } else if ((commandName === 'play') || (commandName === 'p')) {
-        client.commands.get('play').execute(client, message, args, data)
+        client.commands.get('play').execute(client, message, args, data, radios, musiques)
             // if (args.length === 0) {
             //     let helpDescriptions = "Lance ou ajoute une musique depuis YouTube\n\nLance une radio enregistrée\n\nLance une musique enregistrée"
             //     let helpCommands =

@@ -16,7 +16,7 @@ module.exports = {
                     let find = false
                     const maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length)
                     for (let i = 0; i < maxLength; i++) {
-                        if (args[1] == Object.keys(radios)[i]) {
+                        if (args[0] == Object.keys(radios)[i]) {
                             data[message.guild.id]['song'] = connection.playArbitraryInput(Object.values(radios)[i][0])
                             data[message.guild.id]['song'].setVolume(1 / 25)
                             let words = message.content.split(' ')
@@ -26,7 +26,7 @@ module.exports = {
                             find = true
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
                             message.react('📻')
-                        } else if (args[1] == Object.keys(musiques)[i]) {
+                        } else if (args[0] == Object.keys(musiques)[i]) {
                             data[message.guild.id]['song'] = connection.playFile(Object.values(musiques)[i][0])
                             data[message.guild.id]['song'].setVolume(1 / 25)
                             let words = message.content.split(' ')
@@ -39,14 +39,14 @@ module.exports = {
                             break
                         }
                     }
-                    if (Number.isInteger(args[1])) {
-                        if (data[message.guild.id]['musicTitle'][args[1]]) {
-                            console.log(data[message.guild.id]['musicTitle'][args[1]])
+                    if (Number.isInteger(args[0])) {
+                        if (data[message.guild.id]['musicTitle'][args[0]]) {
+                            console.log(data[message.guild.id]['musicTitle'][args[0]])
                         }
                     } else if (!find) {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
-                        if (args[1].match(regExp)) {
-                            ytpl(args[1].match(regExp)[2], { limit: Infinity }, function(err, playlist) {
+                        if (args[0].match(regExp)) {
+                            ytpl(args[0].match(regExp)[2], { limit: Infinity }, function(err, playlist) {
                                 if (err) console.log(err)
                                 message.react('▶')
                                 data[message.guild.id]['firstResult'] = playlist
@@ -61,7 +61,7 @@ module.exports = {
                                     if (data[message.guild.id]['queue'].length == 1 && i == 0) play(connection, message, 'Add')
                                 }
                                 play(connection, message, 'Add playlist')
-                            });
+                            })
                         } else {
                             let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
                             search(words, function(err, r) {
