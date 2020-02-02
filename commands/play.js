@@ -14,7 +14,6 @@ module.exports = {
             message.member.voiceChannel.join()
                 .then(connection => {
                     let find = false
-                    const args = contenuMessage.split(' ')
                     const maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length)
                     for (let i = 0; i < maxLength; i++) {
                         if (args[1] == Object.keys(radios)[i]) {
