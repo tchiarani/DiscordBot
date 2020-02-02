@@ -232,27 +232,8 @@ client.on('message', async message => {
         client.commands.get('queue').execute(message, args, data)
 
         // REMOVE
-    } else if ((commandName === 'remove') || (commandName === 'r')) {
-        const helpDescriptions = "Supprime les musiques en paramètre"
-        const helpCommands = config.prefix + 'remove *1 3 4...*'
-        setSpecificHelp(message.guild, "remove", ["r"], helpCommands, helpDescriptions)
-        message.channel.send(data[message.guild.id]['specificHelpEmbed'])
-    } else if (message.content.startsWith(config.prefix + 'remove ') || message.content.startsWith(config.prefix + 'r ')) {
-        const queueNumbers = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(" ")
-        let nbRemoved = 0
-        for (let i = 0; i < queueNumbers.length; i++) {
-            if (data[message.guild.id]['dataQueue'][queueNumbers[i] - nbRemoved] != undefined) {
-                message.channel.send('❌ ' + data[message.guild.id]['dataQueue'][queueNumbers[i] - nbRemoved])
-                data[message.guild.id]['queue'].splice(queueNumbers[i] - nbRemoved, 1)
-                data[message.guild.id]['dataQueue'].splice(queueNumbers[i] - nbRemoved, 1)
-                data[message.guild.id]['dataMusicEmbed'].splice(queueNumbers[i] - nbRemoved, 1)
-                data[message.guild.id]['musicTitle'].splice(queueNumbers[i] - nbRemoved, 1)
-                data[message.guild.id]['musicDuration'].splice(queueNumbers[i] - nbRemoved, 1)
-                nbRemoved++
-            } else {
-                message.channel.send("Pas de numéro **" + queueNumbers[i] + "** dans la file d'attente.")
-            }
-        }
+    } else if (commandName === 'remove') {
+        client.commands.get('remove').execute(message, args, data)
 
         // POLL
     } else if ((commandName === 'poll') || (commandName === 'sondage')) {
