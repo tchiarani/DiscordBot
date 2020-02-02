@@ -8,7 +8,7 @@ module.exports = {
     description: 'Lance ou ajoute une musique depuis YouTube',
     usage: '<mots-clés>',
     alias: ['p'],
-    execute(client, message, args, data, radios, musiques) {
+    execute(message, args, data, radios, musiques) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {

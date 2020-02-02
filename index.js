@@ -6,11 +6,11 @@ const ytpl = require('ytpl')
 const Canvas = require('canvas')
 const fs = require('fs')
 const config = require('./config')
-const client = new Discord.Client()
 const radios = require('./musics/radios')
 const musiques = require('./musics/musiques')
-
+const client = new Discord.Client()
 client.commands = new Discord.Collection()
+
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 
 for (const file of commandFiles) {
@@ -159,7 +159,7 @@ client.on('message', async message => {
 
         // PLAY
     } else if ((commandName === 'play') || (commandName === 'p')) {
-        client.commands.get('play').execute(client, message, args, data, radios, musiques)
+        client.commands.get('play').execute(message, args, data, radios, musiques)
 
         // RADIO
     } else if (commandName === 'radio') {
@@ -203,13 +203,7 @@ client.on('message', async message => {
 
         // SKIP
     } else if (commandName === "skip") {
-        if (message.member.voiceChannel) {
-            message.member.voiceChannel.join()
-                .then(connection => {
-                    message.react('⏭')
-                    end(connection, message, "Skip")
-                }).catch(console.log)
-        }
+        client.commands.get('skip').execute(message, args, data)
 
         // HELP
     } else if (commandName === "help" || commandName === "h") {
