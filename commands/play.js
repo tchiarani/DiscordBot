@@ -16,8 +16,8 @@ module.exports = {
                     let find = false
                     const maxLength = Math.max(Object.keys(radios.data).length, Object.keys(musiques).length)
                     for (let i = 0; i < maxLength; i++) {
-                        if (args[0] == Object.keys(radios)[i]) {
-                            data[message.guild.id]['song'] = connection.playArbitraryInput(Object.values(radios)[i][0])
+                        if (args[0] == Object.keys(radios.data)[i]) {
+                            data[message.guild.id]['song'] = connection.playArbitraryInput(Object.values(radios.data)[i][0])
                             data[message.guild.id]['song'].setVolume(1 / 25)
                             let words = message.content.split(' ')
                             if (words[2] >= 0 && words[2] <= 200) {
