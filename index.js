@@ -10,7 +10,6 @@ const radios = require('./musics/radios')
 const musiques = require('./musics/musiques')
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
-config.authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png"
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 
