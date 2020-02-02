@@ -442,7 +442,7 @@ const musiquesList = {
         "description": "Écouter une musique : **" + config.prefix + "p *[musique]* **",
         "color": 7506394,
         "footer": {
-            "icon_url": authorAvatar,
+            "icon_url": config.authorAvatar,
             "text": "unikorn.ga | /musiques"
         },
         "author": {
