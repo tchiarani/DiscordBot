@@ -4,7 +4,7 @@ const config = require('./../config')
 module.exports = {
     name: 'help',
     description: "Affiche toutes les commandes ou des informations à propos d'une commande",
-    aliases: ['commandes', 'commands'],
+    alias: ['commandes', 'commands'],
     usage: '[commande]',
     execute(message, args) {
         const { commands } = message.client
