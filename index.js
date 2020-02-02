@@ -421,7 +421,7 @@ const radiosList = {
         "description": "Écouter une radio : **" + config.prefix + "p *[radio]* **",
         "color": 7506394,
         "footer": {
-            "icon_url": authorAvatar,
+            "icon_url": config.authorAvatar,
             "text": "unikorn.ga | /radios"
         },
         "author": {
