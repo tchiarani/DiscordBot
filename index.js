@@ -441,10 +441,7 @@ client.on('message', async message => {
         let background
         if (message.mentions.users.size) {
             const taggedUser = message.mentions.users.first()
-            console.log("-------------------- USER -- " + taggedUser)
-            console.log("-------------------- USER AVATARURL -- " + taggedUser.avatarURL)
-                // background = await Canvas.loadImage(taggedUser.avatarURL)
-            background = await Canvas.loadImage(message.author.avatarURL)
+            background = await Canvas.loadImage(taggedUser.avatarURL)
         } else {
             background = await Canvas.loadImage(message.author.avatarURL)
         }
