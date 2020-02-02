@@ -113,14 +113,14 @@ function end(connection, message, action) {
 }
 
 function setMyActivity() {
-    client.user.setActivity("unikorn.ga • /help", { type: "WATCHING" })
+    client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
 }
 
 client.login(token)
 
 client.on('ready', function() {
     console.log(`-----\nBot connecté dans ${client.guilds.size} serveurs différents, pour ${client.users.size} utilisateurs.\n-----`)
-    client.user.setActivity("unikorn.ga • 🦄", { type: "WATCHING" })
+    client.user.setActivity("UniiKorn 🦄", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
     botAvatar = client.user.avatarURL
@@ -439,13 +439,13 @@ client.on('message', async message => {
         // AVATAR
     } else if (command === 'avatar') {
         let background
-        if (!message.mentions.users.size) {
-            background = await Canvas.loadImage(message.author.avatarURL)
-        } else if (message.content.startsWith(prefix + 'avatar @')) {
+        if (message.mentions.users.size) {
             const taggedUser = message.mentions.users.first()
             console.log("-------------------- USER -- " + taggedUser)
             console.log("-------------------- USER AVATARURL -- " + taggedUser.avatarURL)
                 // background = await Canvas.loadImage(taggedUser.avatarURL)
+            background = await Canvas.loadImage(message.author.avatarURL)
+        } else {
             background = await Canvas.loadImage(message.author.avatarURL)
         }
         const canvas = Canvas.createCanvas(500, 500)
