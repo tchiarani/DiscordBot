@@ -4,10 +4,11 @@ const search = require('yt-search')
 const ytdl = require('ytdl-core')
 const ytpl = require('ytpl');
 const Canvas = require('canvas')
+const config = require('config')
 const client = new Discord.Client()
 
 const token = process.env.TOKEN
-const prefix = '/'
+const prefix = config.prefix
 const maxQueueDisplay = 10
 
 const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
@@ -148,7 +149,7 @@ client.on('message', async message => {
     message.content = message.content.toLowerCase()
 
     // JOIN
-    if (message.content === prefix + 'join') {
+    if (command === 'join') {
         if (message.guild.me.voiceChannel) return message.channel.send('Désolé, je suis déjà connecté dans ' + message.guild.me.voiceChannel.name)
 
         if (message.member.voiceChannel) {
@@ -162,7 +163,7 @@ client.on('message', async message => {
         }
 
         // STOP
-    } else if ((message.content === prefix + 'stop') || (message.content === prefix + 's')) {
+    } else if ((command === 'stop') || (command === 's')) {
         if (message.member.voiceChannel === message.guild.me.voiceChannel) {
             message.member.voiceChannel.leave()
             message.react('🛑')
@@ -172,136 +173,147 @@ client.on('message', async message => {
         }
 
         // PLAY
-    } else if ((message.content === prefix + 'play') || (message.content === prefix + 'p')) {
-        let helpDescriptions = "Lance ou ajoute une musique depuis YouTube\n\nLance une radio enregistrée\n\nLance une musique enregistrée"
-        let helpCommands =
-            prefix + 'play *[mots-clés]*\n' +
-            prefix + 'play *[url]*\n' +
-            prefix + 'play *[radio]*\n' +
-            prefix + 'play *[radio] [volume]*\n' +
-            prefix + 'play *[musique]*\n' +
-            prefix + 'play *[musique] [volume]*\n'
-        setSpecificHelp(message.guild, "play", ["p"], helpCommands, helpDescriptions)
-        message.channel.send(data[message.guild.id]['specificHelpEmbed'])
-    } else if ((message.content.startsWith(prefix + 'play ')) || (message.content.startsWith(prefix + 'p '))) {
-        if (message.member.voiceChannel) {
-            message.member.voiceChannel.join()
-                .then(connection => {
-                    let find = false
-                    let args = contenuMessage.split(' ')
-                    let maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length)
-                    for (let i = 0; i < maxLength; i++) {
-                        if (args[1] == Object.keys(radios)[i]) {
-                            data[message.guild.id]['song'] = connection.playArbitraryInput(Object.values(radios)[i][0])
-                            data[message.guild.id]['song'].setVolume(1 / 25)
-                            let words = message.content.split(' ')
-                            if (words[2] >= 0 && words[2] <= 200) {
-                                data[message.guild.id]['song'].setVolume(words[2] / 2500)
-                            }
-                            find = true
-                            message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
-                            message.react('📻')
-                        } else if (args[1] == Object.keys(musiques)[i]) {
-                            data[message.guild.id]['song'] = connection.playFile(Object.values(musiques)[i][0])
-                            data[message.guild.id]['song'].setVolume(1 / 25)
-                            let words = message.content.split(' ')
-                            if (words[2] >= 0 && words[2] <= 200) {
-                                data[message.guild.id]['song'].setVolume(words[2] / 2500)
-                            }
-                            find = true
-                            message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(musiques)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
-                            message.react('🎵')
-                            break
-                        }
-                    }
-                    if (!find) {
-                        let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
-                        if (args[1].match(regExp)) {
-                            ytpl(args[1].match(regExp)[2], { limit: Infinity }, function(err, playlist) {
-                                if (err) console.log(err)
-                                message.react('▶')
-                                data[message.guild.id]['firstResult'] = playlist
-                                for (let i = 0; i < playlist.items.length; i++) {
-                                    data[message.guild.id]['musicTitle'].push(playlist.items[i].title)
-                                    data[message.guild.id]['musicDuration'].push(playlist.items[i].duration)
-                                    let music = playlist.items[i].url_simple
-                                    let dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
-                                    setMusicEmbed(message.guild.id, playlist.items[i], playlist.items[i].id, playlist.items[i].author.ref, playlist.items[i].url_simple, playlist.items[i].duration)
-                                    data[message.guild.id]['queue'].push(music)
-                                    data[message.guild.id]['dataQueue'].push(dataMusic)
-                                    if (data[message.guild.id]['queue'].length == 1 && i == 0) play(connection, message, 'Add')
-                                }
-                                play(connection, message, 'Add playlist')
-                            });
-                        } else {
-                            let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
-                            search(words, function(err, r) {
-                                if (r.videos != undefined) {
-                                    message.react('▶')
-                                    if (err) throw err
-                                    videos = r.videos
-                                    data[message.guild.id]['firstResult'] = videos[0]
-                                    if (videos[0].timestamp == 0) {
-                                        videos[0].timestamp = 'Live'
-                                    }
-                                    data[message.guild.id]['musicTitle'].push(videos[0].title)
-                                    data[message.guild.id]['musicDuration'].push(videos[0].timestamp)
-                                    let music = 'https://www.youtube.com' + videos[0].url
-                                    let dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (' + videos[0].timestamp + ')'
-                                    setMusicEmbed(message.guild.id, videos[0], videos[0].videoId, "https://youtube.com/channel/" + videos[0].author_id, "https://youtube.com" + videos[0].url, videos[0].timestamp)
-                                    data[message.guild.id]['queue'].push(music)
-                                    data[message.guild.id]['dataQueue'].push(dataMusic)
-                                    play(connection, message, 'Add')
-                                } else {
-                                    message.react('❓')
-                                }
-
-                            })
-                        }
-                    }
-                }).catch(console.log)
+    } else if ((command === 'play') || (command === 'p')) {
+        if (args.length === 0) {
+            let helpDescriptions = "Lance ou ajoute une musique depuis YouTube\n\nLance une radio enregistrée\n\nLance une musique enregistrée"
+            let helpCommands =
+                prefix + 'play *[mots-clés]*\n' +
+                prefix + 'play *[url]*\n' +
+                prefix + 'play *[radio]*\n' +
+                prefix + 'play *[radio] [volume]*\n' +
+                prefix + 'play *[musique]*\n' +
+                prefix + 'play *[musique] [volume]*\n'
+            setSpecificHelp(message.guild, "play", ["p"], helpCommands, helpDescriptions)
+            message.channel.send(data[message.guild.id]['specificHelpEmbed'])
         } else {
-            message.reply('il faut être dans un salon vocal.')
+            if (message.member.voiceChannel) {
+                message.member.voiceChannel.join()
+                    .then(connection => {
+                        let find = false
+                        const args = contenuMessage.split(' ')
+                        const maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length)
+                        for (let i = 0; i < maxLength; i++) {
+                            if (args[1] == Object.keys(radios)[i]) {
+                                data[message.guild.id]['song'] = connection.playArbitraryInput(Object.values(radios)[i][0])
+                                data[message.guild.id]['song'].setVolume(1 / 25)
+                                let words = message.content.split(' ')
+                                if (words[2] >= 0 && words[2] <= 200) {
+                                    data[message.guild.id]['song'].setVolume(words[2] / 2500)
+                                }
+                                find = true
+                                message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
+                                message.react('📻')
+                            } else if (args[1] == Object.keys(musiques)[i]) {
+                                data[message.guild.id]['song'] = connection.playFile(Object.values(musiques)[i][0])
+                                data[message.guild.id]['song'].setVolume(1 / 25)
+                                let words = message.content.split(' ')
+                                if (words[2] >= 0 && words[2] <= 200) {
+                                    data[message.guild.id]['song'].setVolume(words[2] / 2500)
+                                }
+                                find = true
+                                message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(musiques)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
+                                message.react('🎵')
+                                break
+                            }
+                        }
+                        if (Number.isInteger(args[1])) {
+                            if (data[message.guild.id]['musicTitle'][args[1]]) {
+                                console.log(data[message.guild.id]['musicTitle'][args[1]])
+                            }
+                        } else if (!find) {
+                            let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
+                            if (args[1].match(regExp)) {
+                                ytpl(args[1].match(regExp)[2], { limit: Infinity }, function(err, playlist) {
+                                    if (err) console.log(err)
+                                    message.react('▶')
+                                    data[message.guild.id]['firstResult'] = playlist
+                                    for (let i = 0; i < playlist.items.length; i++) {
+                                        data[message.guild.id]['musicTitle'].push(playlist.items[i].title)
+                                        data[message.guild.id]['musicDuration'].push(playlist.items[i].duration)
+                                        let music = playlist.items[i].url_simple
+                                        let dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
+                                        setMusicEmbed(message.guild.id, playlist.items[i], playlist.items[i].id, playlist.items[i].author.ref, playlist.items[i].url_simple, playlist.items[i].duration)
+                                        data[message.guild.id]['queue'].push(music)
+                                        data[message.guild.id]['dataQueue'].push(dataMusic)
+                                        if (data[message.guild.id]['queue'].length == 1 && i == 0) play(connection, message, 'Add')
+                                    }
+                                    play(connection, message, 'Add playlist')
+                                });
+                            } else {
+                                let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
+                                search(words, function(err, r) {
+                                    if (r.videos != undefined) {
+                                        message.react('▶')
+                                        if (err) throw err
+                                        videos = r.videos
+                                        data[message.guild.id]['firstResult'] = videos[0]
+                                        if (videos[0].timestamp == 0) {
+                                            videos[0].timestamp = 'Live'
+                                        }
+                                        data[message.guild.id]['musicTitle'].push(videos[0].title)
+                                        data[message.guild.id]['musicDuration'].push(videos[0].timestamp)
+                                        let music = 'https://www.youtube.com' + videos[0].url
+                                        let dataMusic = '**' + videos[0].title + '** de ' + videos[0].author.name + ' (' + videos[0].timestamp + ')'
+                                        setMusicEmbed(message.guild.id, videos[0], videos[0].videoId, "https://youtube.com/channel/" + videos[0].author_id, "https://youtube.com" + videos[0].url, videos[0].timestamp)
+                                        data[message.guild.id]['queue'].push(music)
+                                        data[message.guild.id]['dataQueue'].push(dataMusic)
+                                        play(connection, message, 'Add')
+                                    } else {
+                                        message.react('❓')
+                                    }
+
+                                })
+                            }
+                        }
+                    }).catch(console.log)
+            } else {
+                message.reply('il faut être dans un salon vocal.')
+            }
         }
 
+
         // RADIO
-    } else if (message.content === prefix + 'radio') {
-        let helpDescriptions = "Lance une webradio"
-        let helpCommands = prefix + 'radio *[url]*'
-        setSpecificHelp(message.guild, "radio", [], helpCommands, helpDescriptions)
-        message.channel.send(data[message.guild.id]['specificHelpEmbed'])
-    } else if (message.content.startsWith(prefix + 'radio ')) {
-        if (message.member.voiceChannel) {
-            message.member.voiceChannel.join()
-                .then(connection => {
-                    let words = message.content.split(' ')
-                    data[message.guild.id]['song'] = connection.playArbitraryInput(words[1])
-                    data[message.guild.id]['song'].setVolume(1 / 25)
-                    message.react('📻')
-                }).catch(console.log)
+    } else if (command === 'radio') {
+        if (args.length === 0) {
+            let helpDescriptions = "Lance une webradio"
+            let helpCommands = prefix + 'radio *[url]*'
+            setSpecificHelp(message.guild, "radio", [], helpCommands, helpDescriptions)
+            message.channel.send(data[message.guild.id]['specificHelpEmbed'])
+        } else {
+            if (message.member.voiceChannel) {
+                message.member.voiceChannel.join()
+                    .then(connection => {
+                        let words = message.content.split(' ')
+                        data[message.guild.id]['song'] = connection.playArbitraryInput(words[1])
+                        data[message.guild.id]['song'].setVolume(1 / 25)
+                        message.react('📻')
+                    }).catch(console.log)
+            }
         }
 
         // VOLUME
-    } else if ((message.content === prefix + 'volume') || (message.content === prefix + 'v')) {
-        if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
-            message.reply("🔊 Volume : " + data[message.guild.id]['song'].volume)
-        } else {
-            message.reply("Aucune musique dans la file d'attente")
-        }
-    } else if ((message.content.startsWith(prefix + 'volume')) || (message.content.startsWith(prefix + 'v'))) {
-        if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
-            let words = message.content.split(' ')
-            if (words[1] >= 0 && words[1] <= 200) {
-                data[message.guild.id]['song'].setVolume(words[1] / 2500)
-                message.react('🔊')
+    } else if ((command === 'volume') || (command === 'v')) {
+        if (args.length === 0) {
+            if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
+                message.reply("🔊 Volume : " + data[message.guild.id]['song'].volume)
             } else {
-                message.channel.send('Fais pas l\'fou gamin ! ' + words[1] + ' c\'est trop fort...')
-                message.react('🛑')
+                message.reply("Aucune musique dans la file d'attente")
+            }
+        } else {
+            if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
+                let words = message.content.split(' ')
+                if (words[1] >= 0 && words[1] <= 200) {
+                    data[message.guild.id]['song'].setVolume(words[1] / 2500)
+                    message.react('🔊')
+                } else {
+                    message.channel.send('Fais pas l\'fou gamin ! ' + words[1] + ' c\'est trop fort...')
+                    message.react('🛑')
+                }
             }
         }
 
         // SKIP
-    } else if (message.content === prefix + "skip") {
+    } else if (command === "skip") {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {
@@ -311,27 +323,27 @@ client.on('message', async message => {
         }
 
         // HELP
-    } else if ((message.content === prefix + "help") || (message.content === prefix + "h")) {
+    } else if (command === "help" || command === "h") {
         message.react('❓')
         message.channel.send(dataHelp)
 
         // RADIOS
-    } else if (message.content === prefix + "radios") {
+    } else if (command === "radios") {
         message.react('📻')
         message.channel.send(radiosList)
 
         // MUSIQUES
-    } else if (message.content === prefix + "musiques") {
+    } else if (command === "musiques") {
         message.react('🎵')
         message.channel.send(musiquesList)
 
         // BOB
-    } else if (message.content === prefix + 'bob') {
+    } else if (command === 'bob') {
         const attachment = new Discord.Attachment(photoBob)
         message.channel.send(attachment)
 
         // PURGE
-    } else if (message.content === prefix + 'purge') {
+    } else if (command === 'purge') {
         let helpDescriptions = "Supprime les *[0-100]* derniers messages"
         let helpCommands = prefix + 'purge *[0-100]*'
         setSpecificHelp(message.guild, "purge", [], helpCommands, helpDescriptions)
@@ -346,7 +358,7 @@ client.on('message', async message => {
         }
 
         // PAUSE
-    } else if (message.content === prefix + 'pause') {
+    } else if (command === 'pause') {
         if (message.member.voiceChannel) {
             message.react('⏸')
             data[message.guild.id]['song'].pause()
@@ -354,7 +366,7 @@ client.on('message', async message => {
         }
 
         // RESUME
-    } else if (message.content === prefix + 'resume') {
+    } else if (command === 'resume') {
         if (message.member.voiceChannel) {
             message.react('⏯')
             data[message.guild.id]['song'].resume()
@@ -362,7 +374,7 @@ client.on('message', async message => {
         }
 
         // QUEUE
-    } else if ((message.content === prefix + 'queue') || (message.content === prefix + 'q')) {
+    } else if ((command === 'queue') || (command === 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
             setQueueEmbed(message, data[message.guild.id]['musicTitle'], data[message.guild.id]['musicDuration'])
         } else {
@@ -387,7 +399,7 @@ client.on('message', async message => {
         }
 
         // REMOVE
-    } else if ((message.content === prefix + 'remove') || (message.content === prefix + 'r')) {
+    } else if ((command === 'remove') || (command === 'r')) {
         const helpDescriptions = "Supprime les musiques en paramètre"
         const helpCommands = prefix + 'remove *1 3 4...*'
         setSpecificHelp(message.guild, "remove", ["r"], helpCommands, helpDescriptions)
@@ -410,7 +422,7 @@ client.on('message', async message => {
         }
 
         // POLL
-    } else if ((message.content === prefix + 'poll') || (message.content === prefix + 'sondage')) {
+    } else if ((command === 'poll') || (command === 'sondage')) {
         let helpDescriptions = "Crée un sondage"
         let helpCommands = prefix + 'poll Faut-il poser une question ? "Oui" "Non"'
         setSpecificHelp(message.guild, "poll", ["sondage"], helpCommands, helpDescriptions)
@@ -452,7 +464,7 @@ client.on('message', async message => {
         message.channel.send(attachment)
 
         // TEST 
-    } else if (message.content === prefix + 'test') {
+    } else if (command === 'test') {
         message.channel.send("Test réussi ! En ligne depuis : " + msToTime(client.uptime))
         console.log("---------------------------------------")
     }
@@ -477,28 +489,6 @@ function msToTime(s) {
     if (mins != 0) return pad(mins) + 'm' + pad(secs) + 's'
     else return pad(secs) + 's'
 }
-
-client.on('reconnecting', () => {
-    console.log('Reconnecting!')
-})
-
-client.on('disconnect', () => {
-    console.log('Disconnect!')
-    client.user.setActivity("la maintenance", { type: "WATCHING" })
-    client.user.setStatus('dnd')
-})
-
-client.on('warn', () => {
-    console.log('Error! : ' + error)
-    client.user.setActivity("la maintenance", { type: "WATCHING" })
-    client.user.setStatus('dnd')
-})
-
-client.on('error', () => {
-    console.log('Warn!')
-    client.user.setActivity("la maintenance", { type: "WATCHING" })
-    client.user.setStatus('dnd')
-})
 
 function setSpecificHelp(guild, command, alias, helpCommands, helpDescritions) {
     data[guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
