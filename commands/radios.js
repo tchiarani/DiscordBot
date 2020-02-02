@@ -4,9 +4,6 @@ module.exports = {
     aliases: [],
     usage: [''],
     execute(message, radios) {
-        message.react('📻')
-        message.channel.send(radiosList)
-
         const radiosList = {
             "embed": {
                 "description": "Écouter une radio : **" + config.prefix + "p *[radio]* **",
@@ -27,5 +24,8 @@ module.exports = {
                 }]
             }
         }
+
+        message.react('📻')
+        message.channel.send(radiosList)
     }
 }

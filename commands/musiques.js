@@ -4,9 +4,6 @@ module.exports = {
     aliases: [],
     usage: '',
     execute(message, musiques) {
-        message.react('🎵')
-        message.channel.send(musiquesList)
-
         const musiquesList = {
             "embed": {
                 "description": "Écouter une musique : **" + config.prefix + "p *[musique]* **",
@@ -26,5 +23,8 @@ module.exports = {
                 }]
             }
         }
+
+        message.react('🎵')
+        message.channel.send(musiquesList)
     }
 }
