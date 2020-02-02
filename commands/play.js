@@ -49,7 +49,6 @@ module.exports = {
                         if (args[0].match(regExp)) {
                             ytpl(args[0].match(regExp)[2], { limit: Infinity }, function(err, playlist) {
                                 if (err) console.log(err)
-                                message.react('▶')
                                 data[message.guild.id]['firstResult'] = playlist
                                 for (let i = 0; i < playlist.items.length; i++) {
                                     data[message.guild.id]['musicTitle'].push(playlist.items[i].title)
@@ -61,13 +60,13 @@ module.exports = {
                                     data[message.guild.id]['dataQueue'].push(dataMusic)
                                     if (data[message.guild.id]['queue'].length == 1 && i == 0) play(connection, message, 'Add')
                                 }
+                                message.react('▶')
                                 play(connection, message, 'Add playlist')
                             })
                         } else {
                             let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
                             search(words, function(err, r) {
                                 if (r.videos != undefined) {
-                                    message.react('▶')
                                     if (err) throw err
                                     videos = r.videos
                                     data[message.guild.id]['firstResult'] = videos[0]
@@ -81,6 +80,7 @@ module.exports = {
                                     setMusicEmbed(message.guild.id, videos[0], videos[0].videoId, "https://youtube.com/channel/" + videos[0].author_id, "https://youtube.com" + videos[0].url, videos[0].timestamp)
                                     data[message.guild.id]['queue'].push(music)
                                     data[message.guild.id]['dataQueue'].push(dataMusic)
+                                    message.react('▶')
                                     play(connection, message, 'Add')
                                 } else {
                                     message.react('❓')
