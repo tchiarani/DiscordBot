@@ -156,22 +156,7 @@ client.on('message', async message => {
 
         // RADIO
     } else if (commandName === 'radio') {
-        if (args.length === 0) {
-            let helpDescriptions = "Lance une webradio"
-            let helpCommands = config.prefix + 'radio *[url]*'
-            setSpecificHelp(message.guild, "radio", [], helpCommands, helpDescriptions)
-            message.channel.send(data[message.guild.id]['specificHelpEmbed'])
-        } else {
-            if (message.member.voiceChannel) {
-                message.member.voiceChannel.join()
-                    .then(connection => {
-                        let words = message.content.split(' ')
-                        data[message.guild.id]['song'] = connection.playArbitraryInput(words[1])
-                        data[message.guild.id]['song'].setVolume(1 / 25)
-                        message.react('📻')
-                    }).catch(console.log)
-            }
-        }
+        client.commands.get('play').execute(message, data)
 
         // VOLUME
     } else if (commandName === 'volume') {
@@ -183,8 +168,7 @@ client.on('message', async message => {
 
         // RADIOS
     } else if (commandName === "radios") {
-        message.react('📻')
-        message.channel.send(radiosList)
+        client.commands.get('radios').execute(message)
 
         // MUSIQUES
     } else if (commandName === "musiques") {
@@ -213,19 +197,11 @@ client.on('message', async message => {
 
         // PAUSE
     } else if (commandName === 'pause') {
-        if (message.member.voiceChannel) {
-            message.react('⏸')
-            data[message.guild.id]['song'].pause()
-            data[message.guild.id]['song'].setSpeaking(false)
-        }
+        client.commands.get('pause').execute(message, args, data)
 
         // RESUME
     } else if (commandName === 'resume') {
-        if (message.member.voiceChannel) {
-            message.react('⏯')
-            data[message.guild.id]['song'].resume()
-            data[message.guild.id]['song'].setSpeaking(true)
-        }
+        client.commands.get('resume').execute(message, args, data)
 
         // QUEUE
     } else if (commandName === 'queue') {
@@ -363,27 +339,6 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
         })
 }
 
-
-const radiosList = {
-    "embed": {
-        "description": "Écouter une radio : **" + config.prefix + "p *[radio]* **",
-        "color": 7506394,
-        "footer": {
-            "icon_url": config.authorAvatar,
-            "text": "unikorn.ga | /radios"
-        },
-        "author": {
-            "name": "Liste des radios",
-            "url": "https://unikorn.ga/bot",
-            "icon_url": config.botAvatar
-        },
-        "fields": [{
-            "name": "__Radios :__",
-            "value": JSON.stringify(Object.keys(radios)).replace(/","/g, ', ').replace(/[["]/g, '').replace(/]/g, ''),
-            "inline": true
-        }]
-    }
-}
 
 const musiquesList = {
     "embed": {

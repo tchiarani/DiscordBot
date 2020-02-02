@@ -1,7 +1,7 @@
 module.exports = {
     name: 'remove',
     description: ["Supprime la musique de la file d'attente", "Supprime les musiques de la file d'attente"],
-    aliases: ['r'],
+    alias: ['r'],
     usage: ['[chiffre]', '[chiffre] [chiffre]'],
     execute(message, args, data) {
         //const queueNumbers = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(" ")
