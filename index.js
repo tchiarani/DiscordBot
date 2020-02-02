@@ -181,18 +181,7 @@ client.on('message', async message => {
 
         // PURGE
     } else if (commandName === 'purge') {
-        let helpDescriptions = "Supprime les *[0-100]* derniers messages"
-        let helpCommands = config.prefix + 'purge *[0-100]*'
-        setSpecificHelp(message.guild, "purge", [], helpCommands, helpDescriptions)
-        message.channel.send(data[message.guild.id]['specificHelpEmbed'])
-    } else if (message.content.startsWith(config.prefix + 'purge')) {
-        let args = message.content.split(' ')
-        if (args[1] == undefined || args[1] < 1 || args[1] > 100) {
-            message.reply('La valeur doit être comprise entre 0 et 100.')
-        } else {
-            message.delete()
-            message.channel.bulkDelete(args[1]).catch(console.error)
-        }
+        client.commands.get('purge').execute(message, args)
 
         // PAUSE
     } else if (commandName === 'pause') {
@@ -211,31 +200,8 @@ client.on('message', async message => {
         client.commands.get('remove').execute(message, args, data)
 
         // POLL
-    } else if ((commandName === 'poll') || (commandName === 'sondage')) {
-        let helpDescriptions = "Crée un sondage"
-        let helpCommands = config.prefix + 'poll Faut-il poser une question ? "Oui" "Non"'
-        setSpecificHelp(message.guild, "poll", ["sondage"], helpCommands, helpDescriptions)
-        message.channel.send(data[message.guild.id]['specificHelpEmbed'])
-    } else if (message.content.startsWith(config.prefix + 'poll ') || message.content.startsWith(config.prefix + 'sondage ')) {
-        let question = contenuMessage.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
-        let choices = contenuMessage.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
-        if (question[1] == undefined || choices[1] == undefined || choices.length > 9) {
-            message.reply('Utilisation :\n' + config.prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
-            return
-        }
-        const pollEmbed = new Discord.RichEmbed()
-            .setColor(0xffffff)
-            .setAuthor("Sondage crée par " + message.author.username)
-            .setTitle(question)
-            .setDescription(choices.map((value, index) => emojisNombre[index] + ' ' + value).join('\n'))
-            .setFooter("Réagissez pour voter")
-        message.channel.send(pollEmbed)
-            .then(async function(poll) {
-                for (let i = 0; i < choices.length; i++) {
-                    await poll.react(emojisNombre[i])
-                }
-            }).catch(console.log())
-        message.delete()
+    } else if (commandName === 'poll') {
+        client.commands.get('poll').execute(message, emojisNombre)
 
         // AVATAR
     } else if (commandName === 'avatar') {
