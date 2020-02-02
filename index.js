@@ -443,6 +443,8 @@ client.on('message', async message => {
             background = await Canvas.loadImage(message.author.avatarURL)
         } else if (message.content.startsWith(prefix + 'avatar @')) {
             const taggedUser = message.mentions.users.first()
+            console.log("-------------------- USER -- " + taggedUser)
+            console.log("-------------------- USER AVATARURL -- " + taggedUser.avatarURL)
             background = await Canvas.loadImage(taggedUser.avatarURL)
         }
         const canvas = Canvas.createCanvas(500, 500)
