@@ -253,28 +253,7 @@ client.on('message', async message => {
 
         // QUEUE
     } else if ((commandName === 'queue') || (commandName === 'q')) {
-        if (data[message.guild.id]['dataQueue'].length != 0) {
-            setQueueEmbed(message, data[message.guild.id]['musicTitle'], data[message.guild.id]['musicDuration'])
-        } else {
-            message.channel.send("Aucune musique dans la file d'attente.")
-        }
-    } else if ((message.content.startsWith(config.prefix + 'queue ')) || (message.content.startsWith(config.prefix + 'q '))) {
-        const queueNumber = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1)
-        if (queueNumber >= 0 && queueNumber <= 1000) {
-            if (data[message.guild.id]['dataQueue'][queueNumber] != undefined) {
-                if (queueNumber == 0) {
-                    message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][queueNumber])
-                } else if (queueNumber <= 9) {
-                    message.channel.send(emojisNombre[queueNumber - 1] + ' ' + data[message.guild.id]['dataQueue'][queueNumber])
-                } else {
-                    message.channel.send(queueNumber + '. ' + data[message.guild.id]['dataQueue'][queueNumber])
-                }
-            } else {
-                message.channel.send("Pas ce numéro dans la file d'attente.")
-            }
-        } else {
-            message.channel.send("La valeur doit être comprise entre 1 et 1000.")
-        }
+        client.commands.get('queue').execute(message, args, data)
 
         // REMOVE
     } else if ((commandName === 'remove') || (commandName === 'r')) {
