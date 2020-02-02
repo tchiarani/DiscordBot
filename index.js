@@ -122,8 +122,9 @@ client.on('ready', function() {
 client.on('message', async message => {
 
     const args = message.content.slice(config.prefix.length).split(' ')
-    const commandName = args.shift().toLowerCase()
-    const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.alias && cmd.alias.includes(commandName)).name
+    let commandName = args.shift().toLowerCase()
+    const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.alias && cmd.alias.includes(commandName))
+    commandName = command.name
 
     if (!message.guild || message.author.bot) return
     if (!message.content.startsWith(config.prefix)) return
@@ -346,26 +347,6 @@ client.on('message', async message => {
     }
 })
 
-function msToTime(s) {
-
-    function pad(n, z) {
-        z = z || 2
-        return ('00' + n).slice(-z)
-    }
-
-    let ms = s % 1000
-    s = (s - ms) / 1000
-    let secs = s % 60
-    s = (s - secs) / 60
-    let mins = s % 60
-    let hrs = (s - mins) / 60
-    s = (s - hrs) / 60
-
-    if (hrs != 0) return pad(hrs) + 'h' + pad(mins) + 'm' + pad(secs) + 's'
-    if (mins != 0) return pad(mins) + 'm' + pad(secs) + 's'
-    else return pad(secs) + 's'
-}
-
 function setSpecificHelp(guild, command, alias, helpCommands, helpDescritions) {
     data[guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
         .setTitle("Commandes disponibles pour " + config.prefix + command + " :")
@@ -378,22 +359,6 @@ function setSpecificHelp(guild, command, alias, helpCommands, helpDescritions) {
         data[guild.id]['specificHelpEmbed'].setDescription("Aucun alias")
     } else {
         data[guild.id]['specificHelpEmbed'].setDescription("Alias : " + config.prefix + alias.join(", " + config.prefix))
-    }
-}
-
-function setMusicEmbed(id, video, videoId, author_id, url, duration) {
-    data[id]['dataMusicEmbed']
-        .push(new Discord.RichEmbed()
-            .setTitle(video.title)
-            .setAuthor(video.author.name, "https://i.imgur.com/MBNSqyF.png", author_id)
-            .setThumbnail("https://img.youtube.com/vi/" + videoId + "/mqdefault.jpg")
-            .setColor('#FF0000')
-            .setURL(url)
-        )
-    if (duration == "0") {
-        data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription("🔴 Live")
-    } else {
-        data[id]['dataMusicEmbed'][data[id]['dataMusicEmbed'].length - 1].setDescription(duration)
     }
 }
 

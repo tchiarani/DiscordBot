@@ -2,7 +2,7 @@ module.exports = {
     name: 'skip',
     description: 'Passe à la musique suivante',
     usage: '',
-    alias: [],
+    alias: ['s'],
     execute(message) {
         if (message.member.voiceChannel === message.guild.me.voiceChannel) {
             message.member.voiceChannel.leave()
