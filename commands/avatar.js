@@ -1,3 +1,6 @@
+const Attachment = require('discord.js')
+const Canvas = require('canvas')
+
 module.exports = {
     name: 'avatar',
     description: [""],
