@@ -34,7 +34,7 @@ module.exports = {
                 .setTitle("Commandes disponibles pour " + config.prefix + command.name + " :")
                 .setAuthor("Besoin d'aide ?⁢⁢", config.botAvatar, "https://unikorn.ga/bot")
                 .setColor('#7289DA')
-                .setFooter("unikorn.ga | " + config.prefix + "help " + commandName, config.authorAvatar)
+                .setFooter("unikorn.ga | " + config.prefix + "help " + command.name, config.authorAvatar)
             if (command.usage) data[message.guild.id]['specificHelpEmbed'].addField("**Commande :**", command.usage, true)
             if (command.description) data[message.guild.id]['specificHelpEmbed'].addField("**Description :**", command.description, true)
             if (command.alias) {
