@@ -110,9 +110,9 @@ client.on('ready', function() {
     dataHelp = new Discord.RichEmbed()
         .setTitle("Liste des commandes")
         .setDescription("Préfix : **" + config.prefix + "**")
-        .setAuthor("Besoin d'aide ?", botAvatar, "https://unikorn.ga/bot")
+        .setAuthor("Besoin d'aide ?", config.botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
-        .setFooter("unikorn.ga | /help", authorAvatar)
+        .setFooter("unikorn.ga | /help", config.authorAvatar)
         .addField("----------------", config.prefix + commandes.slice(0, (commandes.length + 1) / 2).join("\n" + config.prefix), true)
         .addField("----------------", config.prefix + commandes.slice((commandes.length + 1) / 2, commandes.length).join("\n" + config.prefix), true)
 })
@@ -327,9 +327,9 @@ client.on('message', async message => {
 function setSpecificHelp(guild, commandName, alias, helpCommands, helpDescritions) {
     data[guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
         .setTitle("Commandes disponibles pour " + config.prefix + commandName + " :")
-        .setAuthor("Besoin d'aide ?⁢⁢", botAvatar, "https://unikorn.ga/bot")
+        .setAuthor("Besoin d'aide ?⁢⁢", config.botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
-        .setFooter("unikorn.ga | " + config.prefix + commandName, authorAvatar)
+        .setFooter("unikorn.ga | " + config.prefix + commandName, config.authorAvatar)
         .addField("**Commande :**", helpCommands, true)
         .addField("**Description :**", helpDescritions, true)
     if (alias.length == 0) {
