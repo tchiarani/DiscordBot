@@ -438,13 +438,12 @@ client.on('message', async message => {
 
         // AVATAR
     } else if (command === 'avatar') {
-        let background
-        if (message.content === prefix + 'avatar') {
+        let background = {}
+        if (!message.mentions.users.size) {
             background = await Canvas.loadImage(message.author.avatarURL)
         } else if (message.content.startsWith(prefix + 'avatar @')) {
             const taggedUser = message.mentions.users.first()
-            if (taggedUser) background = await Canvas.loadImage(message.author.avatarURL)
-            else background = await Canvas.loadImage(message.author.avatarURL)
+            background = await Canvas.loadImage(taggedUser.avatarURL)
         }
         const canvas = Canvas.createCanvas(500, 500)
         const ctx = canvas.getContext("2d")
