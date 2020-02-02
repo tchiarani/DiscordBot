@@ -11,6 +11,17 @@ module.exports = {
         const { commands } = message.client
 
         if (!args.length) {
+
+            let dataHelp = new Discord.RichEmbed()
+                .setTitle("Liste des commandes")
+                .setDescription("Préfix : **" + config.prefix + "**")
+                .setAuthor("Besoin d'aide ?", config.botAvatar, "https://unikorn.ga/bot")
+                .setColor('#7289DA')
+                .setFooter("unikorn.ga | /help", config.authorAvatar)
+                .addField("----------------", config.prefix + commands.map(command => command.name).slice(0, (commands.length + 1) / 2).join("\n" + config.prefix), true)
+                .addField("----------------", config.prefix + commands.map(command => command.name).slice((commands.length + 1) / 2, commands.length).join("\n" + config.prefix), true)
+            message.channel.send(dataHelp)
+
             data.push('Here\'s a list of all my commands:')
             data.push(commands.map(command => command.name).join(', '))
             data.push(`\nYou can send \`${config.prefix}help [command name]\` to get info on a specific command!`)
@@ -24,16 +35,6 @@ module.exports = {
                     console.error(`Could not send help DM to ${message.author.tag}.\n`, error)
                     message.reply('it seems like I can\'t DM you! Do you have DMs disabled?')
                 })
-
-            let dataHelp = new Discord.RichEmbed()
-                .setTitle("Liste des commandes")
-                .setDescription("Préfix : **" + config.prefix + "**")
-                .setAuthor("Besoin d'aide ?", config.botAvatar, "https://unikorn.ga/bot")
-                .setColor('#7289DA')
-                .setFooter("unikorn.ga | /help", config.authorAvatar)
-                .addField("----------------", config.prefix + commands.map(command => command.name).slice(0, (commands.length + 1) / 2).join("\n" + config.prefix), true)
-                .addField("----------------", config.prefix + commands.map(command => command.name).slice((commands.length + 1) / 2, commands.length).join("\n" + config.prefix), true)
-            message.channel.send(dataHelp)
 
         } else {
             const name = args[0].toLowerCase()
