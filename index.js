@@ -176,25 +176,8 @@ client.on('message', async message => {
         }
 
         // VOLUME
-    } else if ((commandName === 'volume') || (commandName === 'v')) {
-        if (args.length === 0) {
-            if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
-                message.reply("🔊 Volume : " + data[message.guild.id]['song'].volume)
-            } else {
-                message.reply("Aucune musique dans la file d'attente")
-            }
-        } else {
-            if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
-                let words = message.content.split(' ')
-                if (words[1] >= 0 && words[1] <= 200) {
-                    data[message.guild.id]['song'].setVolume(words[1] / 2500)
-                    message.react('🔊')
-                } else {
-                    message.channel.send('Fais pas l\'fou gamin ! ' + words[1] + ' c\'est trop fort...')
-                    message.react('🛑')
-                }
-            }
-        }
+    } else if (commandName === 'volume') {
+        client.commands.get('skip').execute(message, args, data)
 
         // SKIP
     } else if (commandName === "skip") {
@@ -324,21 +307,6 @@ client.on('message', async message => {
         client.commands.get('help').execute(message, args)
     }
 })
-
-function setSpecificHelp(guild, commandName, alias, helpCommands, helpDescritions) {
-    data[guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
-        .setTitle("Commandes disponibles pour " + config.prefix + commandName + " :")
-        .setAuthor("Besoin d'aide ?⁢⁢", config.botAvatar, "https://unikorn.ga/bot")
-        .setColor('#7289DA')
-        .setFooter("unikorn.ga | " + config.prefix + commandName, config.authorAvatar)
-        .addField("**Commande :**", helpCommands, true)
-        .addField("**Description :**", helpDescritions, true)
-    if (alias.length == 0) {
-        data[guild.id]['specificHelpEmbed'].setDescription("Aucun alias")
-    } else {
-        data[guild.id]['specificHelpEmbed'].setDescription("Alias : " + config.prefix + alias.join(", " + config.prefix))
-    }
-}
 
 function setQueueEmbed(message, musicTitle, musicDuration) {
     let nbPages = Math.ceil(musicTitle.length / 10)

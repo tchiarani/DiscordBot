@@ -7,6 +7,7 @@ module.exports = {
     alias: ['commandes', 'commands'],
     usage: '[commande]',
     execute(message, args) {
+        const data = []
         const { commands } = message.client
 
         if (!args.length) {
@@ -39,5 +40,20 @@ module.exports = {
 
             message.channel.send(data, { split: true })
         }
+    }
+}
+
+function setSpecificHelp(guild, commandName, alias, helpCommands, helpDescritions) {
+    data[guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
+        .setTitle("Commandes disponibles pour " + config.prefix + commandName + " :")
+        .setAuthor("Besoin d'aide ?⁢⁢", config.botAvatar, "https://unikorn.ga/bot")
+        .setColor('#7289DA')
+        .setFooter("unikorn.ga | " + config.prefix + commandName, config.authorAvatar)
+        .addField("**Commande :**", helpCommands, true)
+        .addField("**Description :**", helpDescritions, true)
+    if (alias.length == 0) {
+        data[guild.id]['specificHelpEmbed'].setDescription("Aucun alias")
+    } else {
+        data[guild.id]['specificHelpEmbed'].setDescription("Alias : " + config.prefix + alias.join(", " + config.prefix))
     }
 }
