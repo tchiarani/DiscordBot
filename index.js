@@ -427,7 +427,7 @@ const radiosList = {
         "author": {
             "name": "Liste des radios",
             "url": "https://unikorn.ga/bot",
-            "icon_url": botAvatar
+            "icon_url": config.botAvatar
         },
         "fields": [{
             "name": "__Radios :__",
