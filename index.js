@@ -105,14 +105,6 @@ client.on('ready', function() {
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
     config.botAvatar = client.user.avatarURL
-    dataHelp = new Discord.RichEmbed()
-        .setTitle("Liste des commandes")
-        .setDescription("Préfix : **" + config.prefix + "**")
-        .setAuthor("Besoin d'aide ?", config.botAvatar, "https://unikorn.ga/bot")
-        .setColor('#7289DA')
-        .setFooter("unikorn.ga | /help", config.authorAvatar)
-        .addField("----------------", config.prefix + commandes.slice(0, (commandes.length + 1) / 2).join("\n" + config.prefix), true)
-        .addField("----------------", config.prefix + commandes.slice((commandes.length + 1) / 2, commandes.length).join("\n" + config.prefix), true)
 })
 
 client.on('message', async message => {
