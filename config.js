@@ -2,4 +2,4 @@ const config = {
     prefix: '.'
 }
 
-module.exports(config)
+module.exports = config
