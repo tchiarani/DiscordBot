@@ -199,9 +199,10 @@ client.on('message', async message => {
         client.commands.get('skip').execute(message, data)
 
         // HELP
-    } else if (commandName === "help" || commandName === "h") {
-        message.react('❓')
-        message.channel.send(dataHelp)
+    } else if (commandName === "help") {
+        client.commands.get('help').execute(message, args)
+            // message.react('❓')
+            // message.channel.send(dataHelp)
 
         // RADIOS
     } else if (commandName === "radios") {
