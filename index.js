@@ -128,7 +128,8 @@ client.on('message', async message => {
 
     const args = message.content.slice(config.prefix.length).split(' ')
     const commandName = args.shift().toLowerCase()
-    const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.alias && cmd.alias.includes(commandName));
+    const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.alias && cmd.alias.includes(commandName))
+    console.log(command)
 
     let contenuMessage = message.content;
     message.content = message.content.toLowerCase()
@@ -149,13 +150,7 @@ client.on('message', async message => {
 
         // STOP
     } else if ((commandName === 'stop') || (commandName === 's')) {
-        if (message.member.voiceChannel === message.guild.me.voiceChannel) {
-            message.member.voiceChannel.leave()
-            message.react('🛑')
-        } else {
-            message.channel.send('Je ne suis pas connecté dans un salon avec vous !')
-            message.react('❌')
-        }
+        client.commands.get('stop').execute(message)
 
         // PLAY
     } else if ((commandName === 'play') || (commandName === 'p')) {
