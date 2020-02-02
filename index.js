@@ -18,17 +18,9 @@ for (const file of commandFiles) {
     client.commands.set(commandName.name, commandName);
 }
 
-const maxQueueDisplay = config.maxQueueDisplay
-const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
-let dataHelp = {}
-
 const emojisNombre = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
 
 let data = []
-
-client.on('guildCreate', (guild) => {
-    initGuild(guild.id)
-})
 
 function initGuild(id) {
     data[id] = []
@@ -44,60 +36,15 @@ function initGuild(id) {
     data[id]['musicDuration'] = []
 }
 
-// function play(connection, message, action) {
-//     if (action == "Add") {
-//         if (data[message.guild.id]['queue'].length > 1) {
-//             message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
-//         }
-//     } else if (action == "Add playlist") {
-//         if (data[message.guild.id]['queue'].length > 1) {
-//             message.channel.send('Playlist ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (**' + data[message.guild.id]['firstResult'].items.length + '** musiques)')
-//         }
-//     }
-//     if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" && data[message.guild.id]['queue'].length >= 1) {
-//         message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
-//         data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
-//         data[message.guild.id]['song'].setVolume(1 / 25)
-
-//         data[message.guild.id]['song'].on("end", (reason) => {
-//             if (reason == undefined) {
-//                 end(connection, message, "Stop")
-//             } else if (reason != "Skip") {
-//                 end(connection, message, "Skip end")
-//             }
-//         })
-//     }
-// }
-
-// function end(connection, message, action) {
-//     if (action != "Skip end") {
-//         data[message.guild.id]['song'].end([action])
-//     }
-//     if (action == 'Skip' || action == "Skip end") {
-//         data[message.guild.id]['queue'].shift()
-//         data[message.guild.id]['dataQueue'].shift()
-//         data[message.guild.id]['dataMusicEmbed'].shift()
-//         data[message.guild.id]['musicTitle'].shift()
-//         data[message.guild.id]['musicDuration'].shift()
-//     } else if (action == 'Stop') {
-//         data[message.guild.id]['queue'] = []
-//         data[message.guild.id]['dataQueue'] = []
-//         data[message.guild.id]['dataMusicEmbed'] = []
-//         data[message.guild.id]['musicTitle'] = []
-//         data[message.guild.id]['musicDuration'] = []
-//     }
-//     if (data[message.guild.id]['queue'].length == 0) {
-//         connection.disconnect()
-//     } else {
-//         play(connection, message, 'Skip')
-//     }
-// }
-
 function setMyActivity() {
     client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
 }
 
 client.login(config.token)
+
+client.on('guildCreate', (guild) => {
+    initGuild(guild.id)
+})
 
 client.on('ready', function() {
     console.log(`-----\nBot connecté dans ${client.guilds.size} serveurs différents, pour ${client.users.size} utilisateurs.\n-----`)
@@ -150,11 +97,6 @@ client.on('message', async message => {
     } else if (commandName === "musiques") {
         client.commands.get('musiques').execute(message, musiques)
 
-        // BOB
-    } else if (commandName === 'bob') {
-        const attachment = new Discord.Attachment(photoBob)
-        message.channel.send(attachment)
-
         // PURGE
     } else if (commandName === 'purge') {
         client.commands.get('purge').execute(message, args)
@@ -177,22 +119,11 @@ client.on('message', async message => {
 
         // POLL
     } else if (commandName === 'poll') {
-        client.commands.get('poll').execute(message, emojisNombre)
+        client.commands.get('poll').execute(message, contenuMessage, emojisNombre)
 
         // AVATAR
     } else if (commandName === 'avatar') {
-        let background
-        if (message.mentions.users.size) {
-            const taggedUser = message.mentions.users.first()
-            background = await Canvas.loadImage(taggedUser.avatarURL)
-        } else {
-            background = await Canvas.loadImage(message.author.avatarURL)
-        }
-        const canvas = Canvas.createCanvas(500, 500)
-        const ctx = canvas.getContext("2d")
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
-        const attachment = new Discord.Attachment(canvas.toBuffer(), "userAvatar.png")
-        message.channel.send(attachment)
+        client.commands.get('avatar').execute(message)
 
         // UPTIME 
     } else if (commandName === 'uptime') {

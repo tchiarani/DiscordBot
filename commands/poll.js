@@ -5,7 +5,7 @@ module.exports = {
     description: "",
     aliases: ['sondage'],
     usage: '',
-    execute(message, emojisNombre) {
+    execute(message, contenuMessage, emojisNombre) {
         let question = contenuMessage.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
         let choices = contenuMessage.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
         if (question[1] == undefined || choices[1] == undefined || choices.length > 9) {
