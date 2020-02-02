@@ -304,7 +304,7 @@ client.on('message', async message => {
 
         // HELP
     } else if (commandName === 'help') {
-        client.commands.get('help').execute(message, args)
+        client.commands.get('help').execute(message, args, data)
     }
 })
 
