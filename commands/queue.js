@@ -34,7 +34,7 @@ module.exports = {
 
 
         function setQueueEmbed(message, musicTitle, musicDuration) {
-            let nbPages = Math.ceil(musicTitle.length / 10)
+            let nbPages = Math.ceil(musicTitle.length / config.maxQueueDisplay)
             let page = 1
             let indexMin = 1
             let indexMax = config.maxQueueDisplay + 1

@@ -10,6 +10,7 @@ const radios = require('./musics/radios')
 const musiques = require('./musics/musiques')
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
+config.authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png"
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 
@@ -20,8 +21,6 @@ for (const file of commandFiles) {
 
 const maxQueueDisplay = config.maxQueueDisplay
 const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
-const authorAvatar = "https://cdn.discordapp.com/avatars/226064436127989760/4445007dcbbdba7272345a16372ff662.png"
-let botAvatar = ""
 let dataHelp = {}
 
 const commandes = ["play", "skip", "stop", "queue", "volume", "remove", "purge", "pause", "resume", "radio", "radios", "musiques", "poll", "help"]
@@ -108,7 +107,7 @@ client.on('ready', function() {
     client.user.setActivity("UniiKorn 🦄", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
-    botAvatar = client.user.avatarURL
+    config.botAvatar = client.user.avatarURL
     dataHelp = new Discord.RichEmbed()
         .setTitle("Liste des commandes")
         .setDescription("Préfix : **" + config.prefix + "**")
@@ -149,11 +148,11 @@ client.on('message', async message => {
         }
 
         // STOP
-    } else if ((commandName === 'stop') || (commandName === 's')) {
+    } else if (commandName === 'stop') {
         client.commands.get('stop').execute(message)
 
         // PLAY
-    } else if (commandName === 'play') { //|| commandName === 'p') {
+    } else if (commandName === 'play') {
         client.commands.get('play').execute(message, args, data, radios, musiques)
 
         // RADIO
@@ -252,7 +251,7 @@ client.on('message', async message => {
         }
 
         // QUEUE
-    } else if ((commandName === 'queue') || (commandName === 'q')) {
+    } else if (commandName === 'queue') {
         client.commands.get('queue').execute(message, args, data)
 
         // REMOVE

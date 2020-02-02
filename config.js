@@ -1,7 +1,7 @@
 const config = {
     token: process.env.TOKEN,
     prefix: '/',
-    maxQueueDisplay: 3
+    maxQueueDisplay: 10
 }
 
 module.exports = config
