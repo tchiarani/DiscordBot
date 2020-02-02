@@ -3,6 +3,7 @@ const Attachment = require('discord.js')
 const search = require('yt-search')
 const ytdl = require('ytdl-core')
 const ytpl = require('ytpl');
+const Canvas = require('canvas')
 const client = new Discord.Client()
 
 const token = process.env.TOKEN
@@ -431,6 +432,17 @@ client.on('message', async message => {
                 }
             }).catch(console.log())
         message.delete()
+
+        // CANVA
+    } else if (message.content === prefix + 'test') {
+        const canvas = Canvas.createCanvas(600, 600)
+        const ctx = canvas.getContext("2d")
+        const background = await Canvas.loadImage(message.user.avatarURL)
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+        ctx.strokeStyle("#000")
+        ctx.strokeRect(8, 11, 580, 580)
+        const attachment = new Discord.Attachment(canvas.toBuffer(), "test-canvas.png")
+        message.channel.send(attachment)
 
         // TEST 
     } else if (message.content === prefix + 'test') {

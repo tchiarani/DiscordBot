@@ -9,6 +9,7 @@
     "author": "UniKorn",
     "license": "MIT",
     "dependencies": {
+        "canvas": "^2.6.1",
         "discord.js": "^11.5.1",
         "m3u8stream": "^0.6.4",
         "node-opus": "^0.3.1",
