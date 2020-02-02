@@ -1,14 +1,14 @@
 module.exports = {
     name: 'skip',
     description: 'Passe à la musique suivante',
-    execute(client, message, args, data) {
-        if (message.member.voiceChannel) {
-            message.member.voiceChannel.join()
-                .then(connection => {
-                    message.react('⏭')
-                    end(connection, message, "Skip")
-                }).catch(console.log)
-        }
+    execute(message, data) {
+        console.log(message)
+        console.log(message.member)
+        message.member.voiceChannel.join()
+            .then(connection => {
+                message.react('⏭')
+                end(connection, message, "Skip")
+            }).catch(console.log)
 
         function end(connection, message, action) {
             if (action != "Skip end") {

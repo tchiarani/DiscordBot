@@ -203,7 +203,7 @@ client.on('message', async message => {
 
         // SKIP
     } else if (commandName === "skip") {
-        client.commands.get('skip').execute(message, args, data)
+        client.commands.get('skip').execute(message, data)
 
         // HELP
     } else if (commandName === "help" || commandName === "h") {
