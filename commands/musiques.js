@@ -2,8 +2,8 @@ const config = require('./../config')
 
 module.exports = {
     name: 'musiques',
-    description: "",
-    aliases: [],
+    description: "Liste les musiques enregistrées",
+    alias: [],
     usage: '',
     execute(message, musiques) {
         const musiquesList = {

@@ -1,8 +1,10 @@
 module.exports = {
     name: 'uptime',
-    description: 'Affiche le temps de connexion',
+    description: 'Affiche la durée de connexion du bot',
+    alias: [],
+    usage: [''],
     execute(client, message, args) {
-        message.channel.send("En ligne depuis : " + msToTime(client.uptime))
+        message.channel.send(client.user.username + " en ligne depuis : " + msToTime(client.uptime))
         console.log("---------------------------------------")
     }
 }

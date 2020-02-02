@@ -3,7 +3,7 @@ const config = require('./../config')
 module.exports = {
     name: 'radios',
     description: ["Liste les radios enregistrées"],
-    aliases: [],
+    alias: [],
     usage: [''],
     execute(message, radios) {
         const radiosList = {

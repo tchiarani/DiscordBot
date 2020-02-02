@@ -1,14 +1,14 @@
 module.exports = {
     name: 'volume',
-    description: ["Règle le volume entre 0 et 200"],
-    aliases: ['vol', 'v'],
-    usage: ['[chiffre]'],
+    description: ["Règle le volume entre 0 et 200", "Affiche le volume actuel"],
+    alias: ['vol', 'v'],
+    usage: ['[chiffre]', ''],
     execute(message, args, data) {
         if (args.length === 0) {
             if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
-                message.reply("🔊 Volume : " + data[message.guild.id]['song'].volume)
+                message.channel.send("🔊 Volume : " + data[message.guild.id]['song'].volume)
             } else {
-                message.reply("Aucune musique dans la file d'attente")
+                message.channel.send("Aucune musique dans la file d'attente")
             }
         } else {
             if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {

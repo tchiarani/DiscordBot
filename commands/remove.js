@@ -4,7 +4,6 @@ module.exports = {
     alias: ['r'],
     usage: ['[chiffre]', '[chiffre] [chiffre]'],
     execute(message, args, data) {
-        //const queueNumbers = message.content.substring(message.content.indexOf(" ") + 1, message.content.length + 1).split(" ")
         let nbRemoved = 0
         for (let i = 0; i < args.length; i++) {
             if (data[message.guild.id]['dataQueue'][args[i] - nbRemoved] != undefined) {

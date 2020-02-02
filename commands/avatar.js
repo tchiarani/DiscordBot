@@ -4,9 +4,9 @@ const Canvas = require('canvas')
 
 module.exports = {
     name: 'avatar',
-    description: [""],
-    aliases: ['icon'],
-    usage: [''],
+    description: ["Affiche l'avatar d'un membre du serveur", "Affiche votre avatar"],
+    alias: ['icon'],
+    usage: ['[membre]', ''],
     async execute(message) {
         let background
         if (message.mentions.users.size) {

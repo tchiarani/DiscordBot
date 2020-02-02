@@ -1,7 +1,7 @@
 module.exports = {
     name: 'resume',
     description: ["Reprend la musique mise en pause"],
-    aliases: [],
+    alias: [],
     usage: [''],
     execute(message, args, data) {
         if (message.member.voiceChannel) {

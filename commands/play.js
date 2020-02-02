@@ -21,6 +21,7 @@ module.exports = {
                             let words = message.content.split(' ')
                             if (words[2] >= 0 && words[2] <= 200) {
                                 data[message.guild.id]['song'].setVolume(words[2] / 2500)
+                                message.react('🔊')
                             }
                             find = true
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios.data)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
@@ -31,6 +32,7 @@ module.exports = {
                             let words = message.content.split(' ')
                             if (words[2] >= 0 && words[2] <= 200) {
                                 data[message.guild.id]['song'].setVolume(words[2] / 2500)
+                                message.react('🔊')
                             }
                             find = true
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(musiques.data)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')

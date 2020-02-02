@@ -1,7 +1,7 @@
 module.exports = {
     name: 'radio',
     description: ["Lance une webradio"],
-    aliases: [],
+    alias: [],
     usage: ['[url]'],
     execute(message, data) {
         if (message.member.voiceChannel) {
