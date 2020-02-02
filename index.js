@@ -434,10 +434,10 @@ client.on('message', async message => {
         message.delete()
 
         // CANVA
-    } else if (message.content === prefix + 'test') {
+    } else if (message.content === prefix + 'canva') {
         const canvas = Canvas.createCanvas(600, 600)
         const ctx = canvas.getContext("2d")
-        const background = await Canvas.loadImage(message.user.avatarURL)
+        const background = await Canvas.loadImage(message.author.avatarURL)
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
         ctx.strokeStyle("#000")
         ctx.strokeRect(8, 11, 580, 580)
