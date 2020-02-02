@@ -40,7 +40,7 @@ const musiques = {
         /*  'musique' : ['chemin', 'texte']  */
 }
 
-const emojisNombre = ['🔊', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
+const emojisNombre = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
 
 let data = []
 
@@ -225,7 +225,7 @@ client.on('message', async message => {
                                     setMusicEmbed(message.guild.id, playlist.items[i], playlist.items[i].id, playlist.items[i].author.ref, playlist.items[i].url_simple, playlist.items[i].duration)
                                     data[message.guild.id]['queue'].push(music)
                                     data[message.guild.id]['dataQueue'].push(dataMusic)
-                                    if (i == 0) play(connection, message, 'Add')
+                                    if (data[message.guild.id]['queue'].length == 1 && i == 0) play(connection, message, 'Add')
                                 }
                                 play(connection, message, 'Add playlist')
                             });
@@ -371,7 +371,7 @@ client.on('message', async message => {
                 if (queueNumber == 0) {
                     message.channel.send('🔊 ' + data[message.guild.id]['dataQueue'][queueNumber])
                 } else if (queueNumber <= 9) {
-                    message.channel.send(emojisNombre[queueNumber] + ' ' + data[message.guild.id]['dataQueue'][queueNumber])
+                    message.channel.send(emojisNombre[queueNumber - 1] + ' ' + data[message.guild.id]['dataQueue'][queueNumber])
                 } else {
                     message.channel.send(queueNumber + '. ' + data[message.guild.id]['dataQueue'][queueNumber])
                 }
@@ -420,16 +420,14 @@ client.on('message', async message => {
         }
         const pollEmbed = new Discord.RichEmbed()
             .setColor(0xffffff)
-            .setFooter("Réagissez pour voter")
-            .setTitle(question)
             .setAuthor("Sondage crée par " + message.author.username)
-        for (let i = 0; i < choices.length; i++) {
-            pollEmbed.addField(emojisNombre[i + 1], choices[i], false)
-        }
+            .setTitle(question)
+            .setDescription(choices.map((value, index) => emojisNombre[index] + value).join('\n') + "**")
+            .setFooter("Réagissez pour voter")
         message.channel.send(pollEmbed)
             .then(async function(poll) {
                 for (let i = 0; i < choices.length; i++) {
-                    await poll.react(emojisNombre[i + 1])
+                    await poll.react(emojisNombre[i])
                 }
             }).catch(console.log())
         message.delete()
@@ -547,13 +545,13 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     const forwards = msg.createReactionCollector(forwardsFilter)
 
                     backwards.on('collect', r => {
-                        r.remove(r.users.filter(u => !u.bot))
+                        r.remove(r.users.filter(u => !u.bot)).catch(console.log())
                         if (r.count == 1 || page == 1) return
                         page--
                         nbPages = Math.ceil(musicTitle.length / 10)
                         indexMin -= maxQueueDisplay
                         indexMax -= maxQueueDisplay
-                        data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
+                        if (musicTitle[0]) data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
                         if (musicTitle.length == 1) {
                             data[message.guild.id]['queueEmbed'].fields[1].value = " "
                             data[message.guild.id]['queueEmbed'].fields[2].value = " "
@@ -567,13 +565,13 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     })
 
                     forwards.on('collect', r => {
-                        r.remove(r.users.filter(u => !u.bot))
+                        r.remove(r.users.filter(u => !u.bot)).catch(console.log())
                         if (r.count == 1 || page == nbPages) return
                         page++
                         nbPages = Math.ceil(musicTitle.length / 10)
                         indexMin += maxQueueDisplay
                         indexMax += maxQueueDisplay
-                        data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
+                        if (musicTitle[0]) data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
                         if (musicTitle.length == 1) {
                             data[message.guild.id]['queueEmbed'].fields[1].value = " "
                             data[message.guild.id]['queueEmbed'].fields[2].value = " "
