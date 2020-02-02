@@ -7,7 +7,7 @@ module.exports = {
     description: 'Lance ou ajoute une musique depuis YouTube',
     usage: '<mots-clés>',
     alias: ['p'],
-    execute(client, message, args) {
+    execute(client, message, args, data, radios, musiques) {
         message.channel.send("Commande /play")
 
         if (message.member.voiceChannel) {
