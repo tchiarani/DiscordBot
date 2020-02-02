@@ -22,8 +22,6 @@ const maxQueueDisplay = config.maxQueueDisplay
 const photoBob = "https://cdn.discordapp.com/attachments/407512037330255872/552972224685015050/IMG_20190304_223322.jpg"
 let dataHelp = {}
 
-const commandes = ["play", "skip", "stop", "queue", "volume", "remove", "purge", "pause", "resume", "radio", "radios", "musiques", "poll", "help"]
-
 const emojisNombre = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
 
 let data = []
@@ -46,54 +44,54 @@ function initGuild(id) {
     data[id]['musicDuration'] = []
 }
 
-function play(connection, message, action) {
-    if (action == "Add") {
-        if (data[message.guild.id]['queue'].length > 1) {
-            message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
-        }
-    } else if (action == "Add playlist") {
-        if (data[message.guild.id]['queue'].length > 1) {
-            message.channel.send('Playlist ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (**' + data[message.guild.id]['firstResult'].items.length + '** musiques)')
-        }
-    }
-    if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" && data[message.guild.id]['queue'].length >= 1) {
-        message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
-        data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
-        data[message.guild.id]['song'].setVolume(1 / 25)
+// function play(connection, message, action) {
+//     if (action == "Add") {
+//         if (data[message.guild.id]['queue'].length > 1) {
+//             message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
+//         }
+//     } else if (action == "Add playlist") {
+//         if (data[message.guild.id]['queue'].length > 1) {
+//             message.channel.send('Playlist ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (**' + data[message.guild.id]['firstResult'].items.length + '** musiques)')
+//         }
+//     }
+//     if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" && data[message.guild.id]['queue'].length >= 1) {
+//         message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
+//         data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
+//         data[message.guild.id]['song'].setVolume(1 / 25)
 
-        data[message.guild.id]['song'].on("end", (reason) => {
-            if (reason == undefined) {
-                end(connection, message, "Stop")
-            } else if (reason != "Skip") {
-                end(connection, message, "Skip end")
-            }
-        })
-    }
-}
+//         data[message.guild.id]['song'].on("end", (reason) => {
+//             if (reason == undefined) {
+//                 end(connection, message, "Stop")
+//             } else if (reason != "Skip") {
+//                 end(connection, message, "Skip end")
+//             }
+//         })
+//     }
+// }
 
-function end(connection, message, action) {
-    if (action != "Skip end") {
-        data[message.guild.id]['song'].end([action])
-    }
-    if (action == 'Skip' || action == "Skip end") {
-        data[message.guild.id]['queue'].shift()
-        data[message.guild.id]['dataQueue'].shift()
-        data[message.guild.id]['dataMusicEmbed'].shift()
-        data[message.guild.id]['musicTitle'].shift()
-        data[message.guild.id]['musicDuration'].shift()
-    } else if (action == 'Stop') {
-        data[message.guild.id]['queue'] = []
-        data[message.guild.id]['dataQueue'] = []
-        data[message.guild.id]['dataMusicEmbed'] = []
-        data[message.guild.id]['musicTitle'] = []
-        data[message.guild.id]['musicDuration'] = []
-    }
-    if (data[message.guild.id]['queue'].length == 0) {
-        connection.disconnect()
-    } else {
-        play(connection, message, 'Skip')
-    }
-}
+// function end(connection, message, action) {
+//     if (action != "Skip end") {
+//         data[message.guild.id]['song'].end([action])
+//     }
+//     if (action == 'Skip' || action == "Skip end") {
+//         data[message.guild.id]['queue'].shift()
+//         data[message.guild.id]['dataQueue'].shift()
+//         data[message.guild.id]['dataMusicEmbed'].shift()
+//         data[message.guild.id]['musicTitle'].shift()
+//         data[message.guild.id]['musicDuration'].shift()
+//     } else if (action == 'Stop') {
+//         data[message.guild.id]['queue'] = []
+//         data[message.guild.id]['dataQueue'] = []
+//         data[message.guild.id]['dataMusicEmbed'] = []
+//         data[message.guild.id]['musicTitle'] = []
+//         data[message.guild.id]['musicDuration'] = []
+//     }
+//     if (data[message.guild.id]['queue'].length == 0) {
+//         connection.disconnect()
+//     } else {
+//         play(connection, message, 'Skip')
+//     }
+// }
 
 function setMyActivity() {
     client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
@@ -132,22 +130,8 @@ client.on('message', async message => {
     let contenuMessage = message.content;
     message.content = message.content.toLowerCase()
 
-    // JOIN
-    if (commandName === 'join') {
-        if (message.guild.me.voiceChannel) return message.channel.send('Désolé, je suis déjà connecté dans ' + message.guild.me.voiceChannel.name)
-
-        if (message.member.voiceChannel) {
-            message.member.voiceChannel.join()
-                .then(connection => {
-                    message.react('✅')
-                }).catch(console.log)
-        } else {
-            message.reply('il faut être dans un salon vocal.')
-            message.react('❌')
-        }
-
-        // STOP
-    } else if (commandName === 'stop') {
+    // STOP
+    if (commandName === 'stop') {
         client.commands.get('stop').execute(message)
 
         // PLAY
@@ -156,11 +140,11 @@ client.on('message', async message => {
 
         // RADIO
     } else if (commandName === 'radio') {
-        client.commands.get('play').execute(message, data)
+        client.commands.get('radio').execute(message, data)
 
         // VOLUME
     } else if (commandName === 'volume') {
-        client.commands.get('skip').execute(message, args, data)
+        client.commands.get('volume').execute(message, args, data)
 
         // SKIP
     } else if (commandName === "skip") {
@@ -227,79 +211,3 @@ client.on('message', async message => {
         client.commands.get('help').execute(message, args, data)
     }
 })
-
-function setQueueEmbed(message, musicTitle, musicDuration) {
-    let nbPages = Math.ceil(musicTitle.length / 10)
-    let page = 1
-    let indexMin = 1
-    let indexMax = maxQueueDisplay + 1
-    data[message.guild.id]['queueEmbed'] = new Discord.RichEmbed()
-        .setTitle("File d'attente :")
-        .setColor('#FF0000')
-        .addField("Actuellement :", "🔊 **" + musicTitle[0] + "**", false)
-    if (musicTitle.length == 1) {
-        data[message.guild.id]['queueEmbed'].setFooter("1 musique")
-    } else {
-        data[message.guild.id]['queueEmbed'].addField("Prochainement :", musicTitle.slice(indexMin, indexMax).map((value, index) => index + 1 + '. **' + value).join('**\n') + "**", true)
-        data[message.guild.id]['queueEmbed'].addField("Durée :", musicDuration.slice(indexMin, indexMax), true)
-        if (nbPages == 1) {
-            data[message.guild.id]['queueEmbed'].setFooter(musicTitle.length + " musiques")
-        } else {
-            data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + musicTitle.length + " musiques")
-        }
-    }
-    message.channel.send(data[message.guild.id]['queueEmbed'])
-        .then(msg => {
-            if (musicTitle.length > maxQueueDisplay) {
-                msg.react('⬅️').then(res => {
-                    msg.react('➡️')
-
-                    const backwardsFilter = (reaction, user) => reaction.emoji.name === '⬅️' //&& user.id === message.author.id
-                    const forwardsFilter = (reaction, user) => reaction.emoji.name === '➡️' //&& user.id === message.author.id
-
-                    const backwards = msg.createReactionCollector(backwardsFilter)
-                    const forwards = msg.createReactionCollector(forwardsFilter)
-
-                    backwards.on('collect', r => {
-                        if (r.users[1]) r.remove(r.users.filter(u => !u.bot))
-                        if (r.count == 1 || page == 1) return
-                        page--
-                        nbPages = Math.ceil(musicTitle.length / 10)
-                        indexMin -= maxQueueDisplay
-                        indexMax -= maxQueueDisplay
-                        if (musicTitle[0]) data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
-                        if (musicTitle.length == 1) {
-                            data[message.guild.id]['queueEmbed'].fields[1].value = " "
-                            data[message.guild.id]['queueEmbed'].fields[2].value = " "
-                            data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + "1 musique")
-                        } else {
-                            data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + indexMin + '. **' + value).join('**\n') + "**"
-                            data[message.guild.id]['queueEmbed'].fields[2].value = musicDuration.slice(indexMin, indexMax).join('\n')
-                            data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + musicTitle.length + " musiques")
-                        }
-                        msg.edit(data[message.guild.id]['queueEmbed'])
-                    })
-
-                    forwards.on('collect', r => {
-                        if (r.users[1]) r.remove(r.users.filter(u => !u.bot))
-                        if (r.count == 1 || page == nbPages) return
-                        page++
-                        nbPages = Math.ceil(musicTitle.length / 10)
-                        indexMin += maxQueueDisplay
-                        indexMax += maxQueueDisplay
-                        if (musicTitle[0]) data[message.guild.id]['queueEmbed'].fields[0].value = "🔊 **" + musicTitle[0] + "**"
-                        if (musicTitle.length == 1) {
-                            data[message.guild.id]['queueEmbed'].fields[1].value = " "
-                            data[message.guild.id]['queueEmbed'].fields[2].value = " "
-                            data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + "1 musique")
-                        } else {
-                            data[message.guild.id]['queueEmbed'].fields[1].value = musicTitle.slice(indexMin, indexMax).map((value, index) => index + indexMin + '. **' + value).join('**\n') + "**"
-                            data[message.guild.id]['queueEmbed'].fields[2].value = musicDuration.slice(indexMin, indexMax).join('\n')
-                            data[message.guild.id]['queueEmbed'].setFooter(page + '/' + nbPages + " • " + musicTitle.length + " musiques")
-                        }
-                        msg.edit(data[message.guild.id]['queueEmbed'])
-                    })
-                })
-            }
-        })
-}
