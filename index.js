@@ -153,7 +153,7 @@ client.on('message', async message => {
         client.commands.get('stop').execute(message)
 
         // PLAY
-    } else if ((commandName === 'play') || (commandName === 'p')) {
+    } else if (commandName === 'play') { //|| commandName === 'p') {
         client.commands.get('play').execute(message, args, data, radios, musiques)
 
         // RADIO
