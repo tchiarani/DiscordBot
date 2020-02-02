@@ -121,15 +121,14 @@ client.on('ready', function() {
 
 client.on('message', async message => {
 
-    if (message.author.bot) return
-    if (!message.guild) return
-    if (!message.content.startsWith(config.prefix)) return
-    if (!message.member) message.member = await message.guild.fetchMember(message)
-
     const args = message.content.slice(config.prefix.length).split(' ')
     const commandName = args.shift().toLowerCase()
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.alias && cmd.alias.includes(commandName)).name
-    console.log(command)
+
+    if (!message.guild || message.author.bot) return
+    if (!message.content.startsWith(config.prefix)) return
+    if (!command) return
+    if (!message.member) message.member = await message.guild.fetchMember(message)
 
     let contenuMessage = message.content;
     message.content = message.content.toLowerCase()
