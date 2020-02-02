@@ -14,8 +14,8 @@ client.commands = new Discord.Collection()
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 
 for (const file of commandFiles) {
-    const commandName = require(`./commands/${file}`);
-    client.commands.set(commandName.name, commandName);
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.name, command);
 }
 
 const maxQueueDisplay = config.maxQueueDisplay
@@ -135,7 +135,7 @@ client.on('message', async message => {
     message.content = message.content.toLowerCase()
 
     // JOIN
-    if (commandName === 'join') {
+    if (command === 'join') {
         if (message.guild.me.voiceChannel) return message.channel.send('Désolé, je suis déjà connecté dans ' + message.guild.me.voiceChannel.name)
 
         if (message.member.voiceChannel) {
@@ -149,15 +149,15 @@ client.on('message', async message => {
         }
 
         // STOP
-    } else if ((commandName === 'stop') || (commandName === 's')) {
+    } else if ((command === 'stop') || (command === 's')) {
         client.commands.get('stop').execute(message)
 
         // PLAY
-    } else if (commandName === 'play') { //|| commandName === 'p') {
+    } else if (command === 'play') { //|| command === 'p') {
         client.commands.get('play').execute(message, args, data, radios, musiques)
 
         // RADIO
-    } else if (commandName === 'radio') {
+    } else if (command === 'radio') {
         if (args.length === 0) {
             let helpDescriptions = "Lance une webradio"
             let helpCommands = config.prefix + 'radio *[url]*'
@@ -176,7 +176,7 @@ client.on('message', async message => {
         }
 
         // VOLUME
-    } else if ((commandName === 'volume') || (commandName === 'v')) {
+    } else if ((command === 'volume') || (command === 'v')) {
         if (args.length === 0) {
             if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
                 message.reply("🔊 Volume : " + data[message.guild.id]['song'].volume)
@@ -197,31 +197,31 @@ client.on('message', async message => {
         }
 
         // SKIP
-    } else if (commandName === "skip") {
+    } else if (command === "skip") {
         client.commands.get('skip').execute(message, data)
 
         // HELP
-    } else if (commandName === "help" || commandName === "h") {
+    } else if (command === "help" || command === "h") {
         message.react('❓')
         message.channel.send(dataHelp)
 
         // RADIOS
-    } else if (commandName === "radios") {
+    } else if (command === "radios") {
         message.react('📻')
         message.channel.send(radiosList)
 
         // MUSIQUES
-    } else if (commandName === "musiques") {
+    } else if (command === "musiques") {
         message.react('🎵')
         message.channel.send(musiquesList)
 
         // BOB
-    } else if (commandName === 'bob') {
+    } else if (command === 'bob') {
         const attachment = new Discord.Attachment(photoBob)
         message.channel.send(attachment)
 
         // PURGE
-    } else if (commandName === 'purge') {
+    } else if (command === 'purge') {
         let helpDescriptions = "Supprime les *[0-100]* derniers messages"
         let helpCommands = config.prefix + 'purge *[0-100]*'
         setSpecificHelp(message.guild, "purge", [], helpCommands, helpDescriptions)
@@ -236,7 +236,7 @@ client.on('message', async message => {
         }
 
         // PAUSE
-    } else if (commandName === 'pause') {
+    } else if (command === 'pause') {
         if (message.member.voiceChannel) {
             message.react('⏸')
             data[message.guild.id]['song'].pause()
@@ -244,7 +244,7 @@ client.on('message', async message => {
         }
 
         // RESUME
-    } else if (commandName === 'resume') {
+    } else if (command === 'resume') {
         if (message.member.voiceChannel) {
             message.react('⏯')
             data[message.guild.id]['song'].resume()
@@ -252,7 +252,7 @@ client.on('message', async message => {
         }
 
         // QUEUE
-    } else if ((commandName === 'queue') || (commandName === 'q')) {
+    } else if ((command === 'queue') || (command === 'q')) {
         if (data[message.guild.id]['dataQueue'].length != 0) {
             setQueueEmbed(message, data[message.guild.id]['musicTitle'], data[message.guild.id]['musicDuration'])
         } else {
@@ -277,7 +277,7 @@ client.on('message', async message => {
         }
 
         // REMOVE
-    } else if ((commandName === 'remove') || (commandName === 'r')) {
+    } else if ((command === 'remove') || (command === 'r')) {
         const helpDescriptions = "Supprime les musiques en paramètre"
         const helpCommands = config.prefix + 'remove *1 3 4...*'
         setSpecificHelp(message.guild, "remove", ["r"], helpCommands, helpDescriptions)
@@ -300,7 +300,7 @@ client.on('message', async message => {
         }
 
         // POLL
-    } else if ((commandName === 'poll') || (commandName === 'sondage')) {
+    } else if ((command === 'poll') || (command === 'sondage')) {
         let helpDescriptions = "Crée un sondage"
         let helpCommands = config.prefix + 'poll Faut-il poser une question ? "Oui" "Non"'
         setSpecificHelp(message.guild, "poll", ["sondage"], helpCommands, helpDescriptions)
@@ -327,7 +327,7 @@ client.on('message', async message => {
         message.delete()
 
         // AVATAR
-    } else if (commandName === 'avatar') {
+    } else if (command === 'avatar') {
         let background
         if (message.mentions.users.size) {
             const taggedUser = message.mentions.users.first()
@@ -342,7 +342,7 @@ client.on('message', async message => {
         message.channel.send(attachment)
 
         // TEST 
-    } else if (commandName === 'test') {
+    } else if (command === 'test') {
         client.commands.get('test').execute(client, message, args)
     }
 })
@@ -367,12 +367,12 @@ function msToTime(s) {
     else return pad(secs) + 's'
 }
 
-function setSpecificHelp(guild, commandName, alias, helpCommands, helpDescritions) {
+function setSpecificHelp(guild, command, alias, helpCommands, helpDescritions) {
     data[guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
-        .setTitle("Commandes disponibles pour " + config.prefix + commandName + " :")
+        .setTitle("Commandes disponibles pour " + config.prefix + command + " :")
         .setAuthor("Besoin d'aide ?⁢⁢", botAvatar, "https://unikorn.ga/bot")
         .setColor('#7289DA')
-        .setFooter("unikorn.ga | " + config.prefix + commandName, authorAvatar)
+        .setFooter("unikorn.ga | " + config.prefix + command, authorAvatar)
         .addField("**Commande :**", helpCommands, true)
         .addField("**Description :**", helpDescritions, true)
     if (alias.length == 0) {
