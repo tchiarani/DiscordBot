@@ -471,8 +471,7 @@ client.on('message', async message => {
 
         // TEST 
     } else if (command === 'test') {
-        message.channel.send("Test réussi ! En ligne depuis : " + msToTime(client.uptime))
-        console.log("---------------------------------------")
+        client.commands.get('test').execute(message, args)
     }
 })
 
