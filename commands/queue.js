@@ -3,8 +3,8 @@ const config = require('./../config')
 
 module.exports = {
     name: 'queue',
-    description: "Affiche la file d'attente",
-    usage: '<chiffre>',
+    description: ["Affiche la file d'attente"],
+    usage: ['[chiffre]'],
     alias: ['q'],
     execute(message, args, data) {
         if (args.length == 0) {

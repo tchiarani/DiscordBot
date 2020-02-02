@@ -34,12 +34,12 @@ module.exports = {
                 .setAuthor("Besoin d'aide ?⁢⁢", config.botAvatar, "https://unikorn.ga/bot")
                 .setColor('#7289DA')
                 .setFooter("unikorn.ga | " + config.prefix + "help " + command.name, config.authorAvatar)
-            if (command.usage) data[message.guild.id]['specificHelpEmbed'].addField("**Commande :**", config.prefix + ' ' + command.name + ' *' + command.usage.join("*\n*" + config.prefix + command.name) + '*', true)
+            if (command.usage) data[message.guild.id]['specificHelpEmbed'].addField("**Commande :**", config.prefix + command.name + ' ' + command.usage.join("\n" + config.prefix + command.name), true)
             if (command.description) data[message.guild.id]['specificHelpEmbed'].addField("**Description :**", command.description.join("\n"), true)
-            if (command.alias) {
-                data[message.guild.id]['specificHelpEmbed'].setDescription("Alias : " + config.prefix + command.alias.join(", " + config.prefix))
-            } else {
+            if (command.alias.length == 0) {
                 data[message.guild.id]['specificHelpEmbed'].setDescription("Aucun alias")
+            } else {
+                data[message.guild.id]['specificHelpEmbed'].setDescription("Alias : " + config.prefix + command.alias.join(", " + config.prefix))
             }
 
             message.channel.send(data[message.guild.id]['specificHelpEmbed'])

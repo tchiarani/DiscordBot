@@ -1,7 +1,7 @@
 module.exports = {
     name: 'stop',
-    description: 'Déconnecte le bot du salon vocal et vide la file',
-    usage: '',
+    description: ['Déconnecte le bot du salon vocal et vide la file'],
+    usage: [''],
     alias: ['s'],
     execute(message) {
         if (message.member.voiceChannel === message.guild.me.voiceChannel) {

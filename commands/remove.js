@@ -1,8 +1,8 @@
 module.exports = {
     name: 'remove',
-    description: "",
+    description: [""],
     aliases: ['r'],
-    usage: '<chiffre>',
+    usage: ['[chiffre]'],
     execute(message, args) {
         // execute
     }
