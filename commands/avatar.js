@@ -3,7 +3,7 @@ module.exports = {
     description: [""],
     aliases: ['icon'],
     usage: [''],
-    execute(message) {
+    async execute(message) {
         let background
         if (message.mentions.users.size) {
             const taggedUser = message.mentions.users.first()
