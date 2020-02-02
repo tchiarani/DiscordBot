@@ -9,12 +9,12 @@ module.exports = {
     usage: '<mots-clés>',
     alias: ['p'],
     execute(client, message, args, data, radios, musiques) {
-
+        console.log(Object.keys(radios.data).length)
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {
                     let find = false
-                    const maxLength = Math.max(Object.keys(radios).length, Object.keys(musiques).length)
+                    const maxLength = Math.max(Object.keys(radios.data).length, Object.keys(musiques).length)
                     for (let i = 0; i < maxLength; i++) {
                         if (args[0] == Object.keys(radios)[i]) {
                             data[message.guild.id]['song'] = connection.playArbitraryInput(Object.values(radios)[i][0])
