@@ -27,33 +27,23 @@ module.exports = {
             const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name))
 
             if (!command) {
-                return message.reply('that\'s not a valid command!')
+                return message.reply('cette commande n\'existe pas')
             }
 
-            data.push(`**Name:** ${command.name}`)
+            data[guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
+                .setTitle("Commandes disponibles pour " + config.prefix + command.name + " :")
+                .setAuthor("Besoin d'aide ?⁢⁢", config.botAvatar, "https://unikorn.ga/bot")
+                .setColor('#7289DA')
+                .setFooter("unikorn.ga | " + config.prefix + "help " + commandName, config.authorAvatar)
+            if (command.usage) data[guild.id]['specificHelpEmbed'].addField("**Commande :**", command.usage, true)
+            if (command.description) data[guild.id]['specificHelpEmbed'].addField("**Description :**", command.description, true)
+            if (command.alias) {
+                data[guild.id]['specificHelpEmbed'].setDescription("Alias : " + config.prefix + command.alias.join(", " + config.prefix))
+            } else {
+                data[guild.id]['specificHelpEmbed'].setDescription("Aucun alias")
+            }
 
-            if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(', ')}`)
-            if (command.description) data.push(`**Description:** ${command.description}`)
-            if (command.usage) data.push(`**Usage:** ${config.prefix}${command.name} ${command.usage}`)
-
-            data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`)
-
-            message.channel.send(data, { split: true })
+            message.channel.send(data[guild.id]['specificHelpEmbed'])
         }
-    }
-}
-
-function setSpecificHelp(guild, commandName, alias, helpCommands, helpDescritions) {
-    data[guild.id]['specificHelpEmbed'] = new Discord.RichEmbed()
-        .setTitle("Commandes disponibles pour " + config.prefix + commandName + " :")
-        .setAuthor("Besoin d'aide ?⁢⁢", config.botAvatar, "https://unikorn.ga/bot")
-        .setColor('#7289DA')
-        .setFooter("unikorn.ga | " + config.prefix + commandName, config.authorAvatar)
-        .addField("**Commande :**", helpCommands, true)
-        .addField("**Description :**", helpDescritions, true)
-    if (alias.length == 0) {
-        data[guild.id]['specificHelpEmbed'].setDescription("Aucun alias")
-    } else {
-        data[guild.id]['specificHelpEmbed'].setDescription("Alias : " + config.prefix + alias.join(", " + config.prefix))
     }
 }
