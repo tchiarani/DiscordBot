@@ -9,12 +9,11 @@ module.exports = {
     usage: '<mots-clés>',
     alias: ['p'],
     execute(client, message, args, data, radios, musiques) {
-        console.log(Object.keys(radios.data).length)
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {
                     let find = false
-                    const maxLength = Math.max(Object.keys(radios.data).length, Object.keys(musiques).length)
+                    const maxLength = Math.max(Object.keys(radios.data).length, Object.keys(musiques.data).length)
                     for (let i = 0; i < maxLength; i++) {
                         if (args[0] == Object.keys(radios.data)[i]) {
                             data[message.guild.id]['song'] = connection.playArbitraryInput(Object.values(radios.data)[i][0])
@@ -26,15 +25,15 @@ module.exports = {
                             find = true
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios.data)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
                             message.react('📻')
-                        } else if (args[0] == Object.keys(musiques)[i]) {
-                            data[message.guild.id]['song'] = connection.playFile(Object.values(musiques)[i][0])
+                        } else if (args[0] == Object.keys(musiques.data)[i]) {
+                            data[message.guild.id]['song'] = connection.playFile(Object.values(musiques.data)[i][0])
                             data[message.guild.id]['song'].setVolume(1 / 25)
                             let words = message.content.split(' ')
                             if (words[2] >= 0 && words[2] <= 200) {
                                 data[message.guild.id]['song'].setVolume(words[2] / 2500)
                             }
                             find = true
-                            message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(musiques)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
+                            message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(musiques.data)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
                             message.react('🎵')
                             break
                         }

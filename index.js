@@ -7,6 +7,8 @@ const Canvas = require('canvas')
 const fs = require('fs')
 const config = require('./config')
 const client = new Discord.Client()
+const radios = require('./musics/radios')
+const musiques = require('./musics/musiques')
 
 client.commands = new Discord.Collection()
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
@@ -23,32 +25,6 @@ let botAvatar = ""
 let dataHelp = {}
 
 const commandes = ["play", "skip", "stop", "queue", "volume", "remove", "purge", "pause", "resume", "radio", "radios", "musiques", "poll", "help"]
-
-// const radios = {
-//     'dnb': ['http://195.201.98.51:8000/dnbradio_main.mp3', 'drum\'n\'bass'],
-//     'metal': ['http://144.217.29.205:80/live', 'métal'],
-//     'gold': ['http://185.33.21.112:80/highvoltage_128', 'goldé'],
-//     'core': ['http://192.95.18.39:5508/song', 'métalcore'],
-//     'prog': ['http://144.76.106.52:7000/progressive.mp3', 'progressive'],
-//     'samba': ['http://148.72.152.10:20028/song', 'samba'],
-//     'misc': ['http://185.85.29.144:8000/', 'miscellaneous'],
-//     'hit': ['http://185.85.29.140:8000/', 'hit allemand'],
-//     'dub': ['http://37.187.124.134:8010/', 'dub'],
-//     'black': ['http://147.135.208.34:8000/song/2/', 'blackmétal'],
-//     'chill': ['http://66.70.187.44:9146/song', 'chill'],
-//     'polk': ['http://70.38.12.44:8144/song', 'polk'],
-//     'muhamed': ['http://108.179.220.88:9302/song', 'allahu akbar'],
-//     'motherland': ['http://air.radiorecord.ru:805/hbass_320', 'cyka blyat']
-//         /*  'radio' : ['lien', 'texte']  */
-// }
-
-const radios = require('./musics/radios')
-
-const musiques = {
-    'aspiradance': ['./songs/eurodance.mp3', 'aspiradance'],
-    'sw': ['./songs/SalleDesCoffres.mp3', 'la salle des coffres']
-        /*  'musique' : ['chemin', 'texte']  */
-}
 
 const emojisNombre = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
 
