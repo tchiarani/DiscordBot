@@ -24,7 +24,7 @@ module.exports = {
                                 data[message.guild.id]['song'].setVolume(words[2] / 2500)
                             }
                             find = true
-                            message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
+                            message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios.data)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
                             message.react('📻')
                         } else if (args[0] == Object.keys(musiques)[i]) {
                             data[message.guild.id]['song'] = connection.playFile(Object.values(musiques)[i][0])
