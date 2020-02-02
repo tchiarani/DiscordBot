@@ -422,7 +422,7 @@ client.on('message', async message => {
             .setColor(0xffffff)
             .setAuthor("Sondage crée par " + message.author.username)
             .setTitle(question)
-            .setDescription(choices.map((value, index) => emojisNombre[index] + value).join('\n') + "**")
+            .setDescription(choices.map((value, index) => emojisNombre[index] + ' ' + value).join('\n'))
             .setFooter("Réagissez pour voter")
         message.channel.send(pollEmbed)
             .then(async function(poll) {
@@ -545,7 +545,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     const forwards = msg.createReactionCollector(forwardsFilter)
 
                     backwards.on('collect', r => {
-                        r.remove(r.users.filter(u => !u.bot)).catch(console.log())
+                        if (r.users[1]) r.remove(r.users.filter(u => !u.bot))
                         if (r.count == 1 || page == 1) return
                         page--
                         nbPages = Math.ceil(musicTitle.length / 10)
@@ -565,7 +565,7 @@ function setQueueEmbed(message, musicTitle, musicDuration) {
                     })
 
                     forwards.on('collect', r => {
-                        r.remove(r.users.filter(u => !u.bot)).catch(console.log())
+                        if (r.users[1]) r.remove(r.users.filter(u => !u.bot))
                         if (r.count == 1 || page == nbPages) return
                         page++
                         nbPages = Math.ceil(musicTitle.length / 10)
