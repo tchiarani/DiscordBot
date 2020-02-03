@@ -1,6 +1,6 @@
 {
     "data": {
-        "aspiradance": ["../musics/saved/eurodance.mp3", "aspiradance"],
-        "sw": ["../musics/saved/SalleDesCoffres.mp3", "la salle des coffres"]
+        "aspiradance": ["./../musics/saved/eurodance.mp3", "aspiradance"],
+        "sw": ["./../musics/saved/SalleDesCoffres.mp3", "la salle des coffres"]
     }
 }
