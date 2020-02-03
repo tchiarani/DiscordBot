@@ -5,7 +5,7 @@ module.exports = {
     name: 'avatar',
     description: ["Affiche l'avatar d'un membre du serveur", "Affiche votre avatar"],
     alias: ['icon'],
-    usage: ['[membre]', ''],
+    usage: ['[@membre]', ''],
     async execute(client, message, args, data) {
         let avatar
         if (message.mentions.users.size) {
