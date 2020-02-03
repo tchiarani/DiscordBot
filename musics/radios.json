@@ -1,18 +1,18 @@
 {
     "data": {
-        "dnb": ["http://195.201.98.51:8000/dnbradio_main.mp3", "drum'n'bass"],
-        "metal": ["http://144.217.29.205:80/live", "métal"],
-        "gold": ["http://185.33.21.112:80/highvoltage_128", "goldé"],
-        "core": ["http://192.95.18.39:5508/song", "métalcore"],
-        "prog": ["http://144.76.106.52:7000/progressive.mp3", "progressive"],
-        "samba": ["http://148.72.152.10:20028/song", "samba"],
-        "misc": ["http://185.85.29.144:8000/", "miscellaneous"],
-        "hit": ["http://185.85.29.140:8000/", "hit allemand"],
-        "dub": ["http://37.187.124.134:8010/", "dub"],
-        "black": ["http://147.135.208.34:8000/song/2/", "blackmétal"],
-        "chill": ["http://66.70.187.44:9146/song", "chill"],
-        "polk": ["http://70.38.12.44:8144/song", "polk"],
-        "muhamed": ["http://108.179.220.88:9302/song", "allahu akbar"],
-        "motherland": ["http://air.radiorecord.ru:805/hbass_320", "cyka blyat"]
+        "DnB": ["http://195.201.98.51:8000/dnbradio_main.mp3", "drum'n'bass"],
+        "Metal": ["http://144.217.29.205:80/live", "métal"],
+        "Gold": ["http://185.33.21.112:80/highvoltage_128", "goldé"],
+        "Core": ["http://192.95.18.39:5508/song", "métalcore"],
+        "Prog": ["http://144.76.106.52:7000/progressive.mp3", "progressive"],
+        "Samba": ["http://148.72.152.10:20028/song", "samba"],
+        "Misc": ["http://185.85.29.144:8000/", "miscellaneous"],
+        "Hit": ["http://185.85.29.140:8000/", "hit allemand"],
+        "Dub": ["http://37.187.124.134:8010/", "dub"],
+        "Black": ["http://147.135.208.34:8000/song/2/", "blackmétal"],
+        "Chill": ["http://66.70.187.44:9146/song", "chill"],
+        "Polka": ["http://70.38.12.44:8144/song", "polka"],
+        "Muhamed": ["http://108.179.220.88:9302/song", "allahu akbar"],
+        "MotherLand": ["http://air.radiorecord.ru:805/hbass_320", "cyka blyat"]
     }
 }
