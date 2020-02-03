@@ -22,6 +22,8 @@ module.exports = {
         const ctx = canvas.getContext("2d")
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
         const attachment = new Discord.Attachment(canvas.toBuffer(), "userAvatar.png")
+        console.log(attachment.width)
+        console.log(attachment.height)
         message.channel.send(attachment)
     }
 }
