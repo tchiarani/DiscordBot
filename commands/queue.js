@@ -87,13 +87,19 @@ module.exports = {
 
                             forwards.on('collect', r => {
                                 if (r.count == 1 || page == nbPages) return
-                                console.log(r.users.filter(u => !u.bot))
-                                console.log(r.users)
-                                    //if (r.users[1]) r.remove(r.users.filter(u => !u.bot))
-                                msg.clearReactions().catch(error => console.error('Failed to clear reactions: ', error))
-                                msg.react('⬅️').then(res => {
-                                    msg.react('➡️')
-                                })
+                                console.log(r.users[1].name)
+
+                                if (r.users[1]) {
+                                    const userReactions = msg.reactions.filter(reaction => reaction.users.has(r.users[1].name));
+                                    try {
+                                        for (const reaction of userReactions) {
+                                            await reaction.remove(r.users[1].name);
+                                        }
+                                    } catch (error) {
+                                        console.error('Failed to remove reactions.');
+                                    }
+                                }
+
                                 page++
                                 nbPages = Math.ceil(musicTitle.length / 10)
                                 indexMin += config.maxQueueDisplay
