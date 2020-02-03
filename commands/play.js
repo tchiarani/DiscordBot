@@ -29,7 +29,6 @@ module.exports = {
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios.data)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
                             message.react('📻')
                         } else if (args[0] == Object.keys(musiques.data)[i]) {
-                            console.log(Object.values(musiques.data)[i][0])
                             data[message.guild.id]['song'] = connection.playFile(Object.values(musiques.data)[i][0])
                             data[message.guild.id]['song'].setVolume(1 / 25)
                             let words = message.content.split(' ')
