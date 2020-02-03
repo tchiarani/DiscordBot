@@ -89,14 +89,14 @@ module.exports = {
                                 if (r.count == 1 || page == nbPages) return
 
                                 if (r.users[1]) {
-                                    console.log(r.users[1].name)
-                                    const userReactions = msg.reactions.filter(reaction => reaction.users.has(r.users[1].name));
+                                    console.log(r.users[1][0])
+                                    const userReactions = msg.reactions.filter(reaction => reaction.users.has(r.users[1][0]));
                                     try {
                                         for (const reaction of userReactions) {
-                                            await reaction.remove(r.users[1].name);
+                                            await reaction.remove(r.users[1][0])
                                         }
                                     } catch (error) {
-                                        console.error('Failed to remove reactions.');
+                                        console.error('Failed to remove reactions.')
                                     }
                                 }
 
