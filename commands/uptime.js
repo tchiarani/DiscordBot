@@ -1,6 +1,6 @@
 module.exports = {
     name: 'uptime',
-    description: 'Affiche la durée de connexion du bot',
+    description: ['Affiche la durée d\'activité du bot'],
     alias: [],
     usage: [''],
     execute(client, message, args, data) {
