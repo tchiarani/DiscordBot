@@ -86,6 +86,7 @@ module.exports = {
                             })
 
                             forwards.on('collect', r => {
+                                if (r.count == 1 || page == nbPages) return
                                 console.log(r.users.filter(u => !u.bot))
                                 console.log(r.users)
                                     //if (r.users[1]) r.remove(r.users.filter(u => !u.bot))
@@ -93,7 +94,6 @@ module.exports = {
                                 msg.react('⬅️').then(res => {
                                     msg.react('➡️')
                                 })
-                                if (r.count == 1 || page == nbPages) return
                                 page++
                                 nbPages = Math.ceil(musicTitle.length / 10)
                                 indexMin += config.maxQueueDisplay
