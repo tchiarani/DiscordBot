@@ -7,16 +7,16 @@ module.exports = {
     alias: ['icon'],
     usage: ['[membre]', ''],
     async execute(client, message, args, data) {
-        let background
+        let avatar
         if (message.mentions.users.size) {
             const taggedUser = message.mentions.users.first()
-            background = await Canvas.loadImage(taggedUser.displayAvatarURL)
+            avatar = await Canvas.loadImage(taggedUser.displayAvatarURL)
         } else {
-            background = await Canvas.loadImage(message.author.displayAvatarURL)
+            avatar = await Canvas.loadImage(message.author.displayAvatarURL)
         }
         const canvas = Canvas.createCanvas(500, 500)
         const ctx = canvas.getContext("2d")
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+        ctx.drawImage(avatar, 0, 0) //, canvas.width, canvas.height)
         const attachment = new Discord.Attachment(canvas.toBuffer(), "userAvatar.png")
         message.channel.send(attachment)
     }
