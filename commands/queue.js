@@ -66,8 +66,8 @@ module.exports = {
                             const backwards = msg.createReactionCollector(backwardsFilter)
                             const forwards = msg.createReactionCollector(forwardsFilter)
 
-                            backwards.on('collect', r => {
-                                if (r.count == 1 || page == nbPages) return
+                            backwards.on('collect', async r => {
+                                if (r.count == 1 || page == 1) return
                                 if (r.users.size > 1) {
                                     const userReactions = msg.reactions.filter(reaction => reaction.users.has(Array.from(r.users.values())[1].id));
                                     try {
