@@ -8,11 +8,10 @@ module.exports = {
     aliases: ['sondage'],
     usage: ['[Question ? "Choix 1" "Choix 2" ... ]'],
     execute(message, args, data) {
-        let contenuMessage = message.content;
-        let question = contenuMessage.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
-        let choices = contenuMessage.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
+        let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
+        let choices = message.content.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
         if (question[1] == undefined || choices[1] == undefined || choices.length > 9) {
-            message.reply('Utilisation :\n' + config.prefix + 'poll Faut-il poser une question ? "Oui" "Non"')
+            message.reply('il ne peut pas y avoir plus de 9 choix de réponses.')
             return
         }
         const pollEmbed = new Discord.RichEmbed()

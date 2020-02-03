@@ -57,77 +57,10 @@ client.on('message', async message => {
     if (!command) return
     if (!message.member) message.member = await message.guild.fetchMember(message)
 
-    message.content = message.content.toLowerCase()
-
     try {
         command.execute(message, args, data)
     } catch (error) {
         console.error("Error" + error)
     }
-
-    // // STOP
-    // if (commandName === 'stop') {
-    //     client.commands.get('stop').execute(message)
-
-    //     // PLAY
-    // } else if (commandName === 'play') {
-    //     client.commands.get('play').execute(message, args, data)
-
-    //     // RADIO
-    // } else if (commandName === 'radio') {
-    //     client.commands.get('radio').execute(message, data)
-
-    //     // VOLUME
-    // } else if (commandName === 'volume') {
-    //     client.commands.get('volume').execute(message, args, data)
-
-    //     // SKIP
-    // } else if (commandName === "skip") {
-    //     client.commands.get('skip').execute(message, data)
-
-    //     // RADIOS
-    // } else if (commandName === "radios") {
-    //     client.commands.get('radios').execute(message)
-
-    //     // MUSIQUES
-    // } else if (commandName === "musiques") {
-    //     client.commands.get('musiques').execute(message)
-
-    //     // PURGE
-    // } else if (commandName === 'purge') {
-    //     client.commands.get('purge').execute(message, args)
-
-    //     // PAUSE
-    // } else if (commandName === 'pause') {
-    //     client.commands.get('pause').execute(message, args, data)
-
-    //     // RESUME
-    // } else if (commandName === 'resume') {
-    //     client.commands.get('resume').execute(message, args, data)
-
-    //     // QUEUE
-    // } else if (commandName === 'queue') {
-    //     client.commands.get('queue').execute(message, args, data)
-
-    //     // REMOVE
-    // } else if (commandName === 'remove') {
-    //     client.commands.get('remove').execute(message, args, data)
-
-    //     // POLL
-    // } else if (commandName === 'poll') {
-    //     client.commands.get('poll').execute(message)
-
-    //     // AVATAR
-    // } else if (commandName === 'avatar') {
-    //     client.commands.get('avatar').execute(message)
-
-    //     // UPTIME 
-    // } else if (commandName === 'uptime') {
-    //     client.commands.get('uptime').execute(client, message, args)
-
-    //     // HELP
-    // } else if (commandName === 'help') {
-    //     client.commands.get('help').execute(message, args, data)
-    // }
 
 })
