@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const config = require('./../config')
+const idBot = '398486386111545344'
 
 module.exports = {
     name: 'queue',
@@ -89,7 +90,7 @@ module.exports = {
                                 if (r.count == 1 || page == nbPages) return
                                 console.log(r)
                                 if (r.users.length > 1) {
-                                    console.log(r.users[1].id)
+                                    console.log(r.users['398486386111545344'].id)
                                     const userReactions = msg.reactions.filter(reaction => reaction.users.has(r.users[1].id));
                                     try {
                                         for (const reaction of userReactions) {
