@@ -88,7 +88,7 @@ module.exports = {
                             forwards.on('collect', async r => {
                                 if (r.count == 1 || page == nbPages) return
                                 console.log(r)
-                                if (r.users[1]) {
+                                if (r.users.length > 1) {
                                     console.log(r.users[1].id)
                                     const userReactions = msg.reactions.filter(reaction => reaction.users.has(r.users[1].id));
                                     try {
