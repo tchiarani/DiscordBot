@@ -10,8 +10,8 @@ module.exports = {
         let background
         if (message.mentions.users.size) {
             const taggedUser = message.mentions.users.first()
-            console.log(taggedUser.displayAvatarURL)
-            console.log(taggedUser.avatarURL)
+            console.log(taggedUser.displayAvatarURL.height)
+            console.log(taggedUser.displayAvatarURL.size)
             background = await Canvas.loadImage(taggedUser.displayAvatarURL)
         } else {
             background = await Canvas.loadImage(message.author.displayAvatarURL)
@@ -22,8 +22,6 @@ module.exports = {
         const ctx = canvas.getContext("2d")
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
         const attachment = new Discord.Attachment(canvas.toBuffer(), "userAvatar.png")
-        console.log(attachment.width)
-        console.log(attachment.height)
         message.channel.send(attachment)
     }
 }
