@@ -14,8 +14,7 @@ module.exports = {
         } else {
             background = await Canvas.loadImage(message.author.displayAvatarURL)
         }
-        const canvas = Canvas.createCanvas()
-            //const canvas = Canvas.createCanvas(500, 500)
+        const canvas = Canvas.createCanvas(500, 500)
         const ctx = canvas.getContext("2d")
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
         const attachment = new Discord.Attachment(canvas.toBuffer(), "userAvatar.png")
