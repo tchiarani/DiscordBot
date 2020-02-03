@@ -10,7 +10,7 @@ module.exports = {
     description: ['Lance ou ajoute une musique depuis YouTube', '', 'Lance une radio enregistrée', '', 'Lance une musique enregistrée', ''],
     usage: ['[mots-clés]', '[url]', '[radio]', '[radio] [volume]', '[musique]', '[musique] [volume]', ],
     alias: ['p'],
-    execute(message, args, data) {
+    execute(client, message, args, data) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {

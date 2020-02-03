@@ -3,7 +3,7 @@ module.exports = {
     description: 'Affiche la durée de connexion du bot',
     alias: [],
     usage: [''],
-    execute(client, message, args) {
+    execute(client, message, args, data) {
         message.channel.send(client.user.username + " en ligne depuis : " + msToTime(client.uptime))
         console.log("---------------------------------------")
     }

@@ -3,7 +3,7 @@ module.exports = {
     description: ["Reprend la musique mise en pause"],
     alias: [],
     usage: [''],
-    execute(message, args, data) {
+    execute(client, message, args, data) {
         if (message.member.voiceChannel) {
             message.react('⏯')
             data[message.guild.id]['song'].resume()

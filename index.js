@@ -58,7 +58,7 @@ client.on('message', async message => {
     if (!message.member) message.member = await message.guild.fetchMember(message)
 
     try {
-        command.execute(message, args, data)
+        command.execute(client, message, args, data)
     } catch (error) {
         console.error("Error" + error)
     }

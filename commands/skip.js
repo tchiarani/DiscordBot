@@ -8,7 +8,7 @@ module.exports = {
     description: ['Passe à la musique suivante'],
     usage: [''],
     alias: [],
-    execute(message, args, data) {
+    execute(client, message, args, data) {
         message.member.voiceChannel.join()
             .then(connection => {
                 message.react('⏭')

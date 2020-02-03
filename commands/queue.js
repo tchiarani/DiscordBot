@@ -7,7 +7,7 @@ module.exports = {
     description: ["Affiche la file d'attente"],
     usage: ['[chiffre]'],
     alias: ['q'],
-    execute(message, args, data) {
+    execute(client, message, args, data) {
         if (args.length == 0) {
             if (data[message.guild.id]['dataQueue'].length != 0) {
                 setQueueEmbed(message, data[message.guild.id]['musicTitle'], data[message.guild.id]['musicDuration'])

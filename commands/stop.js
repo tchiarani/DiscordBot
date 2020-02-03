@@ -3,7 +3,7 @@ module.exports = {
     description: ['Déconnecte le bot du salon vocal et vide la file'],
     usage: [''],
     alias: ['s'],
-    execute(message) {
+    execute(client, message, args, data) {
         if (message.member.voiceChannel === message.guild.me.voiceChannel) {
             message.member.voiceChannel.leave()
             message.react('🛑')

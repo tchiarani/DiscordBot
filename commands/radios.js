@@ -6,7 +6,7 @@ module.exports = {
     description: ["Liste les radios enregistrées"],
     alias: [],
     usage: [''],
-    execute(message, args, data) {
+    execute(client, message, args, data) {
         const radiosList = {
             "embed": {
                 "description": "Écouter une radio : **" + config.prefix + "p *[radio]* **",

@@ -6,7 +6,7 @@ module.exports = {
     description: ["Affiche toutes les commandes", "Affiche des informations à propos d'une commande"],
     alias: ['h', 'aide'],
     usage: ['', '[commande]'],
-    execute(message, args, data) {
+    execute(client, message, args, data) {
         const { commands } = message.client
 
         if (!args.length) {

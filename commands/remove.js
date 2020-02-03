@@ -3,7 +3,7 @@ module.exports = {
     description: ["Supprime la musique de la file d'attente", "Supprime les musiques de la file d'attente"],
     alias: ['r'],
     usage: ['[chiffre]', '[chiffre] [chiffre]'],
-    execute(message, args, data) {
+    execute(client, message, args, data) {
         let nbRemoved = 0
         for (let i = 0; i < args.length; i++) {
             if (data[message.guild.id]['dataQueue'][args[i] - nbRemoved] != undefined) {

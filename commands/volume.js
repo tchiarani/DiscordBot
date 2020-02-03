@@ -3,7 +3,7 @@ module.exports = {
     description: ["Règle le volume entre 0 et 200", "Affiche le volume actuel"],
     alias: ['vol', 'v'],
     usage: ['[chiffre]', ''],
-    execute(message, args, data) {
+    execute(client, message, args, data) {
         if (args.length === 0) {
             if (message.member.voiceChannel && data[message.guild.id]['song'].length != 0) {
                 message.channel.send("🔊 Volume : " + data[message.guild.id]['song'].volume)

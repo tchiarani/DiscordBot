@@ -7,7 +7,7 @@ module.exports = {
     description: ["Crée un sondage"],
     aliases: ['sondage'],
     usage: ['[Question ? "Choix 1" "Choix 2" ... ]'],
-    execute(message, args, data) {
+    execute(client, message, args, data) {
         let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
         let choices = message.content.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
         if (question[1] == undefined || choices[1] == undefined || choices.length > 9) {

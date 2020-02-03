@@ -6,7 +6,7 @@ module.exports = {
     description: "Liste les musiques enregistrées",
     alias: [],
     usage: '',
-    execute(message, args, data) {
+    execute(client, message, args, data) {
         const musiquesList = {
             "embed": {
                 "description": "Écouter une musique : **" + config.prefix + "p *[musique]* **",

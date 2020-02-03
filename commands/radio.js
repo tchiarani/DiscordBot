@@ -3,7 +3,7 @@ module.exports = {
     description: ["Lance une webradio"],
     alias: [],
     usage: ['[url]'],
-    execute(message, args, data) {
+    execute(client, message, args, data) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {
