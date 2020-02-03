@@ -90,14 +90,13 @@ module.exports = {
                                 if (r.count == 1 || page == nbPages) return
                                 if (r.users.size > 1) {
                                     console.log(Array.from(r.users.values())[1].id)
-                                        //console.log(r.users['398486386111545344'].id)
                                     const userReactions = msg.reactions.filter(reaction => reaction.users.has(Array.from(r.users.values())[1].id));
                                     try {
                                         for (const reaction of userReactions) {
                                             await reaction.remove(Array.from(r.users.values())[1].id)
                                         }
                                     } catch (error) {
-                                        console.error('Failed to remove reactions.')
+                                        console.error('Failed to remove reactions : ' + error)
                                     }
                                 }
 
