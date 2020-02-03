@@ -87,9 +87,9 @@ module.exports = {
 
                             forwards.on('collect', async r => {
                                 if (r.count == 1 || page == nbPages) return
-                                console.log(r.users[1].name)
 
                                 if (r.users[1]) {
+                                    console.log(r.users[1].name)
                                     const userReactions = msg.reactions.filter(reaction => reaction.users.has(r.users[1].name));
                                     try {
                                         for (const reaction of userReactions) {
