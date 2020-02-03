@@ -90,6 +90,7 @@ module.exports = {
                                 console.log(typeof r.users.filter(u => !u.bot))
                                 console.log(typeof r.users.filter(u => !u.bot)[0])
                                 console.log(r.users[1])
+                                console.log(r.users)
                                 if (r.users[1]) r.remove(r.users.filter(u => !u.bot))
                                 if (r.count == 1 || page == nbPages) return
                                 page++
