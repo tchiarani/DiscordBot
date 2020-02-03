@@ -6,7 +6,7 @@ module.exports = {
     description: ["Affiche la file d'attente"],
     usage: ['[chiffre]'],
     alias: ['q'],
-    execute(message, args, data) {
+    async execute(message, args, data) {
         if (args.length == 0) {
             if (data[message.guild.id]['dataQueue'].length != 0) {
                 setQueueEmbed(message, data[message.guild.id]['musicTitle'], data[message.guild.id]['musicDuration'])
@@ -85,7 +85,7 @@ module.exports = {
                                 msg.edit(data[message.guild.id]['queueEmbed'])
                             })
 
-                            forwards.on('collect', async r => {
+                            forwards.on('collect', r => {
                                 if (r.count == 1 || page == nbPages) return
 
                                 if (r.users[1]) {
