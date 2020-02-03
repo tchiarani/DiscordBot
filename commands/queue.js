@@ -87,11 +87,12 @@ module.exports = {
 
                             forwards.on('collect', r => {
                                 console.log(r.users.filter(u => !u.bot))
-                                console.log(typeof r.users.filter(u => !u.bot))
-                                console.log(typeof r.users.filter(u => !u.bot)[0])
-                                console.log(r.users[1])
                                 console.log(r.users)
-                                if (r.users[1]) r.remove(r.users.filter(u => !u.bot))
+                                    //if (r.users[1]) r.remove(r.users.filter(u => !u.bot))
+                                msg.clearReactions().catch(error => console.error('Failed to clear reactions: ', error))
+                                msg.react('⬅️').then(res => {
+                                    msg.react('➡️')
+                                })
                                 if (r.count == 1 || page == nbPages) return
                                 page++
                                 nbPages = Math.ceil(musicTitle.length / 10)
