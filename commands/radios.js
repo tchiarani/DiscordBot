@@ -1,11 +1,12 @@
 const config = require('./../config')
+const radios = require('./../musics/radios')
 
 module.exports = {
     name: 'radios',
     description: ["Liste les radios enregistrées"],
     alias: [],
     usage: [''],
-    execute(message, radios) {
+    execute(message, args, data) {
         const radiosList = {
             "embed": {
                 "description": "Écouter une radio : **" + config.prefix + "p *[radio]* **",

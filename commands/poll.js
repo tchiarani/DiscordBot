@@ -1,11 +1,14 @@
 const Discord = require('discord.js')
 
+const emojisNombre = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
+
 module.exports = {
     name: 'poll',
     description: ["Crée un sondage"],
     aliases: ['sondage'],
     usage: ['[Question ? "Choix 1" "Choix 2" ... ]'],
-    execute(message, contenuMessage, emojisNombre) {
+    execute(message, args, data) {
+        let contenuMessage = message.content;
         let question = contenuMessage.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
         let choices = contenuMessage.substring(message.content.indexOf("?") + 2, message.content.length + 1).replace(/"/gi, '').split(' ')
         if (question[1] == undefined || choices[1] == undefined || choices.length > 9) {

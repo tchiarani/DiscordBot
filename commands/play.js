@@ -2,13 +2,15 @@ const Discord = require('discord.js')
 const search = require('yt-search')
 const ytdl = require('ytdl-core')
 const ytpl = require('ytpl')
+const radios = require('./../musics/radios')
+const musiques = require('./../musics/musiques')
 
 module.exports = {
     name: 'play',
     description: ['Lance ou ajoute une musique depuis YouTube', '', 'Lance une radio enregistrée', '', 'Lance une musique enregistrée', ''],
     usage: ['[mots-clés]', '[url]', '[radio]', '[radio] [volume]', '[musique]', '[musique] [volume]', ],
     alias: ['p'],
-    execute(message, args, data, radios, musiques) {
+    execute(message, args, data) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => {

@@ -6,7 +6,7 @@ module.exports = {
     description: ["Affiche l'avatar d'un membre du serveur", "Affiche votre avatar"],
     alias: ['icon'],
     usage: ['[membre]', ''],
-    async execute(message) {
+    async execute(message, args, data) {
         let background
         if (message.mentions.users.size) {
             const taggedUser = message.mentions.users.first()
