@@ -69,7 +69,6 @@ module.exports = {
                             backwards.on('collect', r => {
                                 if (r.count == 1 || page == nbPages) return
                                 if (r.users.size > 1) {
-                                    console.log(Array.from(r.users.values())[1].id)
                                     const userReactions = msg.reactions.filter(reaction => reaction.users.has(Array.from(r.users.values())[1].id));
                                     try {
                                         for (const reaction of userReactions) {
@@ -99,7 +98,6 @@ module.exports = {
                             forwards.on('collect', async r => {
                                 if (r.count == 1 || page == nbPages) return
                                 if (r.users.size > 1) {
-                                    console.log(Array.from(r.users.values())[1].id)
                                     const userReactions = msg.reactions.filter(reaction => reaction.users.has(Array.from(r.users.values())[1].id));
                                     try {
                                         for (const reaction of userReactions) {
