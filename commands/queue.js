@@ -88,10 +88,9 @@ module.exports = {
 
                             forwards.on('collect', async r => {
                                 if (r.count == 1 || page == nbPages) return
-                                console.log(Array.from(r.users.values()))
-                                console.log(r.users.size)
                                 if (r.users.size > 1) {
-                                    console.log(r.users['398486386111545344'].id)
+                                    console.log(Array.from(r.users.values())[1])
+                                        //console.log(r.users['398486386111545344'].id)
                                     const userReactions = msg.reactions.filter(reaction => reaction.users.has(r.users[1].id));
                                     try {
                                         for (const reaction of userReactions) {
