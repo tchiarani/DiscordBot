@@ -4,7 +4,7 @@ module.exports = {
     alias: [],
     usage: [''],
     execute(client, message, args, data) {
-        message.channel.send(client.user.username + " en ligne depuis : " + msToTime(client.uptime))
+        message.channel.send(client.user.username + " est en ligne depuis : " + msToTime(client.uptime))
         console.log("---------------------------------------")
     }
 }
