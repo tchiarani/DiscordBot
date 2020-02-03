@@ -86,14 +86,14 @@ module.exports = {
                                 msg.edit(data[message.guild.id]['queueEmbed'])
                             })
 
-                            forwards.on('collect', async r => {
-                                if (r.count == 1 || page == nbPages) return
-                                if (r.users.size > 1) {
-                                    console.log(Array.from(r.users.values())[1].id)
-                                    const userReactions = msg.reactions.filter(reaction => reaction.users.has(Array.from(r.users.values())[1].id));
+                            forwards.on('collect', async reaction => {
+                                if (reaction.count == 1 || page == nbPages) return
+                                if (reaction.users.size > 1) {
+                                    console.log(Array.from(reaction.users.values())[1].id)
+                                    const userReactions = msg.reactions.filter(reaction => reaction.users.has(Array.from(reaction.users.values())[1].id));
                                     try {
                                         for (const reaction of userReactions) {
-                                            await reaction.remove(Array.from(r.users.values())[1].id)
+                                            await reaction.remove(Array.from(reaction.users.values())[1].id)
                                         }
                                     } catch (error) {
                                         console.error('Failed to remove reactions : ' + error)
