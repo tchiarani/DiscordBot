@@ -67,8 +67,18 @@ module.exports = {
                             const forwards = msg.createReactionCollector(forwardsFilter)
 
                             backwards.on('collect', r => {
-                                if (r.users[1]) r.remove(r.users.filter(u => !u.bot))
-                                if (r.count == 1 || page == 1) return
+                                if (r.count == 1 || page == nbPages) return
+                                if (r.users.size > 1) {
+                                    console.log(Array.from(r.users.values())[1].id)
+                                    const userReactions = msg.reactions.filter(reaction => reaction.users.has(Array.from(r.users.values())[1].id));
+                                    try {
+                                        for (const reaction of userReactions) {
+                                            await r.remove(Array.from(r.users.values())[1].id)
+                                        }
+                                    } catch (error) {
+                                        console.error('Failed to remove reaction : ' + error)
+                                    }
+                                }
                                 page--
                                 nbPages = Math.ceil(musicTitle.length / 10)
                                 indexMin -= config.maxQueueDisplay
@@ -96,10 +106,9 @@ module.exports = {
                                             await r.remove(Array.from(r.users.values())[1].id)
                                         }
                                     } catch (error) {
-                                        console.error('Failed to remove reactions : ' + error)
+                                        console.error('Failed to remove reaction : ' + error)
                                     }
                                 }
-
                                 page++
                                 nbPages = Math.ceil(musicTitle.length / 10)
                                 indexMin += config.maxQueueDisplay
