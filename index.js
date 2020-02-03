@@ -66,9 +66,9 @@ client.on('message', async message => {
     let contenuMessage = message.content;
     message.content = message.content.toLowerCase()
 
-    if (cmds.includes(commandName)) {
-        client.commands.get(commandName).execute(array)
-    }
+    // if (cmds.includes(commandName)) {
+    //     client.commands.get(commandName).execute(array)
+    // }
 
     // STOP
     if (commandName === 'stop') {
