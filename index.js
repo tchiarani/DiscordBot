@@ -15,6 +15,8 @@ for (const file of commandFiles) {
 
 const emojisNombre = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
 
+const cmds = ['volume', 'stop', 'play']
+
 let data = []
 
 function initGuild(id) {
@@ -63,6 +65,10 @@ client.on('message', async message => {
 
     let contenuMessage = message.content;
     message.content = message.content.toLowerCase()
+
+    if (cmds.includes(commandName)) {
+        client.commands.get(commandName).execute(array)
+    }
 
     // STOP
     if (commandName === 'stop') {
