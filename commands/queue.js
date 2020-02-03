@@ -85,7 +85,7 @@ module.exports = {
                                 msg.edit(data[message.guild.id]['queueEmbed'])
                             })
 
-                            forwards.on('collect', r => {
+                            forwards.on('collect', async r => {
                                 if (r.count == 1 || page == nbPages) return
                                 console.log(r.users[1].name)
 
