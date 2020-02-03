@@ -19,6 +19,7 @@ module.exports = {
                 .setFooter("unikorn.ga | /help", config.authorAvatar)
                 .addField("----------------", commands.map(command => config.prefix + command.name).slice(0, (commands.size + 1) / 2).join("\n"), true)
                 .addField("----------------", commands.map(command => config.prefix + command.name).slice((commands.size + 1) / 2, commands.size).join("\n"), true)
+                .addField("Aide pour une commande", config.prefix + "help [commande]", false)
             message.channel.send(dataHelp)
 
         } else {
