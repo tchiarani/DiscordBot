@@ -13,7 +13,7 @@ module.exports = {
     execute(client, message, args, data) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
-                .then(connection => {
+                .then(async connection => {
                     let find = false
                     const maxLength = Math.max(Object.keys(radios.data).length, Object.keys(musiques.data).length)
                     for (let i = 0; i < maxLength; i++) {
@@ -50,7 +50,7 @@ module.exports = {
                                 data[message.guild.id]['musicDuration'].splice(1, 0, data[message.guild.id]['musicDuration'][args[0]]).splice(args[0], 1)
                                 data[message.guild.id]['queue'].splice(1, 0, data[message.guild.id]['queue'][args[0]]).splice(args[0], 1)
                                 data[message.guild.id]['dataQueue'].splice(1, 0, data[message.guild.id]['dataQueue'][args[0]]).splice(args[0], 1)
-                                client.commands.get("skip").execute(client, message, args, data)
+                                await client.commands.get("skip").execute(client, message, args, data)
                             }
                         } else if (args[0].match(regExp)) {
                             if (ytpl.validateURL(args[0].match(regExp)[2])) {
