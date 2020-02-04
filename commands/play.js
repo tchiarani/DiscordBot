@@ -47,10 +47,14 @@ module.exports = {
                         if (args[0] > 0 && args[0] < data[message.guild.id]['queue'].length) {
                             if (data[message.guild.id]['queue'][args[0]]) {
                                 console.log(data[message.guild.id]['queue'][args[0]])
+                                data[message.guild.id]['musicTitle'].splice(0, 1, data[message.guild.id]['musicTitle'][args[0]])
+                                data[message.guild.id]['musicDuration'].splice(0, 1, data[message.guild.id]['musicDuration'][args[0]])
+                                data[message.guild.id]['queue'].splice(0, 1, data[message.guild.id]['queue'][args[0]])
+                                data[message.guild.id]['dataQueue'].splice(0, 1, data[message.guild.id]['dataQueue'][args[0]])
                             }
                         } else if (args[0].match(regExp)) {
                             if (ytpl.validateURL(args[0].match(regExp)[2])) {
-                                ytpl(args[0].match(regExp)[2], { limit: 0 }, function(err, playlist) {
+                                ytpl(args[0].match(regExp)[2], { limit: Infinity }, function(err, playlist) {
                                     if (err) return console.log(err)
                                     console.log(typeof playlist)
                                     if (typeof playlist != undefined) {
