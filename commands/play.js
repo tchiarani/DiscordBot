@@ -43,15 +43,14 @@ module.exports = {
                         }
                     }
                     if (!find) {
+                        let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
                         console.log(Number.isInteger(args[0]))
                         if (Number.isInteger(args[0])) {
                             console.log(data[message.guild.id]['queue'][args[0]])
                             if (data[message.guild.id]['queue'][args[0]]) {
                                 console.log(data[message.guild.id]['queue'][args[0]])
                             }
-                        }
-                        let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
-                        else if (args[0].match(regExp)) {
+                        } else if (args[0].match(regExp)) {
                             if (ytpl.validateURL(args[0].match(regExp)[2])) {
                                 ytpl(args[0], { limit: Infinity }, function(err, playlist) {
                                     if (err) console.log(err)
