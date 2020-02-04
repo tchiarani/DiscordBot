@@ -7,8 +7,8 @@ const musiques = require('./../musics/musiques')
 
 module.exports = {
     name: 'play',
-    description: ['Lance ou ajoute une musique depuis YouTube', '', 'Lance une radio enregistrée', '', 'Lance une musique enregistrée', ''],
-    usage: ['[mots-clés]', '[url]', '[radio]', '[radio] [volume]', '[musique]', '[musique] [volume]', ],
+    description: ['Lance ou ajoute une musique depuis YouTube', '', 'Lance une musique dans la file', 'Lance une radio enregistrée', '', 'Lance une musique enregistrée', ''],
+    usage: ['[mots-clés]', '[url]', '[chiffre]', '[radio]', '[radio] [volume]', '[musique]', '[musique] [volume]', ],
     alias: ['p'],
     execute(client, message, args, data) {
         if (message.member.voiceChannel) {
@@ -43,6 +43,7 @@ module.exports = {
                         }
                     }
                     if (!find) {
+                        // PLAY SPECIFIC QUEUE SONG
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
                         if (args[0] > 0 && args[0] < data[message.guild.id]['queue'].length) {
                             if (data[message.guild.id]['queue'][args[0]]) {
@@ -51,19 +52,13 @@ module.exports = {
                                 data[message.guild.id]['queue'].splice(1, 0, data[message.guild.id]['queue'].splice(args[0], 1)[0])
                                 data[message.guild.id]['dataQueue'].splice(1, 0, data[message.guild.id]['dataQueue'].splice(args[0], 1)[0])
                                 data[message.guild.id]['dataMusicEmbed'].splice(1, 0, data[message.guild.id]['dataMusicEmbed'].splice(args[0], 1)[0])
-
-
-                                // data[message.guild.id]['musicTitle'].splice(1, 0, data[message.guild.id]['musicTitle'][args[0]]).splice(args[0], 1)
-                                // data[message.guild.id]['musicDuration'].splice(1, 0, data[message.guild.id]['musicDuration'][args[0]]).splice(args[0], 1)
-                                // data[message.guild.id]['queue'].splice(1, 0, data[message.guild.id]['queue'][args[0]]).splice(args[0], 1)
-                                // data[message.guild.id]['dataQueue'].splice(1, 0, data[message.guild.id]['dataQueue'][args[0]]).splice(args[0], 1)
-                                // data[message.guild.id]['dataMusicEmbed'].splice(1, 0, data[message.guild.id]['dataMusicEmbed'][args[0]]).splice(args[0], 1)
                                 await client.commands.get("skip").execute(client, message, args, data)
                             }
+                            // PLAY YOUTUBE PLAYLIST
                         } else if (args[0].match(regExp)) {
                             if (ytpl.validateURL(args[0].match(regExp)[2])) {
                                 ytpl(args[0].match(regExp)[2], { limit: Infinity }, function(err, playlist) {
-                                    if (err) return console.log(err)
+                                    if (err) throw (err)
                                     if (typeof playlist != undefined) {
                                         data[message.guild.id]['firstResult'] = playlist
                                         for (let i = 0; i < playlist.items.length; i++) {
@@ -83,6 +78,7 @@ module.exports = {
                             } else {
                                 message.channel.send("Playlist non valide :(")
                             }
+                            // PLAY YOUTUBE VIDEO
                         } else {
                             let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
                             search(words, function(err, r) {
