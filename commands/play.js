@@ -49,7 +49,9 @@ module.exports = {
                             if (data[message.guild.id]['queue'][args[0]]) {
                                 console.log(data[message.guild.id]['queue'][args[0]])
                             }
-                        } else if (args[0].match(/^.*(youtu.be\/|list=)([^#\&\?]*).*/)) {
+                        }
+                        let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
+                        else if (args[0].match(regExp)) {
                             if (ytpl.validateURL(args[0].match(regExp)[2])) {
                                 ytpl(args[0], { limit: Infinity }, function(err, playlist) {
                                     if (err) console.log(err)
