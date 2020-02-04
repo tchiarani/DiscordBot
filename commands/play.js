@@ -54,7 +54,8 @@ module.exports = {
                             if (ytpl.validateURL(args[0].match(regExp)[2])) {
                                 ytpl(args[0], { limit: Infinity }, function(err, playlist) {
                                     if (err) console.log(err)
-                                    if (typeof playlist != undefined) {
+                                    console.log(playlist + typeof playlist)
+                                    if (playlist != undefined) {
                                         data[message.guild.id]['firstResult'] = playlist
                                         for (let i = 0; i < playlist.items.length; i++) {
                                             let music = playlist.items[i].url_simple
