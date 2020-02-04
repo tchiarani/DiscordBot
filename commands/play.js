@@ -45,7 +45,7 @@ module.exports = {
                     if (!find) {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
                         console.log(Number.isInteger(args[0]))
-                        if (Number.isInteger(args[0])) {
+                        if (args[0] >= 0 && args[0] < data[message.guild.id]['queue'].length) {
                             console.log(data[message.guild.id]['queue'][args[0]])
                             if (data[message.guild.id]['queue'][args[0]]) {
                                 console.log(data[message.guild.id]['queue'][args[0]])
