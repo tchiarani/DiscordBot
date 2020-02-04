@@ -51,7 +51,6 @@ client.on('message', async message => {
     const args = message.content.slice(config.prefix.length).split(' ')
     let commandName = args.shift().toLowerCase()
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.alias && cmd.alias.includes(commandName))
-    if (command) commandName = await command.name
 
     if (!message.guild || message.author.bot) return
     if (!message.content.startsWith(config.prefix)) return
@@ -61,7 +60,7 @@ client.on('message', async message => {
     try {
         command.execute(client, message, args, data)
     } catch (error) {
-        console.error("Error" + error)
+        console.error("Error : " + error)
     }
 
 })

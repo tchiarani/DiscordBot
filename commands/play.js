@@ -47,10 +47,15 @@ module.exports = {
                         if (args[0] > 0 && args[0] < data[message.guild.id]['queue'].length) {
                             if (data[message.guild.id]['queue'][args[0]]) {
                                 console.log(data[message.guild.id]['queue'][args[0]])
-                                data[message.guild.id]['musicTitle'].splice(0, 1, data[message.guild.id]['musicTitle'][args[0]])
-                                data[message.guild.id]['musicDuration'].splice(0, 1, data[message.guild.id]['musicDuration'][args[0]])
-                                data[message.guild.id]['queue'].splice(0, 1, data[message.guild.id]['queue'][args[0]])
-                                data[message.guild.id]['dataQueue'].splice(0, 1, data[message.guild.id]['dataQueue'][args[0]])
+                                data[message.guild.id]['musicTitle'].splice(1, 0, data[message.guild.id]['musicTitle'][args[0]]).splice(args[0], 1)
+                                data[message.guild.id]['musicDuration'].splice(1, 0, data[message.guild.id]['musicDuration'][args[0]]).splice(args[0], 1)
+                                data[message.guild.id]['queue'].splice(1, 0, data[message.guild.id]['queue'][args[0]]).splice(args[0], 1)
+                                data[message.guild.id]['dataQueue'].splice(1, 0, data[message.guild.id]['dataQueue'][args[0]]).splice(args[0], 1)
+                                try {
+                                    client.commands.get("skip").execute(client, message, args, data)
+                                } catch (error) {
+                                    console.error("Error : " + error)
+                                }
                             }
                         } else if (args[0].match(regExp)) {
                             if (ytpl.validateURL(args[0].match(regExp)[2])) {
