@@ -49,8 +49,8 @@ module.exports = {
                     } else if (!find) {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
                         if (args[0].match(regExp)) {
-                            console.log(args[0].match(regExp))
-                            if (ytpl.validateURL(args[0].match(regExp))) {
+                            console.log(args[0].match(regExp)[2])
+                            if (ytpl.validateURL(args[0].match(regExp)[2])) {
                                 ytpl(args[0].match(regExp)[2], { limit: Infinity }, function(err, playlist) {
                                     if (err) console.log(err)
                                     data[message.guild.id]['firstResult'] = playlist
