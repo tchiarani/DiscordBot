@@ -57,7 +57,7 @@ module.exports = {
                             // PLAY YOUTUBE PLAYLIST
                         } else if (args[0].match(regExp)) {
                             if (ytpl.validateURL(args[0].match(regExp)[2])) {
-                                ytpl(args[0].match(regExp)[2], { limit: Infinity }, function(err, playlist) {
+                                ytpl(args[0].match(regExp)[2], function(err, playlist) {
                                     if (err) throw (err)
                                     if (typeof playlist != undefined) {
                                         data[message.guild.id]['firstResult'] = playlist
