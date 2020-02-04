@@ -48,23 +48,27 @@ module.exports = {
                         }
                     } else if (!find) {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
-                        if (args[0].match(regExp) && ytpl.validateURL(args[0].match(regExp))) {
-                            ytpl(args[0].match(regExp)[2], { limit: Infinity }, function(err, playlist) {
-                                if (err) console.log(err)
-                                data[message.guild.id]['firstResult'] = playlist
-                                for (let i = 0; i < playlist.items.length; i++) {
-                                    data[message.guild.id]['musicTitle'].push(playlist.items[i].title)
-                                    data[message.guild.id]['musicDuration'].push(playlist.items[i].duration)
-                                    let music = playlist.items[i].url_simple
-                                    let dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
-                                    setMusicEmbed(message.guild.id, playlist.items[i], playlist.items[i].id, playlist.items[i].author.ref, playlist.items[i].url_simple, playlist.items[i].duration)
-                                    data[message.guild.id]['queue'].push(music)
-                                    data[message.guild.id]['dataQueue'].push(dataMusic)
-                                    if (data[message.guild.id]['queue'].length == 1 && i == 0) play(connection, message, 'Add')
-                                }
-                                message.react('▶')
-                                play(connection, message, 'Add playlist')
-                            })
+                        if (args[0].match(regExp)) {
+                            if (ytpl.validateURL(args[0].match(regExp))) {
+                                ytpl(args[0].match(regExp)[2], { limit: Infinity }, function(err, playlist) {
+                                    if (err) console.log(err)
+                                    data[message.guild.id]['firstResult'] = playlist
+                                    for (let i = 0; i < playlist.items.length; i++) {
+                                        data[message.guild.id]['musicTitle'].push(playlist.items[i].title)
+                                        data[message.guild.id]['musicDuration'].push(playlist.items[i].duration)
+                                        let music = playlist.items[i].url_simple
+                                        let dataMusic = '**' + playlist.items[i].title + '** de ' + playlist.items[i].author.name + ' (' + playlist.items[i].duration + ')'
+                                        setMusicEmbed(message.guild.id, playlist.items[i], playlist.items[i].id, playlist.items[i].author.ref, playlist.items[i].url_simple, playlist.items[i].duration)
+                                        data[message.guild.id]['queue'].push(music)
+                                        data[message.guild.id]['dataQueue'].push(dataMusic)
+                                        if (data[message.guild.id]['queue'].length == 1 && i == 0) play(connection, message, 'Add')
+                                    }
+                                    message.react('▶')
+                                    play(connection, message, 'Add playlist')
+                                })
+                            } else {
+                                message.channel.send("Playlist non valide :(")
+                            }
                         } else {
                             let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
                             search(words, function(err, r) {
