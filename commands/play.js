@@ -46,6 +46,7 @@ module.exports = {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
                         if (args[0] > 0 && args[0] < data[message.guild.id]['queue'].length) {
                             if (data[message.guild.id]['queue'][args[0]]) {
+                                data[message.guild.id]['song'].splice(1, 0, data[message.guild.id]['song'][args[0]]).splice(args[0], 1)
                                 data[message.guild.id]['musicTitle'].splice(1, 0, data[message.guild.id]['musicTitle'][args[0]]).splice(args[0], 1)
                                 data[message.guild.id]['musicDuration'].splice(1, 0, data[message.guild.id]['musicDuration'][args[0]]).splice(args[0], 1)
                                 data[message.guild.id]['queue'].splice(1, 0, data[message.guild.id]['queue'][args[0]]).splice(args[0], 1)
