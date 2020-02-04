@@ -46,11 +46,11 @@ module.exports = {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
                         if (args[0] > 0 && args[0] < data[message.guild.id]['queue'].length) {
                             if (data[message.guild.id]['queue'][args[0]]) {
-                                data[message.guild.id]['musicTitle'].splice(1, 0, data[message.guild.id]['musicTitle'][args[0]]).splice(args[0], 1).then(
-                                    data[message.guild.id]['musicDuration'].splice(1, 0, data[message.guild.id]['musicDuration'][args[0]]).splice(args[0], 1)).then(
-                                    data[message.guild.id]['queue'].splice(1, 0, data[message.guild.id]['queue'][args[0]]).splice(args[0], 1)).then(
-                                    data[message.guild.id]['dataQueue'].splice(1, 0, data[message.guild.id]['dataQueue'][args[0]]).splice(args[0], 1)).then(
-                                    client.commands.get("skip").execute(client, message, args, data))
+                                data[message.guild.id]['musicTitle'].splice(1, 0, data[message.guild.id]['musicTitle'][args[0]]).splice(args[0], 1)
+                                data[message.guild.id]['musicDuration'].splice(1, 0, data[message.guild.id]['musicDuration'][args[0]]).splice(args[0], 1)
+                                data[message.guild.id]['queue'].splice(1, 0, data[message.guild.id]['queue'][args[0]]).splice(args[0], 1)
+                                data[message.guild.id]['dataQueue'].splice(1, 0, data[message.guild.id]['dataQueue'][args[0]]).splice(args[0], 1)
+                                client.commands.get("skip").execute(client, message, args, data)
                             }
                         } else if (args[0].match(regExp)) {
                             if (ytpl.validateURL(args[0].match(regExp)[2])) {
