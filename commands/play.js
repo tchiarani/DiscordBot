@@ -46,11 +46,18 @@ module.exports = {
                         let regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
                         if (args[0] > 0 && args[0] < data[message.guild.id]['queue'].length) {
                             if (data[message.guild.id]['queue'][args[0]]) {
-                                data[message.guild.id]['musicTitle'].splice(1, 0, data[message.guild.id]['musicTitle'][args[0]]).splice(args[0], 1)
-                                data[message.guild.id]['musicDuration'].splice(1, 0, data[message.guild.id]['musicDuration'][args[0]]).splice(args[0], 1)
-                                data[message.guild.id]['queue'].splice(1, 0, data[message.guild.id]['queue'][args[0]]).splice(args[0], 1)
-                                data[message.guild.id]['dataQueue'].splice(1, 0, data[message.guild.id]['dataQueue'][args[0]]).splice(args[0], 1)
-                                data[message.guild.id]['dataMusicEmbed'].splice(1, 0, data[message.guild.id]['dataMusicEmbed'][args[0]]).splice(args[0], 1)
+                                data[message.guild.id]['musicTitle'].splice(1, 0, data[message.guild.id]['musicTitle'].splice(args[0], 1)[0])
+                                data[message.guild.id]['musicDuration'].splice(1, 0, data[message.guild.id]['musicDuration'].splice(args[0], 1)[0])
+                                data[message.guild.id]['queue'].splice(1, 0, data[message.guild.id]['queue'].splice(args[0], 1)[0])
+                                data[message.guild.id]['dataQueue'].splice(1, 0, data[message.guild.id]['dataQueue'].splice(args[0], 1)[0])
+                                data[message.guild.id]['dataMusicEmbed'].splice(1, 0, data[message.guild.id]['dataMusicEmbed'].splice(args[0], 1)[0])
+
+
+                                // data[message.guild.id]['musicTitle'].splice(1, 0, data[message.guild.id]['musicTitle'][args[0]]).splice(args[0], 1)
+                                // data[message.guild.id]['musicDuration'].splice(1, 0, data[message.guild.id]['musicDuration'][args[0]]).splice(args[0], 1)
+                                // data[message.guild.id]['queue'].splice(1, 0, data[message.guild.id]['queue'][args[0]]).splice(args[0], 1)
+                                // data[message.guild.id]['dataQueue'].splice(1, 0, data[message.guild.id]['dataQueue'][args[0]]).splice(args[0], 1)
+                                // data[message.guild.id]['dataMusicEmbed'].splice(1, 0, data[message.guild.id]['dataMusicEmbed'][args[0]]).splice(args[0], 1)
                                 await client.commands.get("skip").execute(client, message, args, data)
                             }
                         } else if (args[0].match(regExp)) {
