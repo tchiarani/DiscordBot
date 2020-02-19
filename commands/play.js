@@ -17,7 +17,7 @@ module.exports = {
                     let find = false
                     const maxLength = Math.max(Object.keys(radios.data).length, Object.keys(musiques.data).length)
                     for (let i = 0; i < maxLength; i++) {
-                        if (args[0].toLowerCase() == Object.keys(radios.data)[i].toLowerCase()) {
+                        if (i < Object.keys(radios.data).length && args[0].toLowerCase() == Object.keys(radios.data)[i].toLowerCase()) {
                             data[message.guild.id]['song'] = connection.playArbitraryInput(Object.values(radios.data)[i][0])
                             data[message.guild.id]['song'].setVolume(1 / 25)
                             let words = message.content.split(' ')
@@ -28,7 +28,7 @@ module.exports = {
                             find = true
                             message.channel.send('Vous écoutez **Radio GOUFFRE** en mode ***' + Object.values(radios.data)[i][1].toUpperCase() + '***  dans **' + message.member.voiceChannel.name + '**')
                             message.react('📻')
-                        } else if (args[0].toLowerCase() == Object.keys(musiques.data)[i].toLowerCase()) {
+                        } else if (i < Object.keys(musiques.data).length && args[0].toLowerCase() == Object.keys(musiques.data)[i].toLowerCase()) {
                             data[message.guild.id]['song'] = connection.playFile(Object.values(musiques.data)[i][0])
                             data[message.guild.id]['song'].setVolume(1 / 25)
                             let words = message.content.split(' ')
