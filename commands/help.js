@@ -24,7 +24,7 @@ module.exports = {
 
         } else {
             const name = args[0].toLowerCase()
-            const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name))
+            const command = commands.get(name) || commands.find(cmd => cmd.alias && cmd.alias.includes(name))
 
             if (!command) {
                 return message.reply('cette commande n\'existe pas')
