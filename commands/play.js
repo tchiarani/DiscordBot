@@ -7,7 +7,7 @@ const musiques = require('./../musics/musiques')
 
 module.exports = {
     name: 'play',
-    description: ['Lance ou ajoute une musique depuis YouTube', '', 'Lance une musique dans la file', 'Lance une radio enregistrée', '', 'Lance une musique enregistrée', ''],
+    description: ['Lance ou ajoute une musique depuis YouTube', 'Lance ou ajoute une musique/playlist YouTube', 'Lance une musique déjà présente dans la file', 'Lance une radio enregistrée', '', 'Lance une musique enregistrée', ''],
     usage: ['[mots-clés]', '[url]', '[chiffre]', '[radio]', '[radio] [volume]', '[musique]', '[musique] [volume]', ],
     alias: ['p'],
     execute(client, message, args, data) {
