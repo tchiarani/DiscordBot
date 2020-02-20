@@ -8,7 +8,7 @@ module.exports = {
             message.reply('La valeur doit être comprise entre 0 et 100.')
         } else {
             message.delete()
-            message.channel.bulkDelete(args[1]).catch(console.error)
+            message.channel.bulkDelete(parseInt(args[1], 10)).catch(console.error)
         }
     }
 }
