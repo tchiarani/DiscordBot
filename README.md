@@ -8,7 +8,7 @@ Help can be found at [unikorn.ga](https://unikorn.ga/bot).
 
 ## Usage
 
-Dr Lachatte requires [discord.js](https://discord.js.org) v11.5 to run.
+Requires [discord.js](https://discord.js.org) v11.5 to run.
 
 Install the dependencies and start the application.
 
