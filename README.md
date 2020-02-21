@@ -8,7 +8,7 @@ Help can be found at [unikorn.ga](https://unikorn.ga/bot).
 
 ## Usage
 
-Requires [discord.js](https://discord.js.org) v11.5 to run.
+Requires [node.js](https://nodejs.org) and [discord.js](https://discord.js.org) v11.5 to run.
 
 Install the dependencies and start the application.
 
