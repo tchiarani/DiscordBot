@@ -1,6 +1,6 @@
-# [![N|Solid](https://cdn.discordapp.com/avatars/398486386111545344/e48cc085278cf3313477c99711ede5f3.png?size=32)](https://discordapp.com/oauth2/authorize?client_id=398486386111545344&scope=bot&permissions=2147482871) Dr Lachatte
+# **Discord Bot**
 
-Dr Lachatte is a **Discord Bot** that delivers music to your server.
+Discord Bot that delivers music to your server.
 
 ## Documentation
 
