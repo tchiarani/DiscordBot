@@ -5,7 +5,7 @@ const emojisNombre = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6�
 module.exports = {
     name: 'poll',
     description: ["Crée un sondage"],
-    aliases: ['sondage'],
+    alias: ['sondage'],
     usage: ['[Question ? "Choix 1" "Choix 2" ... ]'],
     execute(client, message, args, data) {
         let question = message.content.substring(message.content.indexOf(" ") + 1, message.content.indexOf("?") + 1)
