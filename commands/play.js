@@ -80,7 +80,7 @@ module.exports = {
                                             data[message.guild.id]['dataQueue'].push(dataMusic)
                                         }
                                         message.react('▶')
-                                        play(connection, message, 'Add soundcloud')
+                                        play(connection, message, 'Add')
 
                                         // SOUNDCLOUD MUSIC
                                     } else {
@@ -99,7 +99,7 @@ module.exports = {
                                         data[message.guild.id]['queue'].push(music)
                                         data[message.guild.id]['dataQueue'].push(dataMusic)
                                         message.react('▶')
-                                        play(connection, message, 'Add soundcloud')
+                                        play(connection, message, 'Add')
                                     }
                                 } else message.channel.send("Error: " + response.statusCode + " - " + response.statusMessage)
                             })
@@ -190,8 +190,7 @@ module.exports = {
         }
 
         function play(connection, message, action) {
-            console.log(data[message.guild.id]['queue'][0])
-            if (action == "Add" || action == "Add soundcloud") {
+            if (action == "Add") {
                 if (data[message.guild.id]['queue'].length > 1) {
                     message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
                 }
@@ -202,19 +201,11 @@ module.exports = {
             }
             if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" && data[message.guild.id]['queue'].length >= 1) {
                 message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
-                data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
-                data[message.guild.id]['song'].setVolume(1 / 25)
-
-                data[message.guild.id]['song'].on("end", (reason) => {
-                    if (reason == undefined) {
-                        end(connection, message, "Stop")
-                    } else if (reason != "Skip") {
-                        end(connection, message, "Skip end")
-                    }
-                })
-            } else if (action == "Add soundcloud" && data[message.guild.id]['queue'].length <= 1) {
-                message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
-                data[message.guild.id]['song'] = connection.playStream(data[message.guild.id]['queue'][0])
+                if (args[0].indexOf("youtube.com") > -1) {
+                    data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
+                } else if (args[0].indexOf("soundcloud.com") > -1) {
+                    data[message.guild.id]['song'] = connection.playStream(data[message.guild.id]['queue'][0])
+                }
                 data[message.guild.id]['song'].setVolume(1 / 25)
 
                 data[message.guild.id]['song'].on("end", (reason) => {
