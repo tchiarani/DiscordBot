@@ -54,6 +54,32 @@ module.exports = {
                                 data[message.guild.id]['dataMusicEmbed'].splice(1, 0, data[message.guild.id]['dataMusicEmbed'].splice(args[0], 1)[0])
                                 await client.commands.get("skip").execute(client, message, args, data)
                             }
+                            // PLAY SOUNDCLOUD PLAYLIST
+                        } else if (args[0].indexOf("soundcloud.com") > -1) {
+                            request("http://api.soundcloud.com/resolve.json?url=" + args[0] + "&client_id=71dfa98f05fa01cb3ded3265b9672aaf", function(error, response, body) {
+                                if (error) bot.reply(error)
+                                else if (response.statusCode == 200) {
+                                    body = JSON.parse(body)
+                                    if (body.tracks) bot.reply(msg, "euhh plusieurs musiques trouvées. Ooops.")
+                                    else {
+                                        data[message.guild.id]['firstResult'] = { title, author, timestamp }
+                                        data[message.guild.id]['firstResult'].title = body.title
+                                        data[message.guild.id]['firstResult'].author.name = body.user.username
+                                        data[message.guild.id]['firstResult'].timestamp = body.duration
+
+                                        let music = "http://api.soundcloud.com/tracks/" + body.id + "/stream?consumer_key=71dfa98f05fa01cb3ded3265b9672aaf"
+                                        let dataMusic = '**' + body.title + '** de ' + body.user.username + ' (' + timeFormat(body.duration) + ')'
+                                        setSoundcloudEmbed(message.guild.id, body)
+                                        data[message.guild.id]['musicTitle'].push(body.title)
+                                        data[message.guild.id]['musicDuration'].push(timeFormat(body.duration))
+                                        data[message.guild.id]['queue'].push(music)
+                                        data[message.guild.id]['dataQueue'].push(dataMusic)
+                                        message.react('▶')
+                                        play(connection, message, 'Add')
+                                    }
+                                } else bot.reply(msg, "Error: " + response.statusCode + " - " + response.statusMessage)
+                            })
+
                             // PLAY YOUTUBE PLAYLIST
                         } else if (args[0].match(regExp)) {
                             if (ytpl.validateURL(args[0].match(regExp)[2])) {
@@ -126,6 +152,19 @@ module.exports = {
             }
         }
 
+        function setSoundcloudEmbed(id, body) {
+            let EmbedImage = body.artwork_url || body.user.avatar_url
+            data[id]['dataMusicEmbed']
+                .push(new Discord.RichEmbed()
+                    .setTitle(body.title)
+                    .setAuthor(body.user.username, "https://i.imgur.com/MBNSqyF.png", body.user.permalink_url)
+                    .setThumbnail(EmbedImage)
+                    .setColor('#FF5000')
+                    .setURL(body.permalink_url)
+                    .setDescription(timeFormat(body.duration))
+                )
+        }
+
         function play(connection, message, action) {
             if (action == "Add") {
                 if (data[message.guild.id]['queue'].length > 1) {
@@ -173,6 +212,13 @@ module.exports = {
             } else {
                 play(connection, message, 'Skip')
             }
+        }
+
+        function timeFormat(time) {
+            var seconds = Math.floor(time % 60)
+            var minutes = Math.floor((time - seconds) / 60)
+            if (seconds < 10) seconds = "0" + seconds
+            return minutes + ":" + seconds
         }
     }
 }
