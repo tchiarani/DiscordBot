@@ -64,10 +64,12 @@ module.exports = {
                                     if (body.tracks) bot.reply(msg, "euhh plusieurs musiques trouvées. Ooops.")
                                     else {
                                         let video = {
-                                            title = body.title,
-                                            author: { name = body.user.username },
-                                            timestamp = body.duration
+                                            title: body.title,
+                                            author: { name: body.user.username },
+                                            timestamp: body.duration
                                         }
+
+                                        //video.author.name = body.user.username
 
                                         data[message.guild.id]['firstResult'] = video
 
