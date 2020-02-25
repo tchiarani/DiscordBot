@@ -61,7 +61,7 @@ module.exports = {
                                 if (error) message.channel.send(error)
                                 else if (response.statusCode == 200) {
                                     body = JSON.parse(body)
-                                    if (body.tracks) message.channel.send(msg, "euhh plusieurs musiques trouvées. Ooops.")
+                                    if (body.tracks) message.channel.send("Euhh plusieurs musiques trouvées. Ooops.")
                                     else {
                                         let video = {
                                             title: body.title,
@@ -83,7 +83,7 @@ module.exports = {
                                         message.react('▶')
                                         play(connection, message, 'Add soundcloud')
                                     }
-                                } else message.channel.send(msg, "Error: " + response.statusCode + " - " + response.statusMessage)
+                                } else message.channel.send("Error: " + response.statusCode + " - " + response.statusMessage)
                             })
 
                             // PLAY YOUTUBE PLAYLIST
