@@ -204,18 +204,24 @@ module.exports = {
                 if (args[0].indexOf("youtube.com") > -1) {
                     data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
                     data[message.guild.id]['song'].setVolume(1 / 25)
+                    data[message.guild.id]['song'].on("end", (reason) => {
+                        if (reason == undefined) {
+                            end(connection, message, "Stop")
+                        } else if (reason != "Skip") {
+                            end(connection, message, "Skip end")
+                        }
+                    })
                 } else if (args[0].indexOf("soundcloud.com") > -1) {
                     data[message.guild.id]['song'] = connection.playStream(data[message.guild.id]['queue'][0])
                     data[message.guild.id]['song'].setVolume(1 / 25)
+                    data[message.guild.id]['song'].on("end", (reason) => {
+                        if (reason == undefined) {
+                            end(connection, message, "Stop")
+                        } else if (reason != "Skip") {
+                            end(connection, message, "Skip end")
+                        }
+                    })
                 }
-
-                data[message.guild.id]['song'].on("end", (reason) => {
-                    if (reason == undefined) {
-                        end(connection, message, "Stop")
-                    } else if (reason != "Skip") {
-                        end(connection, message, "Skip end")
-                    }
-                })
             }
         }
 
