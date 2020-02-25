@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const search = require('yt-search')
 const ytdl = require('ytdl-core')
 const ytpl = require('ytpl')
+const request = require("request");
 const radios = require('./../musics/radios')
 const musiques = require('./../musics/musiques')
 
