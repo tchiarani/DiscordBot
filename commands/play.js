@@ -70,7 +70,7 @@ module.exports = {
                                             timestamp: body.track_count + " musiques"
                                         }
                                         data[message.guild.id]['firstResult'] = video
-                                        for (let i = 0; i < tracks.length; i++) {
+                                        for (let i = 0; i < body.tracks.length; i++) {
                                             let music = "http://api.soundcloud.com/tracks/" + body.tracks[i].id + "/stream?consumer_key=71dfa98f05fa01cb3ded3265b9672aaf"
                                             let dataMusic = '**' + body.tracks[i].title + '** de ' + body.tracks[i].user.username + ' (' + timeFormat(body.tracks[i].duration) + ')'
                                             setSoundcloudEmbed(message.guild.id, body.tracks[i])
@@ -87,7 +87,7 @@ module.exports = {
                                         let video = {
                                             title: body.title,
                                             author: { name: body.user.username },
-                                            timestamp: body.duration
+                                            timestamp: timeFormat(body.duration)
                                         }
                                         data[message.guild.id]['firstResult'] = video
 
@@ -181,7 +181,7 @@ module.exports = {
             data[id]['dataMusicEmbed']
                 .push(new Discord.RichEmbed()
                     .setTitle(body.title)
-                    .setAuthor(body.user.username, "https://cdn2.iconfinder.com/data/icons/minimalism/512/soundcloud.png", body.user.permalink_url)
+                    .setAuthor(body.user.username, body.user.avatar_url, body.user.permalink_url)
                     .setThumbnail(EmbedImage)
                     .setColor('#FF5000')
                     .setURL(body.permalink_url)
