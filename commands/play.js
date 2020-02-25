@@ -81,7 +81,7 @@ module.exports = {
                                         data[message.guild.id]['queue'].push(music)
                                         data[message.guild.id]['dataQueue'].push(dataMusic)
                                         message.react('▶')
-                                        play(connection, message, 'Add')
+                                        play(connection, message, 'Add soundcloud')
                                     }
                                 } else bot.reply(msg, "Error: " + response.statusCode + " - " + response.statusMessage)
                             })
@@ -172,7 +172,7 @@ module.exports = {
         }
 
         function play(connection, message, action) {
-            if (action == "Add") {
+            if (action == "Add" || action == "Add soundcloud") {
                 if (data[message.guild.id]['queue'].length > 1) {
                     message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
                 }
@@ -184,6 +184,18 @@ module.exports = {
             if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" && data[message.guild.id]['queue'].length >= 1) {
                 message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
                 data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
+                data[message.guild.id]['song'].setVolume(1 / 25)
+
+                data[message.guild.id]['song'].on("end", (reason) => {
+                    if (reason == undefined) {
+                        end(connection, message, "Stop")
+                    } else if (reason != "Skip") {
+                        end(connection, message, "Skip end")
+                    }
+                })
+            } else if (action == "Add soundcloud") {
+                message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
+                data[message.guild.id]['song'] = connection.playRawStream(data[message.guild.id]['queue'][0])
                 data[message.guild.id]['song'].setVolume(1 / 25)
 
                 data[message.guild.id]['song'].on("end", (reason) => {
