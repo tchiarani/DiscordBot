@@ -61,16 +61,34 @@ module.exports = {
                                 if (error) message.channel.send(error)
                                 else if (response.statusCode == 200) {
                                     body = JSON.parse(body)
-                                    if (body.tracks) message.channel.send("Euhh plusieurs musiques trouvées. Ooops.")
-                                    else {
+
+                                    // SOUNDCLOUD PLAYLIST
+                                    if (body.tracks) {
+                                        let video = {
+                                            title: body.title,
+                                            author: { name: body.user.username },
+                                            timestamp: body.track_count + " musiques"
+                                        }
+                                        data[message.guild.id]['firstResult'] = video
+                                        for (let i = 0; i < tracks.length; i++) {
+                                            let music = "http://api.soundcloud.com/tracks/" + body.tracks[i].id + "/stream?consumer_key=71dfa98f05fa01cb3ded3265b9672aaf"
+                                            let dataMusic = '**' + body.tracks[i].title + '** de ' + body.tracks[i].user.username + ' (' + timeFormat(body.tracks[i].duration) + ')'
+                                            setSoundcloudEmbed(message.guild.id, body.tracks[i])
+                                            data[message.guild.id]['musicTitle'].push(body.tracks[i].title)
+                                            data[message.guild.id]['musicDuration'].push(timeFormat(body.tracks[i].duration))
+                                            data[message.guild.id]['queue'].push(music)
+                                            data[message.guild.id]['dataQueue'].push(dataMusic)
+                                        }
+                                        message.react('▶')
+                                        play(connection, message, 'Add soundcloud')
+
+                                        // SOUNDCLOUD MUSIC
+                                    } else {
                                         let video = {
                                             title: body.title,
                                             author: { name: body.user.username },
                                             timestamp: body.duration
                                         }
-
-                                        //video.author.name = body.user.username
-
                                         data[message.guild.id]['firstResult'] = video
 
                                         let music = "http://api.soundcloud.com/tracks/" + body.id + "/stream?consumer_key=71dfa98f05fa01cb3ded3265b9672aaf"
@@ -163,7 +181,7 @@ module.exports = {
             data[id]['dataMusicEmbed']
                 .push(new Discord.RichEmbed()
                     .setTitle(body.title)
-                    .setAuthor(body.user.username, "https://i.imgur.com/MBNSqyF.png", body.user.permalink_url)
+                    .setAuthor(body.user.username, "https://cdn2.iconfinder.com/data/icons/minimalism/512/soundcloud.png", body.user.permalink_url)
                     .setThumbnail(EmbedImage)
                     .setColor('#FF5000')
                     .setURL(body.permalink_url)
