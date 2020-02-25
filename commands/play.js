@@ -190,6 +190,7 @@ module.exports = {
         }
 
         function play(connection, message, action) {
+            console.log(data[message.guild.id]['queue'][0])
             if (action == "Add" || action == "Add soundcloud") {
                 if (data[message.guild.id]['queue'].length > 1) {
                     message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
@@ -211,7 +212,7 @@ module.exports = {
                         end(connection, message, "Skip end")
                     }
                 })
-            } else if (action == "Add soundcloud") {
+            } else if (action == "Add soundcloud" && data[message.guild.id]['queue'].length <= 1) {
                 message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
                 data[message.guild.id]['song'] = connection.playStream(data[message.guild.id]['queue'][0])
                 data[message.guild.id]['song'].setVolume(1 / 25)
