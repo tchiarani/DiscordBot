@@ -63,10 +63,13 @@ module.exports = {
                                     body = JSON.parse(body)
                                     if (body.tracks) bot.reply(msg, "euhh plusieurs musiques trouvées. Ooops.")
                                     else {
-                                        data[message.guild.id]['firstResult'] = { title, author, timestamp }
-                                        data[message.guild.id]['firstResult'].title = body.title
-                                        data[message.guild.id]['firstResult'].author.name = body.user.username
-                                        data[message.guild.id]['firstResult'].timestamp = body.duration
+                                        let video = {
+                                            title = body.title,
+                                            author = { name = body.user.username },
+                                            timestamp = body.duration
+                                        }
+
+                                        data[message.guild.id]['firstResult'] = video
 
                                         let music = "http://api.soundcloud.com/tracks/" + body.id + "/stream?consumer_key=71dfa98f05fa01cb3ded3265b9672aaf"
                                         let dataMusic = '**' + body.title + '** de ' + body.user.username + ' (' + timeFormat(body.duration) + ')'
