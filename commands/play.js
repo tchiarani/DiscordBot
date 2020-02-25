@@ -63,45 +63,49 @@ module.exports = {
                                     body = JSON.parse(body)
 
                                     // SOUNDCLOUD PLAYLIST
-                                    if (body.tracks && body.sharing == "public") {
-                                        let video = {
-                                            title: body.title,
-                                            author: { name: body.user.username },
-                                            timestamp: body.track_count + " musiques"
-                                        }
-                                        data[message.guild.id]['firstResult'] = video
-                                        for (let i = 0; i < body.tracks.length; i++) {
-                                            if (body.tracks[i].sharing == "public") {
-                                                let music = "http://api.soundcloud.com/tracks/" + body.tracks[i].id + "/stream?consumer_key=71dfa98f05fa01cb3ded3265b9672aaf"
-                                                let dataMusic = '**' + body.tracks[i].title + '** de ' + body.tracks[i].user.username + ' (' + timeFormat(body.tracks[i].duration) + ')'
-                                                setSoundcloudEmbed(message.guild.id, body.tracks[i])
-                                                data[message.guild.id]['musicTitle'].push(body.tracks[i].title)
-                                                data[message.guild.id]['musicDuration'].push(timeFormat(body.tracks[i].duration))
-                                                data[message.guild.id]['queue'].push(music)
-                                                data[message.guild.id]['dataQueue'].push(dataMusic)
+                                    if (body.tracks) {
+                                        if (body.sharing == "public") {
+                                            let video = {
+                                                title: body.title,
+                                                author: { name: body.user.username },
+                                                timestamp: body.track_count + " musiques"
                                             }
-                                        }
-                                        message.react('▶')
-                                        play(connection, message, 'Add')
+                                            data[message.guild.id]['firstResult'] = video
+                                            for (let i = 0; i < body.tracks.length; i++) {
+                                                if (body.tracks[i].sharing == "public") {
+                                                    let music = "http://api.soundcloud.com/tracks/" + body.tracks[i].id + "/stream?consumer_key=71dfa98f05fa01cb3ded3265b9672aaf"
+                                                    let dataMusic = '**' + body.tracks[i].title + '** de ' + body.tracks[i].user.username + ' (' + timeFormat(body.tracks[i].duration) + ')'
+                                                    setSoundcloudEmbed(message.guild.id, body.tracks[i])
+                                                    data[message.guild.id]['musicTitle'].push(body.tracks[i].title)
+                                                    data[message.guild.id]['musicDuration'].push(timeFormat(body.tracks[i].duration))
+                                                    data[message.guild.id]['queue'].push(music)
+                                                    data[message.guild.id]['dataQueue'].push(dataMusic)
+                                                }
+                                            }
+                                            message.react('▶')
+                                            play(connection, message, 'Add')
+                                        } else message.reply("cette playlist est privée :(")
 
                                         // SOUNDCLOUD MUSIC
-                                    } else if (body.sharing == "public") {
-                                        let video = {
-                                            title: body.title,
-                                            author: { name: body.user.username },
-                                            timestamp: timeFormat(body.duration)
-                                        }
-                                        data[message.guild.id]['firstResult'] = video
+                                    } else {
+                                        if (body.sharing == "public") {
+                                            let video = {
+                                                title: body.title,
+                                                author: { name: body.user.username },
+                                                timestamp: timeFormat(body.duration)
+                                            }
+                                            data[message.guild.id]['firstResult'] = video
 
-                                        let music = "http://api.soundcloud.com/tracks/" + body.id + "/stream?consumer_key=71dfa98f05fa01cb3ded3265b9672aaf"
-                                        let dataMusic = '**' + body.title + '** de ' + body.user.username + ' (' + timeFormat(body.duration) + ')'
-                                        setSoundcloudEmbed(message.guild.id, body)
-                                        data[message.guild.id]['musicTitle'].push(body.title)
-                                        data[message.guild.id]['musicDuration'].push(timeFormat(body.duration))
-                                        data[message.guild.id]['queue'].push(music)
-                                        data[message.guild.id]['dataQueue'].push(dataMusic)
-                                        message.react('▶')
-                                        play(connection, message, 'Add')
+                                            let music = "http://api.soundcloud.com/tracks/" + body.id + "/stream?consumer_key=71dfa98f05fa01cb3ded3265b9672aaf"
+                                            let dataMusic = '**' + body.title + '** de ' + body.user.username + ' (' + timeFormat(body.duration) + ')'
+                                            setSoundcloudEmbed(message.guild.id, body)
+                                            data[message.guild.id]['musicTitle'].push(body.title)
+                                            data[message.guild.id]['musicDuration'].push(timeFormat(body.duration))
+                                            data[message.guild.id]['queue'].push(music)
+                                            data[message.guild.id]['dataQueue'].push(dataMusic)
+                                            message.react('▶')
+                                            play(connection, message, 'Add')
+                                        } else message.reply("cette musique est privée :(")
                                     }
                                 } else message.channel.send("Error: " + response.statusCode + " - " + response.statusMessage)
                             })
