@@ -58,10 +58,10 @@ module.exports = {
                             // PLAY SOUNDCLOUD PLAYLIST
                         } else if (args[0].indexOf("soundcloud.com") > -1) {
                             request("http://api.soundcloud.com/resolve.json?url=" + args[0] + "&client_id=71dfa98f05fa01cb3ded3265b9672aaf", function(error, response, body) {
-                                if (error) bot.reply(error)
+                                if (error) message.channel.send(error)
                                 else if (response.statusCode == 200) {
                                     body = JSON.parse(body)
-                                    if (body.tracks) bot.reply(msg, "euhh plusieurs musiques trouvées. Ooops.")
+                                    if (body.tracks) message.channel.send(msg, "euhh plusieurs musiques trouvées. Ooops.")
                                     else {
                                         let video = {
                                             title: body.title,
@@ -83,7 +83,7 @@ module.exports = {
                                         message.react('▶')
                                         play(connection, message, 'Add soundcloud')
                                     }
-                                } else bot.reply(msg, "Error: " + response.statusCode + " - " + response.statusMessage)
+                                } else message.channel.send(msg, "Error: " + response.statusCode + " - " + response.statusMessage)
                             })
 
                             // PLAY YOUTUBE PLAYLIST
@@ -233,6 +233,7 @@ module.exports = {
         }
 
         function timeFormat(time) {
+            time = time / 1000
             var seconds = Math.floor(time % 60)
             var minutes = Math.floor((time - seconds) / 60)
             if (seconds < 10) seconds = "0" + seconds
