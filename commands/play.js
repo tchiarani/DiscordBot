@@ -65,7 +65,7 @@ module.exports = {
                                     else {
                                         let video = {
                                             title = body.title,
-                                            author = { name = body.user.username },
+                                            author: { name = body.user.username },
                                             timestamp = body.duration
                                         }
 
