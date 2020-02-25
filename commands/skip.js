@@ -35,21 +35,12 @@ module.exports = {
             if (data[message.guild.id]['queue'].length == 0) {
                 connection.disconnect()
             } else {
-                play(connection, message, 'Skip')
+                play(connection, message)
             }
         }
 
-        function play(connection, message, action) {
-            if (action == "Add") {
-                if (data[message.guild.id]['queue'].length > 1) {
-                    message.channel.send('Ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (' + data[message.guild.id]['firstResult'].timestamp + ')')
-                }
-            } else if (action == "Add playlist") {
-                if (data[message.guild.id]['queue'].length > 1) {
-                    message.channel.send('Playlist ajoutée : **' + data[message.guild.id]['firstResult'].title + '** de ' + data[message.guild.id]['firstResult'].author.name + ' (**' + data[message.guild.id]['firstResult'].items.length + '** musiques)')
-                }
-            }
-            if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" && data[message.guild.id]['queue'].length >= 1) {
+        function play(connection, message) {
+            if (data[message.guild.id]['queue'].length >= 1) {
                 message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
                 if (data[message.guild.id]['queue'][0].indexOf("soundcloud.com") > -1) {
                     data[message.guild.id]['song'] = connection.playStream(data[message.guild.id]['queue'][0])
