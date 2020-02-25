@@ -195,7 +195,7 @@ module.exports = {
                 })
             } else if (action == "Add soundcloud") {
                 message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
-                data[message.guild.id]['song'] = connection.playRawStream(data[message.guild.id]['queue'][0])
+                data[message.guild.id]['song'] = connection.playStream(data[message.guild.id]['queue'][0])
                 data[message.guild.id]['song'].setVolume(1 / 25)
 
                 data[message.guild.id]['song'].on("end", (reason) => {
