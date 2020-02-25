@@ -51,20 +51,27 @@ module.exports = {
             }
             if (action == "Add" && data[message.guild.id]['queue'].length <= 1 || action == "Skip" && data[message.guild.id]['queue'].length >= 1) {
                 message.channel.send(data[message.guild.id]['dataMusicEmbed'][0])
-                if (args[0].indexOf("youtube.com") > -1) {
-                    data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
-                } else if (args[0].indexOf("soundcloud.com") > -1) {
+                if (data[message.guild.id]['queue'][0].indexOf("soundcloud.com") > -1) {
                     data[message.guild.id]['song'] = connection.playStream(data[message.guild.id]['queue'][0])
+                    data[message.guild.id]['song'].setVolume(1 / 25)
+                    data[message.guild.id]['song'].on("end", (reason) => {
+                        if (reason == undefined) {
+                            end(connection, message, "Stop")
+                        } else if (reason != "Skip") {
+                            end(connection, message, "Skip end")
+                        }
+                    })
+                } else {
+                    data[message.guild.id]['song'] = connection.playStream(ytdl(data[message.guild.id]['queue'][0]))
+                    data[message.guild.id]['song'].setVolume(1 / 25)
+                    data[message.guild.id]['song'].on("end", (reason) => {
+                        if (reason == undefined) {
+                            end(connection, message, "Stop")
+                        } else if (reason != "Skip") {
+                            end(connection, message, "Skip end")
+                        }
+                    })
                 }
-                data[message.guild.id]['song'].setVolume(1 / 25)
-
-                data[message.guild.id]['song'].on("end", (reason) => {
-                    if (reason == undefined) {
-                        end(connection, message, "Stop")
-                    } else if (reason != "Skip") {
-                        end(connection, message, "Skip end")
-                    }
-                })
             }
         }
     }
