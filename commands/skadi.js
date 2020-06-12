@@ -20,7 +20,7 @@ module.exports = {
                     .setColor('#7289DA')
                     .setFooter("Trello | Skadi", config.authorAvatar)
                     .addField("A faire", commands.map(command => config.prefix + command.name).slice(0, (commands.size + 1) / 2).join("\n"), true)
-                message.channel.send(dataHelp)
+                message.channel.send(dataTrello)
             })
             .catch(function(error) {
                 console.log(error);
