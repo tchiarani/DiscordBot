@@ -11,8 +11,8 @@ module.exports = {
         axios.get('https://trello.com/b/Tq88EA4I.json')
             .then(function(response) {
                 console.log(response);
-                console.log(response.data.name);
-                console.log(response.data.lists);
+                console.log(response.data.lists.limits);
+                console.log(response.data.lists.limits.cards);
             })
             .catch(function(error) {
                 console.log(error);
