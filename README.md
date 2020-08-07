@@ -27,4 +27,4 @@ node index
 
 ## Project status
 
-Development has slowed down.
+Development has stopped for now.
