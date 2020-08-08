@@ -17,8 +17,10 @@ node index
 
 ---
 
-**You want to test this bot on your server ?**
-[Invite on your server](https://discord.com/oauth2/authorize?client_id=398486386111545344&scope=bot&permissions=2147482871)
+**You want to add my instance of the bot to your server ?**
+
+<br />
+
 [![Invite on your server](https://imgur.com/ebFKyEe.png)](https://discord.com/oauth2/authorize?client_id=398486386111545344&scope=bot&permissions=2147482871)
 
 ## Documentation
