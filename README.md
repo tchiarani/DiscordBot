@@ -5,7 +5,7 @@ Discord Bot that delivers music to your server.
 ## Documentation
 
 <details>
-  **<summary>Commands list</summary>**
+  <summary>Commands list</summary>
   <p>
 
 |Commands        |Alias                          |Description                  |
