@@ -44,8 +44,8 @@ node index
 ## Roadmap
 
 - [x] Fix purge command
-- [] Add image manipulation with canvas
-- [] Add Spotify musics to the library
+- [ ] Add image manipulation with canvas
+- [ ] Add Spotify musics to the library
 
 ## Project status
 
