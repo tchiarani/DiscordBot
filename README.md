@@ -1,6 +1,6 @@
-# **Discord Bot**
+# **DiscordBot**
 
-Discord Bot that delivers music to your server.
+Discord bot that delivers music to your server.
 
 ## Usage
 
@@ -14,6 +14,11 @@ node index
 ```
 
 > Don't forget to **change the token** provided in config.js.
+
+---
+
+**You want to test this bot on your server ?**
+[Invite on your server](https://discord.com/oauth2/authorize?client_id=398486386111545344&scope=bot&permissions=2147482871)
 
 ## Documentation
 
