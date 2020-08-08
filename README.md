@@ -4,10 +4,9 @@ Discord Bot that delivers music to your server.
 
 ## Documentation
 
-Help can be found at [unikorn.ga](https://unikorn.ga/bot).
 <details>
-  <summary>Bot help</summary>
-<p>
+  **<summary>Commands list</summary>**
+  <p>
 
 |Commands        |Alias                          |Description                  |
 |----------------|-------------------------------|-----------------------------|
@@ -23,10 +22,10 @@ Help can be found at [unikorn.ga](https://unikorn.ga/bot).
 |`/resume`       |                               |Resume the current song      |
 |`/skip`         |                               |Skip the current song        |
 |`/stop`         |`/s`                           |Stop the current song and disconnect |
-|`/uptime`       |                               |Display bot uptime |
-|`/volume`       |`/v`, `/vol`                   |Change volume from 0 to 200 |
+|`/uptime`       |                               |Display bot uptime           |
+|`/volume`       |`/v`, `/vol`                   |Change volume from 0 to 200  |
 
-</p>
+  </p>
 </details>
 
 ## Usage
