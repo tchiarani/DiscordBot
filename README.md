@@ -13,13 +13,11 @@ npm install
 node index
 ```
 
-###### Don't forget to change the token provided in config.js.
+> Don't forget to **change the token** provided in config.js.
 
 ## Documentation
 
-<details>
-  <summary>Commands list</summary>
-  <p>
+**Commands list :**
 
 |Command         |Alias                          |Description                  |
 |----------------|-------------------------------|-----------------------------|
@@ -37,9 +35,6 @@ node index
 |`/stop`         |`/s`                           |Stop the current song and disconnect |
 |`/uptime`       |                               |Display bot uptime           |
 |`/volume`       |`/v`, `/vol`                   |Change volume from 0 to 200  |
-
-  </p>
-</details>
 
 ## Roadmap
 
