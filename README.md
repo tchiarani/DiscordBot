@@ -13,7 +13,7 @@ npm install
 node index
 ```
 
-> Don't forget to **change the token** provided in config.js.
+> Don't forget to **change the token** of your [Discord application](https://discord.com/developers/applications) provided in config.js.
 
 ---
 
