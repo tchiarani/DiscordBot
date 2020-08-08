@@ -2,13 +2,26 @@
 
 Discord Bot that delivers music to your server.
 
+## Usage
+
+Requires [node.js](https://nodejs.org) and [discord.js](https://discord.js.org) to run.
+
+Install the dependencies and start the application.
+
+```
+npm install
+node index
+```
+
+###### Don't forget to change the token provided in config.js.
+
 ## Documentation
 
 <details>
   <summary>Commands list</summary>
   <p>
 
-|Commands        |Alias                          |Description                  |
+|Command         |Alias                          |Description                  |
 |----------------|-------------------------------|-----------------------------|
 |`/avatar`       |`/icon`                        |Display server member avatar |
 |`/help`         |`/h`                           |Display commands help        |
@@ -28,24 +41,11 @@ Discord Bot that delivers music to your server.
   </p>
 </details>
 
-## Usage
-
-Requires [node.js](https://nodejs.org) and [discord.js](https://discord.js.org) to run.
-
-Install the dependencies and start the application.
-
-```
-npm install
-node index
-```
-
-###### Don't forget to change the token provided in config.js.
-
 ## Roadmap
 
-- Fix purge command
-- Add image manipulation with canvas
-- Add Spotify musics to the library
+[x] Fix purge command
+[] Add image manipulation with canvas
+[] Add Spotify musics to the library
 
 ## Project status
 
