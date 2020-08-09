@@ -138,8 +138,8 @@ module.exports = {
                         } else {
                             let words = message.content.substring(message.content.indexOf(" ") + 1, message.content.length)
                             search(words, function(err, r) {
-                                if (err) throw err
-                                if (r != undefined) {
+                                if (err) console.log(err)
+                                else if (r != undefined) {
                                     videos = r.videos
                                     data[message.guild.id]['firstResult'] = videos[0]
                                     if (videos[0].timestamp == 0) {
