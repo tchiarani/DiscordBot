@@ -10,7 +10,8 @@ module.exports = {
             message.delete()
             message.channel.bulkDelete(args[0])
                 .then(() => { 
-                    message.channel.send("Les args[0] derniers messages viennent d'être supprimés.").then(msg => msg.delete(3000));
+                    message.channel.send("Les args[0] derniers messages viennent d'être supprimés.").then(msg => msg.delete(3000))
+                })
                 .catch(console.error)
         }
     }
