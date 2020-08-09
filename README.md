@@ -2,9 +2,15 @@
 
 Discord bot that delivers music to your server.
 
+## Usage
+
+**You want to add my bot to your server ?**
+
+[![Invite to your server](https://imgur.com/ebFKyEe.png)](https://discord.com/oauth2/authorize?client_id=398486386111545344&scope=bot&permissions=2147482871)
+
 ## Install
 
-Requires [node.js](https://nodejs.org) and [npm](https://www.npmjs.com/) to run.
+Requires [npm](https://www.npmjs.com/) and [node.js](https://nodejs.org) to run.
 
 Install the dependencies and start the application.
 
@@ -14,12 +20,6 @@ node index
 ```
 
 > Don't forget to **change the token** of your [Discord application](https://discord.com/developers/applications) provided in config.js.
-
-## Usage
-
-**You want to add my bot to your server ?**
-
-[![Invite to your server](https://imgur.com/ebFKyEe.png)](https://discord.com/oauth2/authorize?client_id=398486386111545344&scope=bot&permissions=2147482871)
 
 ## Documentation
 
@@ -44,7 +44,6 @@ node index
 
 ## Roadmap
 
-- [x] Fix purge command
 - [ ] Add image manipulation with canvas
 - [ ] Add music streaming platforms to the library
 
