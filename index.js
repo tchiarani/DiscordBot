@@ -34,13 +34,13 @@ client.on('guildCreate', (guild) => {
 })
 
 function setMyActivity() {
-    client.user.setActivity("unikorn.ga | /help", { type: "WATCHING" })
+    client.user.setActivity("/help", { type: "WATCHING" })
 }
 
 client.on('ready', function() {
     client.channels.get(`410564029329965063`).send(`Bot connecté dans ${client.guilds.size} serveurs différents, pour ${client.users.size} utilisateurs.`)
     console.log(`-----\nBot connecté dans ${client.guilds.size} serveurs différents, pour ${client.users.size} utilisateurs.\n-----`)
-    client.user.setActivity("UniiKorn 🦄", { type: "STREAMING", url: "https://www.twitch.tv/uniikorn" })
+    client.user.setActivity("UniiKorn 😍", { type: "WATCHING"})
     setTimeout(setMyActivity, 5000)
     client.guilds.keyArray().forEach(id => initGuild(id))
     config.botAvatar = client.user.avatarURL
