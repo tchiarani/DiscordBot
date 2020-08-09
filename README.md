@@ -2,7 +2,7 @@
 
 Discord bot that delivers music to your server.
 
-## Usage
+## Install
 
 Requires [node.js](https://nodejs.org) and [discord.js](https://discord.js.org) to run.
 
@@ -15,7 +15,7 @@ node index
 
 > Don't forget to **change the token** of your [Discord application](https://discord.com/developers/applications) provided in config.js.
 
----
+## Usage
 
 **You want to add my hosted bot to your server ?**
 
@@ -25,22 +25,22 @@ node index
 
 **Commands list :**
 
-|Command         |Alias                          |Description                  |
-|----------------|-------------------------------|-----------------------------|
-|`/avatar`       |`/icon`                        |Display server member avatar |
-|`/help`         |`/h`                           |Display commands help        |
-|`/pause`        |                               |Pause the current song       |
-|`/play`         |`/p`                           |Play the song passed in argument |
-|`/poll`         |                               |Display server member avatar |
-|`/purge`        |                               |Purge latest messages        |
-|`/queue`        |`/q`                           |Display server current queue |
-|`/radio`        |                               |Play the radio passed in argument |
-|`/remove`       |`/r`                           |Remove a song from the queue |
-|`/resume`       |                               |Resume the current song      |
-|`/skip`         |                               |Skip the current song        |
+|Command         |Alias                          |Description                          |
+|----------------|-------------------------------|-------------------------------------|
+|`/avatar`       |`/icon`                        |Display server member avatar         |
+|`/help`         |`/h`                           |Display commands help                |
+|`/pause`        |                               |Pause the current song               |
+|`/play`         |`/p`                           |Play the song passed in argument     |
+|`/poll`         |                               |Display server member avatar         |
+|`/purge`        |                               |Purge latest messages                |
+|`/queue`        |`/q`                           |Display server current queue         |
+|`/radio`        |                               |Play the radio passed in argument    |
+|`/remove`       |`/r`                           |Remove a song from the queue         |
+|`/resume`       |                               |Resume the current song              |
+|`/skip`         |                               |Skip the current song                |
 |`/stop`         |`/s`                           |Stop the current song and disconnect |
-|`/uptime`       |                               |Display bot uptime           |
-|`/volume`       |`/v`, `/vol`                   |Change volume from 0 to 200  |
+|`/uptime`       |                               |Display bot uptime                   |
+|`/volume`       |`/v`, `/vol`                   |Change volume from 0 to 200          |
 
 ## Roadmap
 
