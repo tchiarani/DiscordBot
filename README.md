@@ -19,7 +19,7 @@ npm install
 node index
 ```
 
-> Don't forget to **change the token** of your [Discord application](https://discord.com/developers/applications) provided in config.js.
+> Don't forget to **change the token** provided in `config.js` with the one of your [Discord application](https://discord.com/developers/applications).
 
 ## Documentation
 
@@ -44,8 +44,8 @@ node index
 
 ## Roadmap
 
-- [ ] Add image manipulation with canvas
-- [ ] Add music streaming platforms to the library
+- Add image manipulation with canvas
+- Add music streaming platforms to the library
 
 ## Project status
 
